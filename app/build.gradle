@@ -5,19 +5,30 @@ android {
     buildToolsVersion "30.0.2"
 
     defaultConfig {
-        applicationId "com.employee.btvideo"
-        minSdkVersion 16
+        applicationId "com.demo.btvideo"
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        ndk {
+            //选择要添加的对应cpu类型的.so库（不需要的删除即可）。
+            abiFilters "armeabi" , "armeabi-v7a",'armeabi-v8a', 'x86', 'x86_64', 'mips', 'mips64'
+        }
     }
-
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+//        ndk {
+//            //选择要添加的对应cpu类型的.so库（不需要的删除即可）。
+//            abiFilters "armeabi" , "armeabi-v7a",'armeabi-v8a', 'x86', 'x86_64'
+//        }
     }
 }
 
@@ -25,8 +36,32 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'com.google.android.material:material:1.2.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
+    //控件绑定框架
+    implementation 'com.jakewharton:butterknife:10.2.3'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
+
+    //图片加载框架
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
+
+    //网络请求
+    implementation("com.squareup.okhttp3:okhttp:4.8.0")
+    //json工具
+    implementation 'com.google.code.gson:gson:2.8.5'  //json工具
+
+
+    //基于ijkplayer视频框架修改的库
+
+//    api 'com.github.tcking:giraffeplayer2:0.1.25-lazyLoad'
+    //for common decoders
+    implementation project(':giraffeplayer')
+    api 'com.github.tcking:ijkplayer-arm64:0.8.8' //support arm64
+    api 'com.github.tcking:ijkplayer-armv5:0.8.8' //support armv5
+    api 'com.github.tcking:ijkplayer-x86:0.8.8' //support x86
+    api 'com.github.tcking:ijkplayer-x86_64:0.8.8' //support x86_64
 }
