@@ -3,9 +3,7 @@ package com.demo.btvideo.view.activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -14,26 +12,15 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.demo.btvideo.R;
-import com.demo.btvideo.utils.MediaUtils;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import tcking.github.com.giraffeplayer2.DefaultMediaController;
-import tcking.github.com.giraffeplayer2.GiraffePlayer;
 import tcking.github.com.giraffeplayer2.PlayerManager;
-import tcking.github.com.giraffeplayer2.VideoInfo;
 import tcking.github.com.giraffeplayer2.VideoView;
 
 public class VideoDetialsActivity extends AppCompatActivity {
@@ -70,7 +57,7 @@ public class VideoDetialsActivity extends AppCompatActivity {
 				getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_IMMERSIVE);
 			}
 		}
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_video_detail);
 		ButterKnife.bind(this);
 		setSupportActionBar(toolbar);
 		toolbar.setTitleTextColor(Color.TRANSPARENT);
@@ -78,12 +65,10 @@ public class VideoDetialsActivity extends AppCompatActivity {
 		collapsingToolbarLayout.setExpandedTitleGravity(Gravity.TOP);       //标题置顶
 
 		//有部分视频加载有问题，这个视频是有声音显示不出图像的，没有解决http://fzkt-biz.oss-cn-hangzhou.aliyuncs.com/vedio/2f58be65f43946c588ce43ea08491515.mp4
-		String url1 = "http://10.33.5.39:8080/video";
+		String url1 = "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4";
 		videoView =findViewById(R.id.video_view);
 		videoView.setVideoPath(url1).getPlayer().start();
-
 	}
-
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
@@ -94,9 +79,11 @@ public class VideoDetialsActivity extends AppCompatActivity {
 	public void onWindowFocusChanged(boolean hasFocus) {
 		super.onWindowFocusChanged(hasFocus);
 		if (hasFocus){
-			//如果获得焦点
+			PlayerManager.getInstance().getCurrentPlayer().pause();
 		}else{
 			//失去焦点
+			PlayerManager.getInstance().getCurrentPlayer().start();
+
 		}
 	}
 
