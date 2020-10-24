@@ -6,6 +6,8 @@
     <string name="str_register">注册</string>
     <string name="str_passwd">密码</string>
     <string name="str_username">用户名</string>
+    <string name="reg_passwd">密码(必填项)</string>
+    <string name="reg_username">用户名(必填项)</string>
     <string name="str_user_login">用户登录</string>
     <string name="account_text" >1234567890qwertyuioplkjhgfdsazxcvbnm.@,!#$%^*()-_</string>
     <string name="large_text">的app:layout_scrollFlags属性)：

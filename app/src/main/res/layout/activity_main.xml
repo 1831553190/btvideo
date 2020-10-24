@@ -48,9 +48,10 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
 
         android:id="@+id/bottom_navi"
-        android:layout_width="412dp"
-        android:layout_height="57dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_menu" />
 

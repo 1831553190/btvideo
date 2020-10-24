@@ -23,6 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.demo.btvideo.AppController;
 import com.demo.btvideo.R;
 import com.demo.btvideo.model.Msg;
 import com.demo.btvideo.utils.NetWorkUtils;
@@ -30,6 +31,7 @@ import com.demo.btvideo.utils.Propertys;
 import com.demo.btvideo.view.activity.LoginActivity;
 import com.demo.btvideo.view.activity.ServerURL;
 import com.demo.btvideo.viewmodel.DataViewModel;
+import com.demo.btvideo.viewmodel.LoginViewModel;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
@@ -140,6 +142,8 @@ public class FragmentLogin extends Fragment {
 							preferences.edit().putString("passwd", password).apply();
 						}
 						handler.post(() -> {
+							AppController.getInstance().setLogin(true);
+							LoginViewModel.getInstance().update().setValue(200);
 							progressDialog.dismiss();
 							view.setEnabled(true);
 							Toast.makeText(getContext(), msg.getMessage(), Toast.LENGTH_SHORT).show();
@@ -150,15 +154,12 @@ public class FragmentLogin extends Fragment {
 							progressDialog.dismiss();
 							view.setEnabled(true);
 							Toast.makeText(getContext(), msg.getMessage(), Toast.LENGTH_SHORT).show();
-
 //							Snackbar.make(view.findViewById(android.R.id.content), msg.getMessage(), Snackbar.LENGTH_LONG).show();
 						});
 					}
 				} else {
 					handler.post(()->{
-
 						Toast.makeText(getContext(), "服务器响应错误,请稍后重试", Toast.LENGTH_SHORT).show();
-
 //						Snackbar.make(view.findViewById(android.R.id.content), "服务器响应错误,请稍后重试", Snackbar.LENGTH_LONG).show();
 						view.setEnabled(true);
 						progressDialog.dismiss();

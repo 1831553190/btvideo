@@ -25,6 +25,7 @@ public class NetWorkUtils {
 	}
 
 	public static void httpPost(String url, String data, Callback callback){
+
 		RequestBody requestBody1=RequestBody.create(data,JSON);
 		Request request=new Request.Builder()
 				.url(url)
@@ -33,7 +34,14 @@ public class NetWorkUtils {
 		httpClient.newCall(request).enqueue(callback);
 	}
 
-
+	public static void httpGet(String url, String data, Callback callback){
+		RequestBody requestBody1=RequestBody.create(data,JSON);
+		Request request=new Request.Builder()
+				.url(url)
+				.get()
+				.build();
+		httpClient.newCall(request).enqueue(callback);
+	}
 
 
 	public static boolean isJson(String json){
@@ -45,11 +53,5 @@ public class NetWorkUtils {
 			return false;
 		}
 	}
-
-
-
-
-
-
 
 }

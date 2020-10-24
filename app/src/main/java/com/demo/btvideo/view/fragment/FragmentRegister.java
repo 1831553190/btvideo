@@ -50,6 +50,13 @@ public class FragmentRegister extends Fragment {
 	EditText regUserName;
 	@BindView(R.id.reg_password)
 	EditText regPassWord;
+	@BindView(R.id.repeatPassword)
+	EditText regPassWordRep;
+	@BindView(R.id.reg_editphone)
+	EditText regEditPhone;
+	@BindView(R.id.reg_editmail)
+	EditText regEditMail;
+
 	Handler handler=new Handler(Looper.getMainLooper());
 	ProgressDialog progressDialog;
 
@@ -71,17 +78,23 @@ public class FragmentRegister extends Fragment {
 	public void onRegisterClick(View view){
 		String username=regUserName.getText().toString();
 		String password=regUserName.getText().toString();
+		String pwdrep=regPassWordRep.getText().toString();
+		String mail=regEditMail.getText().toString();
+		String phone=regEditPhone.getText().toString();
 
 		if (username.equals("")){
 			Toast.makeText(getContext(), "请输入用户名", Toast.LENGTH_SHORT).show();
 		}else if (password.equals("")){
 			Toast.makeText(getContext(), "请输入密码", Toast.LENGTH_SHORT).show();
-		}else{
+		}else if(!password.equals(pwdrep)){
+			Toast.makeText(getContext(), "两次输入的密码不一致,请重新输入", Toast.LENGTH_SHORT).show();
+		} else{
 			HashMap<String,String> data=new HashMap<>();
 			data.put(Propertys.USERNAME,username);
 			data.put(Propertys.PASSWORD,password);
+			data.put(Propertys.MAIL,mail);
+			data.put(Propertys.PHONE,phone);
 			String dataString=new Gson().toJson(data);
-
 			view.setEnabled(false);
 			progressDialog.setTitle("登陆中...");
 			progressDialog.show();
@@ -133,7 +146,5 @@ public class FragmentRegister extends Fragment {
 	@OnClick(R.id.btnBack)
 	public void backToLogin(){
 		ViewModelProviders.of(getActivity()).get(DataViewModel.class).update().setValue(1);
-
 	}
-
 }

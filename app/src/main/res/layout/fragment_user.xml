@@ -6,13 +6,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/guestView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <ImageView
+            android:id="@+id/img_login"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@mipmap/imglogin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="您还没有登录"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@+id/img_login"
+            app:layout_constraintStart_toStartOf="@+id/img_login"
+            app:layout_constraintTop_toBottomOf="@+id/img_login" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/Cons"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/guestView">
 
         <ImageView
             android:id="@+id/img_userHeadPic"
@@ -99,7 +131,7 @@
 
 
             <TextView
-                android:id="@+id/text_userFollowWith"
+                android:id="@+id/textView12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"

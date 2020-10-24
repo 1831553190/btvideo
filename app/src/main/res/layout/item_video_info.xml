@@ -86,6 +86,7 @@
             android:text="视频介绍"
             >
         </TextView>
+
         <TextView
             android:id="@+id/text_videoClass"
             android:layout_width="wrap_content"

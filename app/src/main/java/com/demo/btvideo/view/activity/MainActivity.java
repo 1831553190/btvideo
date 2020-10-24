@@ -1,11 +1,6 @@
 package com.demo.btvideo.view.activity;
 
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -18,7 +13,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.demo.btvideo.R;
 import com.demo.btvideo.view.fragment.FragmentIndex;
-import com.demo.btvideo.view.fragment.FragmentUser;
+import com.demo.btvideo.FragmentUser;
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -77,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
 			}
 		});
+
 		bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
 			if (item.getItemId()==R.id.menu_index){
 				viewPager.setCurrentItem(0);
@@ -91,5 +87,8 @@ public class MainActivity extends AppCompatActivity {
 		floatingActionButton.setImageResource(R.drawable.ic_upload);
 		BottomNavigationMenuView navi_menu_view=(BottomNavigationMenuView)bottomNavigationView.getChildAt(0);
 		navi_menu_view.addView(floatingActionButton,1);
+		floatingActionButton.setOnClickListener(v -> {
+
+		});
 	}
 }
