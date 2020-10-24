@@ -45,8 +45,8 @@ public class FragmentUser extends Fragment {
 		return mainView;
 	}
 
-	@OnClick(R.id.btnLogin)
-	public void toLogin(){
-		startActivity(new Intent(getContext(), LoginActivity.class));
-	}
+//	@OnClick(R.id.btnLogin)
+//	public void toLogin(){
+//		startActivity(new Intent(getContext(), LoginActivity.class));
+//	}
 }

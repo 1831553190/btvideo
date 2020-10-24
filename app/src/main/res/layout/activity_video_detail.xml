@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--VIDEO-->
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -51,7 +52,7 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-
+<recyclerView></recyclerView>
     <androidx.core.widget.NestedScrollView
         android:id="@+id/sclay"
         android:fillViewport="true"
