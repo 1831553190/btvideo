@@ -2,6 +2,10 @@ package com.demo.btvideo.view.activity;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -15,7 +19,9 @@ import androidx.viewpager.widget.ViewPager;
 import com.demo.btvideo.R;
 import com.demo.btvideo.view.fragment.FragmentIndex;
 import com.demo.btvideo.view.fragment.FragmentUser;
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_main);
 		ButterKnife.bind(this);
 		setSupportActionBar(toolbar);
+		getSupportActionBar().setTitle("首页");
 		viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
 			@NonNull
 			@Override
@@ -62,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
 			@Override
 			public void onPageSelected(int position) {
 				bottomNavigationView.setSelectedItemId(bottomNavigationView.getMenu().getItem(position).getItemId());
-
 			}
 
 			@Override
@@ -70,20 +76,19 @@ public class MainActivity extends AppCompatActivity {
 
 			}
 		});
-		bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-			@Override
-			public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-				if (item.getItemId()==R.id.menu_index){
-					viewPager.setCurrentItem(0);
-							getSupportActionBar().setTitle("首页");
-				}else if (item.getItemId()==R.id.menu_user_index){
-					viewPager.setCurrentItem(1);
-												getSupportActionBar().setTitle("个人中心");
-
-				}
-				return true;
+		bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+			if (item.getItemId()==R.id.menu_index){
+				viewPager.setCurrentItem(0);
+						getSupportActionBar().setTitle("首页");
+			}else if (item.getItemId()==R.id.menu_user_index){
+				viewPager.setCurrentItem(1);
+				getSupportActionBar().setTitle("个人中心");
 			}
+			return true;
 		});
+		FloatingActionButton floatingActionButton=new FloatingActionButton(this);
+		floatingActionButton.setImageResource(R.drawable.ic_upload);
+		BottomNavigationMenuView navi_menu_view=(BottomNavigationMenuView)bottomNavigationView.getChildAt(0);
+		navi_menu_view.addView(floatingActionButton,1);
 	}
 }

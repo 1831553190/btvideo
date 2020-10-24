@@ -40,7 +40,7 @@ public class FragmentUser extends Fragment {
 	@Nullable
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		mainView=LayoutInflater.from(getContext()).inflate(R.layout.fragment_user,container,false);
+		mainView=inflater.inflate(R.layout.fragment_user,container,false);
 		ButterKnife.bind(this,mainView);
 		return mainView;
 	}

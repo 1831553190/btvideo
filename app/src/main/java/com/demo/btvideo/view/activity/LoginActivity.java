@@ -17,15 +17,23 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.viewpager.widget.ViewPager;
 
-import com.demo.btvideo.MainActivity;
 import com.demo.btvideo.R;
 import com.demo.btvideo.User;
 import com.demo.btvideo.model.Msg;
 import com.demo.btvideo.utils.NetWorkUtils;
 import com.demo.btvideo.utils.Propertys;
+import com.demo.btvideo.view.fragment.FragmentLogin;
+import com.demo.btvideo.view.fragment.FragmentRegister;
+import com.demo.btvideo.viewmodel.DataViewModel;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -53,21 +61,9 @@ import okhttp3.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
-	@BindView(R.id.username)
-	EditText edituser;
-	@BindView(R.id.password)
-	EditText editpasswd;
 
-	@BindView(R.id.remPasswd)
-	CheckBox checkBox;
-
-	private String username;
-	private String password;
-	SharedPreferences preferences;
-	ProgressDialog progressDialog;
-	Handler handler = new Handler(Looper.getMainLooper());
-
-	ExecutorService executorService = Executors.newCachedThreadPool();
+	@BindView(R.id.loginViewPager)
+	ViewPager viewPager;
 
 
 	@Override
@@ -94,85 +90,31 @@ public class LoginActivity extends AppCompatActivity {
 		}
 		setContentView(R.layout.activity_login);
 		ButterKnife.bind(this);
-		progressDialog = new ProgressDialog(this);
-		progressDialog.setCancelable(true);
-		preferences = PreferenceManager.getDefaultSharedPreferences(this);
-		checkBox.setChecked(preferences.getBoolean("isrem", false));
-		if (checkBox.isChecked()) {
-			edituser.setText(preferences.getString("username", ""));
-			editpasswd.setText(preferences.getString("passwd", ""));
-			Log.d("password", "onCreate: " + password);
-		}
-		checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-			preferences.edit().putBoolean("isrem", isChecked).apply();
-			if (!isChecked) {
-				preferences.edit().putString("username", "").apply();
-				preferences.edit().putString("passwd", "").apply();
-			}
-		});
-	}
-
-	@OnClick(R.id.btnUserLogin)
-	public void login(View view) {
-		username = edituser.getText().toString();
-		password = editpasswd.getText().toString();
-		if (username.equals("") || password.equals("")) {
-			Snackbar.make(findViewById(android.R.id.content), "请输入完整内容！", Snackbar.LENGTH_SHORT).show();
-			return;
-		}
-		view.setEnabled(false);
-		progressDialog.setTitle("登陆中...");
-		progressDialog.show();
-		JSONObject jsonObject = new JSONObject();
-		try {
-			jsonObject.put(Propertys.USERNAME, username);
-			jsonObject.put(Propertys.PASSWORD, password);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		NetWorkUtils.httpPost(ServerURL.LOGIN_URL, jsonObject.toString(), new Callback() {
+		viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
+			@NonNull
 			@Override
-			public void onFailure(@NotNull Call call, @NotNull IOException e) {
-				handler.post(() -> {
-					Snackbar.make(findViewById(android.R.id.content), "连接失败，请检查网络连接。", Snackbar.LENGTH_SHORT).show();
-					progressDialog.dismiss();
-					view.setEnabled(true);
-				});
-			}
-
-			@Override
-			public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-				String resp = response.body().string();
-				if (NetWorkUtils.isJson(resp)) {
-					Msg msg = new Gson().fromJson(resp, Msg.class);
-					if (msg.getCode() == 200) {
-						if (checkBox.isChecked()) {
-							preferences.edit().putString("username", username).apply();
-							preferences.edit().putString("passwd", password).apply();
-						}
-						handler.post(() -> {
-							progressDialog.dismiss();
-							view.setEnabled(true);
-							Toast.makeText(LoginActivity.this, msg.getMessage(), Toast.LENGTH_SHORT).show();
-							finish();
-						});
-					} else {
-                        handler.post(()->{
-                            progressDialog.dismiss();
-                            view.setEnabled(true);
-                            Snackbar.make(findViewById(android.R.id.content), msg.getMessage(), Snackbar.LENGTH_LONG).show();
-                        });
-					}
-				} else {
-					handler.post(()->{
-                        Snackbar.make(findViewById(android.R.id.content), "服务器响应错误,请稍后重试", Snackbar.LENGTH_LONG).show();
-                        view.setEnabled(true);
-                        progressDialog.dismiss();
-                    });
-//                    Toast.makeText(LoginActivity.this, "服务器响应错误,请稍后重试", Toast.LENGTH_SHORT).show();
+			public Fragment getItem(int position) {
+				if (position==0){
+					return FragmentRegister.getInstance();
+				}else {
+					return FragmentLogin.getInstance();
 				}
 			}
+
+			@Override
+			public int getCount() {
+				return 2;
+			}
 		});
+		viewPager.setCurrentItem(1);
+		ViewModelProviders.of(this).get(DataViewModel.class).update().observe(this, new Observer<Integer>() {
+			@Override
+			public void onChanged(Integer integer) {
+				viewPager.setCurrentItem(integer);
+			}
+		});
+
+
 
 	}
 }

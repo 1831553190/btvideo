@@ -33,7 +33,7 @@ public class FragmentIndex extends Fragment {
 	@Nullable
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		mainView=LayoutInflater.from(getContext()).inflate(R.layout.fragment_main,container,false);
+		mainView=inflater.inflate(R.layout.fragment_main,container,false);
 		return mainView;
 	}
 }
