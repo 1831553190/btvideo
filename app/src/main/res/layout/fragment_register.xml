@@ -9,7 +9,7 @@
 
 
     <ImageView
-        android:id="@+id/img2"
+        android:id="@+id/img2_png"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:elevation="6dp"
@@ -25,9 +25,9 @@
         android:layout_height="wrap_content"
         android:text="注册"
         android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="@+id/img2"
-        app:layout_constraintStart_toStartOf="@+id/img2"
-        app:layout_constraintTop_toBottomOf="@+id/img2" />
+        app:layout_constraintEnd_toEndOf="@+id/img2_png"
+        app:layout_constraintStart_toStartOf="@+id/img2_png"
+        app:layout_constraintTop_toBottomOf="@+id/img2_png" />
 
 
     <com.google.android.material.textfield.TextInputLayout
@@ -118,9 +118,9 @@
         android:layout_height="wrap_content"
         android:text="登录"
         android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@+id/img2"
-        app:layout_constraintStart_toStartOf="@+id/img2"
-        app:layout_constraintTop_toBottomOf="@+id/img2" />
+        app:layout_constraintEnd_toEndOf="@+id/img2_png"
+        app:layout_constraintStart_toStartOf="@+id/img2_png"
+        app:layout_constraintTop_toBottomOf="@+id/img2_png" />
 
 
 

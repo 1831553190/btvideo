@@ -8,7 +8,7 @@
 
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/image_Collection"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:elevation="6dp"
@@ -24,9 +24,9 @@
         android:layout_height="wrap_content"
         android:text="Welcome"
         android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="@+id/imageView2"
-        app:layout_constraintStart_toStartOf="@+id/imageView2"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintEnd_toEndOf="@+id/image_Collection"
+        app:layout_constraintStart_toStartOf="@+id/image_Collection"
+        app:layout_constraintTop_toBottomOf="@+id/image_Collection" />
 
 
     <com.google.android.material.textfield.TextInputLayout
@@ -145,9 +145,9 @@
         android:layout_height="wrap_content"
         android:text="登录"
         android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@+id/imageView2"
-        app:layout_constraintStart_toStartOf="@+id/imageView2"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintEnd_toEndOf="@+id/image_Collection"
+        app:layout_constraintStart_toStartOf="@+id/image_Collection"
+        app:layout_constraintTop_toBottomOf="@+id/image_Collection" />
 
 
 

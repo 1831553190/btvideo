@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/VideoConlayout1"
+        android:layout_width="409dp"
+        android:layout_height="240dp"
+        app:layout_constraintEnd_toEndOf="parent"
+
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/image_videoUserPicture"
+            android:layout_width="49dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/text_videoUserNmae"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:text="name"
+            app:layout_constraintStart_toEndOf="@+id/image_videoUserPicture"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_videoUserFans"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="12dp"
+            android:text="fansCount"
+            app:layout_constraintBottom_toBottomOf="@+id/image_videoUserPicture"
+            app:layout_constraintStart_toEndOf="@+id/image_videoUserPicture"
+            app:layout_constraintTop_toBottomOf="@+id/text_videoUserNmae" />
+
+        <TextView
+            android:id="@+id/text_videoProduce"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:paddingRight="8dp"
+            android:text="VideoProduce"
+
+            app:layout_constraintLeft_toLeftOf="@+id/text_videoUserFans"
+
+            app:layout_constraintStart_toStartOf="@+id/image_videoUserPicture"
+            app:layout_constraintTop_toBottomOf="@+id/text_videoUserFans" />
+
+        <Button
+            android:id="@+id/button_addAttrntion"
+            android:layout_width="65dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:text="+关注"
+            android:textSize="11dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="18dp"
+            android:layout_height="22dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintStart_toStartOf="@+id/text_videoProduce"
+            app:layout_constraintTop_toBottomOf="@+id/text_videoProduce"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/text_videoPlayCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:text="PlayCount"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView4"
+            app:layout_constraintStart_toEndOf="@+id/imageView4"
+            app:layout_constraintTop_toTopOf="@id/imageView4" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="18dp"
+            android:layout_height="22dp"
+            android:layout_marginStart="20dp"
+            app:layout_constraintBottom_toBottomOf="@+id/text_videoPlayCount"
+            app:layout_constraintStart_toEndOf="@+id/text_videoPlayCount"
+            app:layout_constraintTop_toTopOf="@+id/text_videoPlayCount"
+            app:layout_constraintVertical_bias="1.0"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/textView26"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="commentC"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+            app:layout_constraintStart_toEndOf="@+id/imageView5"
+            app:layout_constraintTop_toTopOf="@+id/imageView5"
+            app:layout_constraintVertical_bias="0.666" />
+
+        <TextView
+            android:id="@+id/text_videoVersion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="VideoVersion"
+            app:layout_constraintBottom_toBottomOf="@+id/textView26"
+            app:layout_constraintStart_toEndOf="@+id/textView26"
+            app:layout_constraintTop_toTopOf="@+id/textView26"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <ImageView
+            android:id="@+id/image_videoDianzan"
+            android:layout_width="37dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginBottom="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <ImageView
+            android:id="@+id/image_videoDislike"
+            android:layout_width="37dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="35dp"
+            app:layout_constraintBottom_toBottomOf="@+id/image_videoDianzan"
+            app:layout_constraintStart_toEndOf="@+id/image_videoDianzan"
+            app:layout_constraintTop_toTopOf="@+id/image_videoDianzan"
+            app:layout_constraintVertical_bias="0.0"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <ImageView
+            android:id="@+id/image_videoToubi"
+            android:layout_width="37dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="35dp"
+            app:layout_constraintBottom_toBottomOf="@+id/image_videoDislike"
+            app:layout_constraintStart_toEndOf="@+id/image_videoDislike"
+            app:layout_constraintTop_toTopOf="@+id/image_videoDislike"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <ImageView
+            android:id="@+id/image_videoShoucang"
+            android:layout_width="37dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="35dp"
+            app:layout_constraintBottom_toBottomOf="@+id/image_videoToubi"
+            app:layout_constraintStart_toEndOf="@+id/image_videoToubi"
+            app:layout_constraintTop_toTopOf="@+id/image_videoToubi"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <ImageView
+            android:id="@+id/image_videoZhuanfa"
+            android:layout_width="37dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="35dp"
+            app:layout_constraintBottom_toBottomOf="@+id/image_videoShoucang"
+            app:layout_constraintStart_toEndOf="@+id/image_videoShoucang"
+            app:layout_constraintTop_toTopOf="@+id/image_videoShoucang"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/text_videoDianzan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="点赞"
+            app:layout_constraintEnd_toEndOf="@+id/image_videoDianzan"
+            app:layout_constraintHorizontal_bias="0.285"
+            app:layout_constraintStart_toStartOf="@+id/image_videoDianzan"
+            app:layout_constraintTop_toBottomOf="@+id/image_videoDianzan" />
+
+        <TextView
+            android:id="@+id/img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="不喜欢"
+            app:layout_constraintEnd_toEndOf="@+id/image_videoDislike"
+            app:layout_constraintHorizontal_bias="0.19"
+            app:layout_constraintStart_toStartOf="@+id/image_videoDislike"
+            app:layout_constraintTop_toBottomOf="@+id/image_videoDislike" />
+
+        <TextView
+            android:id="@+id/text_videoToubi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="投币"
+            app:layout_constraintEnd_toEndOf="@+id/image_videoToubi"
+            app:layout_constraintHorizontal_bias="0.428"
+            app:layout_constraintStart_toStartOf="@+id/image_videoToubi"
+            app:layout_constraintTop_toBottomOf="@+id/image_videoToubi" />
+
+        <TextView
+            android:id="@+id/text_videoShoucang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="收藏"
+            app:layout_constraintEnd_toEndOf="@+id/image_videoShoucang"
+            app:layout_constraintHorizontal_bias="0.523"
+            app:layout_constraintStart_toStartOf="@+id/image_videoShoucang"
+            app:layout_constraintTop_toBottomOf="@+id/image_videoShoucang" />
+
+        <TextView
+            android:id="@+id/text_videoZhuanfa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="转发"
+            app:layout_constraintEnd_toEndOf="@+id/image_videoZhuanfa"
+            app:layout_constraintHorizontal_bias="0.38"
+            app:layout_constraintStart_toStartOf="@+id/image_videoZhuanfa"
+            app:layout_constraintTop_toBottomOf="@+id/image_videoZhuanfa" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

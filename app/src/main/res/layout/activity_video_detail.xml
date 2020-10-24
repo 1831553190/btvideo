@@ -52,7 +52,7 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-<recyclerView></recyclerView>
+
     <androidx.core.widget.NestedScrollView
         android:id="@+id/sclay"
         android:fillViewport="true"

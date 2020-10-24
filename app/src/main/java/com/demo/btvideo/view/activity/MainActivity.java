@@ -42,7 +42,8 @@ public class MainActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_main);
 		ButterKnife.bind(this);
 		setSupportActionBar(toolbar);
-		getSupportActionBar().setTitle("首页");
+//		裁剪图片
+		toolbar.setNavigationIcon(R.drawable.ic_baseline_person_24);
 		viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
 			@NonNull
 			@Override
@@ -79,10 +80,10 @@ public class MainActivity extends AppCompatActivity {
 		bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
 			if (item.getItemId()==R.id.menu_index){
 				viewPager.setCurrentItem(0);
-						getSupportActionBar().setTitle("首页");
+//						getSupportActionBar().setTitle("首页");
 			}else if (item.getItemId()==R.id.menu_user_index){
 				viewPager.setCurrentItem(1);
-				getSupportActionBar().setTitle("个人中心");
+//				getSupportActionBar().setTitle("个人中心");
 			}
 			return true;
 		});
