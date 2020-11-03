@@ -1,36 +1,55 @@
 package com.demo.btvideo;
 
+import android.content.Context;
+
+import com.demo.btvideo.statement.StateGuest;
+import com.demo.btvideo.statement.StateLogin;
+import com.demo.btvideo.statement.StateUser;
+import com.demo.btvideo.utils.NetWorkUtils;
+import com.demo.btvideo.view.fragment.FragmentIndex;
+
 public class AppController {
 
 	private AppController(){}
-	private static AppController controller;
-	static boolean login=false;
+//	private static AppController controller;
+	StateUser stateUser=new StateGuest();
+	String authString="";
+	public String getAuthString() {
+		return authString;
+	}
 
-
-	public static AppController getInstance(){
-		if (controller==null){
-			synchronized (AppController.class){
-				if (controller==null){
-					controller=new AppController();
-				}
-			}
-		}
-		return controller;
+	public void updateAuth(String token){
+		NetWorkUtils.updateAuth(token);
+		authString=token;
 	}
 
 
-	public void setLogin(boolean isLogin){
-		if (isLogin){
-			login=true;
-		}else {
-			login=false;
-		}
+	private static class Holder {
+		private static AppController instance = new AppController();
 	}
 
+	public static AppController getInstance() {
+		return AppController.Holder.instance;
+	}
+
+
+	public void setLogin(StateUser stateUser){
+		this.stateUser=stateUser;
+
+	}
 
 	public boolean isLogin(){
-		return login;
+		return stateUser.getClass()== StateLogin.class;
 	}
+
+
+	public void uploadVideo(Context context){
+		stateUser.uploadVideo(context);
+	}
+
+
+
+
 
 
 }

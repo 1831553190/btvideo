@@ -1,8 +1,9 @@
 package com.demo.btvideo.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class PageInfo {
+public class PageInfo implements Serializable {
 
 	private int pageNum;
 	private int pageSize;

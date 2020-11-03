@@ -5,9 +5,10 @@
 
     <ImageView
         android:id="@+id/app_video_cover"
+        android:transitionName="cover"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitCenter" />
+        android:scaleType="centerCrop" />
 
     <RelativeLayout
         android:layout_width="match_parent"

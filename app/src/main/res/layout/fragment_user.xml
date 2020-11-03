@@ -11,6 +11,7 @@
         android:id="@+id/guestView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -20,17 +21,21 @@
             android:id="@+id/img_login"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:src="@mipmap/imglogin"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:src="@mipmap/img_login"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintBottom_toTopOf="@+id/labe"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/labe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
             android:text="您还没有登录"
             android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/img_login"
             app:layout_constraintStart_toStartOf="@+id/img_login"
             app:layout_constraintTop_toBottomOf="@+id/img_login" />
@@ -39,51 +44,65 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/Cons"
+        android:id="@+id/user_info_center"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/guestView">
 
-        <ImageView
-            android:id="@+id/img_userHeadPic"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+        <top.limuyang2.shadowlayoutlib.ShadowFrameLayout
+            android:id="@+id/headLayout"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
-            android:scaleType="centerCrop"
-
+            android:background="@android:color/white"
+            app:l_radius="36dp"
+            app:l_shadowAlpha="0.8"
+            app:l_shadowElevation="4dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-            ></ImageView>
+
+            <ImageView
+                android:id="@+id/img_userHeadPic"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:scaleType="centerCrop" />
+        </top.limuyang2.shadowlayoutlib.ShadowFrameLayout>
+
 
         <TextView
-            android:id="@+id/text_UserId"
+            android:id="@+id/text_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="id"
-            app:layout_constraintStart_toEndOf="@+id/img_userHeadPic"
-            app:layout_constraintTop_toTopOf="@+id/img_userHeadPic" />
+            android:text="用户名"
+            app:layout_constraintBottom_toTopOf="@id/text_userid"
+            app:layout_constraintStart_toEndOf="@+id/headLayout"
+            app:layout_constraintTop_toTopOf="@+id/headLayout"
+            app:layout_constraintVertical_chainStyle="spread" />
 
         <TextView
-            android:id="@+id/text_userBbi"
+            android:id="@+id/text_userid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="B币"
-            app:layout_constraintBottom_toBottomOf="@+id/img_userHeadPic"
-            app:layout_constraintStart_toEndOf="@+id/img_userHeadPic" />
+            android:text="帐号"
+            app:layout_constraintBottom_toBottomOf="@+id/headLayout"
+            app:layout_constraintStart_toEndOf="@+id/headLayout"
+            app:layout_constraintTop_toBottomOf="@+id/text_username" />
 
-        <TextView
-            android:id="@+id/text_userCoin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:text="硬币"
-            app:layout_constraintBottom_toBottomOf="@+id/img_userHeadPic"
-            app:layout_constraintStart_toEndOf="@+id/text_userBbi" />
+<!--        <TextView-->
+<!--            android:id="@+id/text_userCoin"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="32dp"-->
+<!--            android:text="硬币"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/text_userBbi"-->
+<!--            app:layout_constraintStart_toEndOf="@+id/text_userBbi"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/text_userBbi" />-->
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout2"
@@ -93,15 +112,15 @@
             app:layout_constraintHorizontal_weight="1"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/constraintLayout3"
-            app:layout_constraintTop_toBottomOf="@+id/img_userHeadPic">
+            app:layout_constraintTop_toBottomOf="@+id/headLayout">
 
 
             <TextView
                 android:id="@+id/text_userDynamic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
                 android:text="TextView"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/textView11"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -134,8 +153,8 @@
                 android:id="@+id/textView12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
                 android:text="TextView"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/textView13"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -167,8 +186,8 @@
                 android:id="@+id/text_userFans"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
                 android:text="TextView"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/textView15"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -187,10 +206,11 @@
 
         <TextView
             android:id="@+id/text_userSpace"
-            android:layout_width="86dp"
-            android:layout_height="72dp"
-            android:text="空间  >"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
             android:gravity="center_vertical|center_horizontal"
+            android:padding="16dp"
+            android:text="个人中心  >"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -201,7 +221,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Cons"
+        app:layout_constraintTop_toBottomOf="@+id/user_info_center"
         app:layout_constraintVertical_bias="0.0"
         tools:layout_editor_absoluteX="0dp">
 

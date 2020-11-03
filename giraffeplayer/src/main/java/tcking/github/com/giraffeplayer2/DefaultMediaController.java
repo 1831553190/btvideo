@@ -212,8 +212,8 @@ public class DefaultMediaController extends BaseMediaController {
 //        $.id(R.id.app_video_seekBar).visibility(show ? View.VISIBLE : View.GONE);
 //        $.id(R.id.app_video_fullscreen).visibility(show ? View.VISIBLE : View.GONE);
 		final boolean finalShow = show;
-		View decorView = scanForActivity(context).getWindow().getDecorView();
-		int option = SYSTEM_UI_FLAG_VISIBLE | SYSTEM_UI_FLAG_IMMERSIVE;
+//		View decorView = scanForActivity(context).getWindow().getDecorView();
+//		int option = SYSTEM_UI_FLAG_VISIBLE | SYSTEM_UI_FLAG_IMMERSIVE;
 		if (show) {
 			ObjectAnimator objectAnimator = ObjectAnimator.ofFloat($.id(R.id.app_video_bottom_box).view(), "translationY", 100, 0);
 			objectAnimator.setDuration(200).setInterpolator(new DecelerateInterpolator());
@@ -226,7 +226,7 @@ public class DefaultMediaController extends BaseMediaController {
 
 				}
 			});
-			option = SYSTEM_UI_FLAG_VISIBLE ;
+//			option = SYSTEM_UI_FLAG_VISIBLE ;
 			objectAnimator.start();
 		} else {
 			ObjectAnimator objectAnimator = ObjectAnimator.ofFloat($.id(R.id.app_video_bottom_box).view(), "translationY", 0, 100);
@@ -240,10 +240,10 @@ public class DefaultMediaController extends BaseMediaController {
 
 				}
 			});
-			option = SYSTEM_UI_FLAG_HIDE_NAVIGATION | SYSTEM_UI_FLAG_IMMERSIVE|View.SYSTEM_UI_FLAG_FULLSCREEN;
+//			option = SYSTEM_UI_FLAG_HIDE_NAVIGATION | SYSTEM_UI_FLAG_IMMERSIVE|View.SYSTEM_UI_FLAG_FULLSCREEN;
 			objectAnimator.start();
 		}
-        decorView.setSystemUiVisibility(option);
+//        decorView.setSystemUiVisibility(option);
 
 //        $.id(R.id.app_video_bottom_box).visibility(show ? View.VISIBLE : View.GONE);
 
@@ -307,8 +307,6 @@ public class DefaultMediaController extends BaseMediaController {
 					FragmentManager supportFragmentManager = ((AppCompatActivity) activity).getSupportFragmentManager();
 					trackSelectorFragment.show(supportFragmentManager, "player_track");
 				}
-
-
 			}
 		}
 	};
@@ -488,7 +486,13 @@ public class DefaultMediaController extends BaseMediaController {
 		 */
 		@Override
 		public boolean onDoubleTap(MotionEvent e) {
-//            Toast.makeText(context, "onDoubleTap", Toast.LENGTH_SHORT).show();
+			GiraffePlayer giraffePlayer=videoView.getPlayer();
+
+			if (giraffePlayer.isPlaying()){
+				giraffePlayer.pause();
+			}else{
+				giraffePlayer.start();
+			}
 			return true;
 		}
 

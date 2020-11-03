@@ -1,8 +1,11 @@
 package com.demo.btvideo.model;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 import java.util.List;
 
-public class VideoInfo {
+public class VideoInfo implements Serializable {
 	/**
 	 * id : 3
 	 * title : 国服第一亚索
@@ -25,6 +28,7 @@ public class VideoInfo {
 	private String labels;
 	private String description;
 	private String coverImage;
+	@SerializedName("videoUrl")
 	private String videoUrl;
 	private String videoType;
 	private String updateTime;
