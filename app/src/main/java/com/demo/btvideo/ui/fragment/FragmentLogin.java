@@ -1,4 +1,4 @@
-package com.demo.btvideo.view.fragment;
+package com.demo.btvideo.ui.fragment;
 
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
@@ -28,19 +28,12 @@ import com.demo.btvideo.model.Msg;
 import com.demo.btvideo.model.User;
 import com.demo.btvideo.net.NetInterface;
 import com.demo.btvideo.statement.StateLogin;
-import com.demo.btvideo.utils.NetWorkUtils;
 import com.demo.btvideo.utils.Propertys;
 import com.demo.btvideo.utils.ServerURL;
 import com.demo.btvideo.viewmodel.DataViewModel;
 import com.demo.btvideo.viewmodel.LoginViewModel;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.gson.Gson;
 
-import org.jetbrains.annotations.NotNull;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
@@ -53,11 +46,8 @@ import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.exceptions.Exceptions;
-import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.Call;
-import okhttp3.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -142,7 +132,7 @@ public class FragmentLogin extends Fragment {
 								.baseUrl(ServerURL.MAIN_URL)
 								.build();
 						NetInterface netInterface=retrofit.create(NetInterface.class);
-						Response<Msg<AuthData>> response=netInterface.login(stringStringHashMap).execute();
+						Response<Msg<AuthData>> response=netInterface.login(stringStringHashMap,"ceshi").execute();
 						if (response.isSuccessful()&&response.body()!=null&&response.body().getCode()==200){
 							return response.body();
 						}else if (response.body()!=null){

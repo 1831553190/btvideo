@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
 
 
@@ -19,7 +20,7 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.demo.btvideo.view.activity.MainActivity"
+            android:name="com.demo.btvideo.ui.activity.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -27,12 +28,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.activity.LoginActivity" />
-        <activity android:name=".view.activity.VideoDetialsActivity"
+        <activity android:name=".ui.activity.LoginActivity" />
+        <activity android:name=".ui.activity.VideoDetialsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="stateVisible|adjustResize"
             android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.PersionalInfoActivity" />
+        <activity android:name=".ui.activity.PersionalInfoActivity" />
+        <activity android:name=".ui.activity.UploadHeadActivity" />
+        <activity android:name=".ui.activity.UploadVideoAcivity" />
+
+        <service android:name=".UploadService" />
     </application>
 
 </manifest>

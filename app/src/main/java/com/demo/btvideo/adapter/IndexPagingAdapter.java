@@ -2,7 +2,6 @@ package com.demo.btvideo.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,10 +22,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.demo.btvideo.R;
 import com.demo.btvideo.model.NetworkState;
 import com.demo.btvideo.model.VideoInfo;
-import com.demo.btvideo.utils.ServerURL;
-import com.demo.btvideo.view.activity.VideoDetialsActivity;
-
-import org.jetbrains.annotations.NotNull;
+import com.demo.btvideo.ui.activity.VideoDetialsActivity;
 
 public class IndexPagingAdapter extends PagedListAdapter<VideoInfo, RecyclerView.ViewHolder> {
 

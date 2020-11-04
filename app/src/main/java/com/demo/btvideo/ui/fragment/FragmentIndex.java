@@ -1,4 +1,4 @@
-package com.demo.btvideo.view.fragment;
+package com.demo.btvideo.ui.fragment;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,18 +11,10 @@ import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.widget.ContentLoadingProgressBar;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LifecycleCoroutineScope;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.paging.CombinedLoadStates;
 import androidx.paging.LoadState;
 import androidx.paging.LoadStateAdapter;
-import androidx.paging.LoadStates;
-import androidx.paging.LoadType;
-import androidx.paging.PagingData;
-import androidx.paging.rxjava2.PagingRx;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -31,21 +23,14 @@ import com.demo.btvideo.R;
 import com.demo.btvideo.adapter.VideoListAdapter;
 import com.demo.btvideo.model.VideoInfo;
 import com.demo.btvideo.viewmodel.LoadMoreViewModel;
-import com.uber.autodispose.AutoDispose;
-import com.uber.autodispose.AutoDisposeConverter;
-import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import kotlin.Unit;
-import kotlin.jvm.functions.Function1;
 
 public class FragmentIndex extends Fragment {
 
@@ -110,7 +95,6 @@ public class FragmentIndex extends Fragment {
 		@Override
 			public void onBindViewHolder(@NotNull MyHolder myHolder, @NotNull LoadState loadState) {
 //			if (loadState instanceof LoadState.Error){
-				Log.d("loaf", "loadState: ");
 				myHolder.progressBar.setVisibility(View.VISIBLE);
 //			}
 		}

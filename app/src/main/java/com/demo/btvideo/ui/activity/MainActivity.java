@@ -1,4 +1,4 @@
-package com.demo.btvideo.view.activity;
+package com.demo.btvideo.ui.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,31 +14,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.lifecycle.ViewModelStore;
 import androidx.viewpager.widget.ViewPager;
 
-import com.bumptech.glide.Glide;
 import com.demo.btvideo.AppController;
 import com.demo.btvideo.R;
 import com.demo.btvideo.model.User;
 import com.demo.btvideo.model.Msg;
-import com.demo.btvideo.net.NetInterface;
 import com.demo.btvideo.statement.StateGuest;
 import com.demo.btvideo.statement.StateLogin;
 import com.demo.btvideo.utils.NetWorkUtils;
 import com.demo.btvideo.utils.ServerURL;
-import com.demo.btvideo.view.fragment.FragmentIndex;
-import com.demo.btvideo.view.fragment.FragmentUser;
+import com.demo.btvideo.ui.fragment.FragmentIndex;
+import com.demo.btvideo.ui.fragment.FragmentUser;
 import com.demo.btvideo.viewmodel.DataViewModel;
-import com.demo.btvideo.viewmodel.LoadMoreViewModel;
 import com.demo.btvideo.viewmodel.LoginViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
-import com.google.gson.internal.LinkedTreeMap;
 import com.google.gson.reflect.TypeToken;
 
 import org.jetbrains.annotations.NotNull;
@@ -48,9 +42,6 @@ import java.lang.reflect.Type;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -81,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
 		}
 		LoginViewModel.getInstance().update().postValue(0);
 //		裁剪图片
-		toolbar.setNavigationIcon(R.drawable.ic_baseline_person_24);
+//		toolbar.setNavigationIcon(R.drawable.ic_baseline_person_24);
 		getSupportActionBar().setTitle("首页");
 		viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
 			@NonNull
@@ -132,12 +123,7 @@ public class MainActivity extends AppCompatActivity {
 		BottomNavigationMenuView navi_menu_view=(BottomNavigationMenuView)bottomNavigationView.getChildAt(0);
 		navi_menu_view.addView(floatingActionButton,1);
 		floatingActionButton.setOnClickListener(v -> {
-
-			Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-			          intent.setType("*/*");  // 选择文件类型
-			             intent.addCategory(Intent.CATEGORY_OPENABLE);
-			               startActivityForResult( Intent.createChooser(intent, "Select a File to Upload"), 200);
-
+			AppController.getInstance().uploadVideo(this);
 		});
 	}
 
@@ -154,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
 				if (response.isSuccessful()&&NetWorkUtils.isJson(resp)){
 					Msg userMsg=new Gson().fromJson(resp,Msg.class);
 					if(userMsg.getCode()==401){
-						AppController.getInstance().setLogin(new StateLogin());
+						AppController.getInstance().setLogin(new StateGuest());
 						preferences.edit().putString("token","").apply();
 						Looper.prepare();
 						Toast.makeText(MainActivity.this, userMsg.getMessage(), Toast.LENGTH_SHORT).show();

@@ -1,4 +1,4 @@
-package com.demo.btvideo.view.activity;
+package com.demo.btvideo.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

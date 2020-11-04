@@ -9,7 +9,7 @@
     android:orientation="vertical"
     android:fitsSystemWindows="true"
     android:layout_marginTop="-25dp"
-    tools:context="com.demo.btvideo.view.activity.VideoDetialsActivity">
+    tools:context="com.demo.btvideo.ui.activity.VideoDetialsActivity">
 
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

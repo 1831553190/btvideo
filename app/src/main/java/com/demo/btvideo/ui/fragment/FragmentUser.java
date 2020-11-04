@@ -1,22 +1,16 @@
-package com.demo.btvideo.view.fragment;
+package com.demo.btvideo.ui.fragment;
 
-import android.app.ProgressDialog;
-import android.content.Context;
+import android.app.ActivityOptions;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,19 +20,15 @@ import androidx.lifecycle.Observer;
 import androidx.room.Room;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.target.Target;
 import com.demo.btvideo.AppController;
 import com.demo.btvideo.R;
 import com.demo.btvideo.dao.AppDatabase;
 import com.demo.btvideo.model.User;
-import com.demo.btvideo.model.Msg;
-import com.demo.btvideo.net.NetInterface;
-import com.demo.btvideo.utils.NetWorkUtils;
-import com.demo.btvideo.view.activity.LoginActivity;
+import com.demo.btvideo.ui.activity.LoginActivity;
+import com.demo.btvideo.ui.activity.UploadHeadActivity;
 import com.demo.btvideo.viewmodel.LoginViewModel;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
@@ -54,7 +44,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -63,12 +52,6 @@ import java.util.concurrent.Executors;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class FragmentUser extends Fragment {
 
@@ -77,6 +60,8 @@ public class FragmentUser extends Fragment {
 	@BindView(R.id.img_userHeadPic)
 	ImageView imgHead;
 	@BindView(R.id.text_username)
+	TextView textUsername;
+	@BindView(R.id.text_userid)
 	TextView textUserId;
 
 	@BindView(R.id.guestView)
@@ -119,7 +104,9 @@ public class FragmentUser extends Fragment {
 			public void onSuccess(@NullableDecl User result) {
 				if (result!=null){
 					handler.post(()->{
-						textUserId.setText(result.getUsername());
+
+						textUsername.setText(result.getUsername());
+						textUserId.setText(result.getAccount());
 						File file=new File(result.getHeadImage());
 
 						try {
@@ -150,6 +137,24 @@ public class FragmentUser extends Fragment {
 			public void onChanged(Integer integer) {
 				boolean l = AppController.getInstance().isLogin();
 				guestView.setVisibility(l ? View.GONE : View.VISIBLE);
+				executorService.submit(()->{
+					User user=database.userDao().getUser();
+					handler.post(()->{
+						if (user!=null){
+							String userImg=user.getHeadImage();
+							if (userImg!=null){
+								Glide.with(getContext())
+										.load(userImg)
+										.transition(DrawableTransitionOptions.withCrossFade())
+										.skipMemoryCache(true)
+										.diskCacheStrategy(DiskCacheStrategy.NONE)
+										.error(R.mipmap.imglogin)
+										.into(imgHead);
+							}
+
+						}
+					});
+				});
 			}
 		});
 		LoginViewModel.getInstance().userLiveData().observe(getViewLifecycleOwner(), new Observer<User>() {
@@ -168,6 +173,7 @@ public class FragmentUser extends Fragment {
 						handler.post(()->{
 							Glide.with(getContext())
 									.load(cover)
+									.transition(DrawableTransitionOptions.withCrossFade())
 									.skipMemoryCache(true)
 									.diskCacheStrategy(DiskCacheStrategy.NONE)
 									.error(R.mipmap.imglogin)
@@ -181,8 +187,6 @@ public class FragmentUser extends Fragment {
 				});
 				boolean l = AppController.getInstance().isLogin();
 				guestView.setVisibility(l ? View.GONE : View.VISIBLE);
-
-
 			}
 		});
 		return mainView;
@@ -195,70 +199,19 @@ public class FragmentUser extends Fragment {
 
 	@OnClick(R.id.img_userHeadPic)
 	public void upload(View view) {
-		Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-		intent.setType("*/*");  // 选择文件类型
-		intent.addCategory(Intent.CATEGORY_OPENABLE);
-		startActivityForResult( Intent.createChooser(intent, "Select a File to Upload"), 200);
+		Intent intent=new Intent(getContext(), UploadHeadActivity.class);
+		ActivityOptions options = ActivityOptions
+				.makeSceneTransitionAnimation(getActivity(), view, "upload_cover");
+		getContext().startActivity(intent,options.toBundle());
+
 	}
 
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		if (requestCode == 200) {
-			if (data != null) {
-				ProgressDialog progressDialog = new ProgressDialog(getContext());
-				progressDialog.setTitle("上传中");
-				progressDialog.show();
-				NetInterface netInterface = NetWorkUtils.getRetrofit().create(NetInterface.class);
-				MultipartBody.Builder builder = new MultipartBody.Builder()
-						.setType(MultipartBody.FORM);
-				RequestBody body = null;
-				try {
-					InputStream in=getContext().getContentResolver().openInputStream(data.getData());
-					File file=getPictureFile(getContext(),in);
-					body = RequestBody.create(file, MediaType.parse("multipart/form-data"));
-					builder.addFormDataPart("headImage", file.getName(), body);
-					MultipartBody.Part requestBody=builder.build().parts().get(0);
-					netInterface.uploadHeadImage(requestBody).enqueue(new Callback<Msg<String>>() {
-						@Override
-						public void onResponse(Call<Msg<String>> call, Response<Msg<String>> response) {
-							new Handler(Looper.getMainLooper()).post(()->{
-								Msg stringMsg=response.body();
-								if (response.isSuccessful()&&stringMsg!=null){
-									if (stringMsg.getCode()==200){
-										Toast.makeText(getContext(), "上传成功", Toast.LENGTH_SHORT).show();
-										Glide.with(getContext())
-												.load(file)
-												.skipMemoryCache(true)
-												.diskCacheStrategy(DiskCacheStrategy.NONE)
-												.error(R.mipmap.imglogin)
-												.into(imgHead);
-										pool.execute(()->{
-											User user=database.userDao().getUser();
-											File saveImgFile=saveCover(user,file);
-											user.setHeadImage(saveImgFile.getAbsolutePath());
-											database.userDao().insertAll(user);
-										});
-									}else{
-										Toast.makeText(getContext(), stringMsg.getMessage(), Toast.LENGTH_SHORT).show();
-									}
-								}
-								progressDialog.dismiss();
-							});
-						}
-
-						@Override
-						public void onFailure(Call<Msg<String>> call, Throwable t) {
-							new Handler(Looper.getMainLooper()).post(progressDialog::dismiss);
-						}
-					});
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
-				}
-			}
-		}
+	@OnClick(R.id.btn_logout)
+	public void btnLogout(){
+		PreferenceManager.getDefaultSharedPreferences(getContext())
+				.edit().remove("token").apply();
+		startActivity(new Intent(getContext(),LoginActivity.class));
 	}
-
 
 	private File saveCover(User user, File of) {
 		String storePath = getContext().getFilesDir().getAbsolutePath();
@@ -289,32 +242,5 @@ public class FragmentUser extends Fragment {
 	}
 
 
-
-	public static File getPictureFile(Context context, InputStream in) {
-		String storePath = context.getFilesDir().getAbsolutePath();
-		File appDir = new File(storePath);
-		if (!appDir.exists()) {
-			appDir.mkdir();
-		}
-		String fileName = System.currentTimeMillis() + ".jpg";
-		File file = new File(appDir, fileName);
-		try {
-			FileOutputStream fos = new FileOutputStream(file);
-//			FileInputStream fis = new FileInputStream(fileDescriptor.getFileDescriptor());
-			BufferedInputStream bis=new BufferedInputStream(in);
-			byte[] buffer = new byte[1024];
-			int byteRead;
-			while (-1 != (byteRead = bis.read(buffer))) {
-				fos.write(buffer, 0, byteRead);
-			}
-			bis.close();
-			fos.flush();
-			fos.close();
-			return file;
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
 
 }

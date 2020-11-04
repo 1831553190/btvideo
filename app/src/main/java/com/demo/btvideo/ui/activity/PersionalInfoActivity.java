@@ -1,4 +1,4 @@
-package com.demo.btvideo.view.activity;
+package com.demo.btvideo.ui.activity;
 
 import android.os.Bundle;
 
@@ -7,10 +7,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.demo.btvideo.R;
 
-public class UploadVideoAcivity extends AppCompatActivity {
+public class PersionalInfoActivity extends AppCompatActivity {
+
+
+
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_upload_video);
+		setContentView(R.layout.activity_userinfo);
 	}
 }

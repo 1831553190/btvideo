@@ -1,28 +1,21 @@
-package com.demo.btvideo.view.activity;
+package com.demo.btvideo.ui.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
-import android.view.GestureDetector;
-import android.view.Gravity;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -31,8 +24,7 @@ import com.demo.btvideo.R;
 import com.demo.btvideo.model.VideoInfo;
 import com.demo.btvideo.net.NetInterface;
 import com.demo.btvideo.utils.NetWorkUtils;
-import com.demo.btvideo.utils.ServerURL;
-import com.demo.btvideo.view.fragment.FragmentVideoDetail;
+import com.demo.btvideo.ui.fragment.FragmentVideoDetail;
 import com.demo.btvideo.viewmodel.DataViewModel;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -43,7 +35,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import tcking.github.com.giraffeplayer2.GiraffePlayer;
-import tcking.github.com.giraffeplayer2.MediaController;
 import tcking.github.com.giraffeplayer2.PlayerListener;
 import tcking.github.com.giraffeplayer2.PlayerManager;
 import tcking.github.com.giraffeplayer2.VideoView;

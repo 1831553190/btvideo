@@ -66,6 +66,7 @@
 
             <ImageView
                 android:id="@+id/img_userHeadPic"
+                android:transitionName="upload_cover"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
 
@@ -273,16 +274,17 @@
                 app:layout_constraintLeft_toRightOf="@+id/constraintLayout_History"
                 app:layout_constraintRight_toLeftOf="@+id/constraintLayout_Publish"
                 app:layout_constraintTop_toTopOf="@+id/constraintLayout_History">
+
                 <ImageView
                     android:id="@+id/image_Collection"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
 
+                    android:src="@drawable/ic_save"
                     app:layout_constraintBottom_toTopOf="@+id/text_Collection"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:src="@drawable/ic_save"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/text_Collection"
@@ -305,16 +307,17 @@
                 app:layout_constraintLeft_toRightOf="@+id/constraintLayout_Collection"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/constraintLayout_Collection">
+
                 <ImageView
                     android:id="@+id/image_Publish"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
 
+                    android:src="@drawable/ic_set"
                     app:layout_constraintBottom_toTopOf="@+id/text_Publish"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                        android:src="@drawable/ic_set" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/text_Publish"
@@ -330,14 +333,15 @@
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout5"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            app:layout_constraintTop_toBottomOf="@+id/Cons1"
 
-            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            >
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Cons1">
 
             <TextView
                 android:id="@+id/textView16"
@@ -348,12 +352,13 @@
                 android:text="更多服务"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout8"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                app:layout_constraintTop_toBottomOf="@+id/textView16"
-                app:layout_constraintBottom_toBottomOf="parent">
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView16">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayout_Service"
@@ -361,19 +366,18 @@
                     android:layout_height="0dp"
                     app:layout_constraintBottom_toTopOf="@+id/constraintLayout_Class"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_weight="1"
-                    >
+                    app:layout_constraintVertical_weight="1">
 
                     <ImageView
                         android:id="@+id/image_Service"
                         android:layout_width="74dp"
                         android:layout_height="41dp"
                         android:layout_marginStart="4dp"
+                        android:src="@drawable/ic_service"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.545"
-                        android:src="@drawable/ic_service" />
+                        app:layout_constraintVertical_bias="0.545" />
 
                     <TextView
                         android:id="@+id/textView8_1"
@@ -396,14 +400,14 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.515" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayout_Class"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout_Service"
                     app:layout_constraintBottom_toTopOf="@+id/constraintLayout_YoungerStar"
-                    app:layout_constraintVertical_weight="1"
-                    >
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout_Service"
+                    app:layout_constraintVertical_weight="1">
 
                     <ImageView
                         android:id="@+id/image_Class"
@@ -437,24 +441,25 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.515" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayout_YoungerStar"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    app:layout_constraintTop_toBottomOf="@id/constraintLayout_Class"
                     app:layout_constraintBottom_toTopOf="@id/constraintLayout_Setting"
-                    app:layout_constraintVertical_weight="1"
-                    >
+                    app:layout_constraintTop_toBottomOf="@id/constraintLayout_Class"
+                    app:layout_constraintVertical_weight="1">
+
                     <ImageView
                         android:id="@+id/imageView8_1_3"
                         android:layout_width="74dp"
                         android:layout_height="41dp"
                         android:layout_marginStart="4dp"
+                        android:src="@drawable/ic_youngerstar"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.545"
-                        android:src="@drawable/ic_youngerstar"/>
+                        app:layout_constraintVertical_bias="0.545" />
 
                     <TextView
                         android:id="@+id/textView8_3"
@@ -526,8 +531,15 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <Button
+            android:id="@+id/btn_logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="注销登录"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout5" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <!--    <TextView-->
 <!--        android:text="这是用户界面"-->

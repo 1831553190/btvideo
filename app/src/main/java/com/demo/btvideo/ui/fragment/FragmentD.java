@@ -1,4 +1,4 @@
-package com.demo.btvideo.view.fragment;
+package com.demo.btvideo.ui.fragment;
 
 import android.os.Bundle;
 import android.os.Handler;

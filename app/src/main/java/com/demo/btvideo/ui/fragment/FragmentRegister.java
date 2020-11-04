@@ -1,4 +1,4 @@
-package com.demo.btvideo.view.fragment;
+package com.demo.btvideo.ui.fragment;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -16,26 +16,17 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.demo.btvideo.R;
-import com.demo.btvideo.model.AuthData;
 import com.demo.btvideo.model.Msg;
 import com.demo.btvideo.net.NetInterface;
-import com.demo.btvideo.utils.NetWorkUtils;
 import com.demo.btvideo.utils.Propertys;
 import com.demo.btvideo.utils.ServerURL;
 import com.demo.btvideo.viewmodel.DataViewModel;
-import com.google.gson.Gson;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.io.IOException;
 import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 

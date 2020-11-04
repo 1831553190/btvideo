@@ -1,6 +1,5 @@
-package com.demo.btvideo.view.fragment;
+package com.demo.btvideo.ui.fragment;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,24 +12,17 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.paging.PagingData;
 import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.demo.btvideo.R;
 import com.demo.btvideo.model.Comment;
-import com.demo.btvideo.model.VideoInfo;
 import com.demo.btvideo.viewmodel.DataViewModel;
 import com.demo.btvideo.viewmodel.LoadMoreViewModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import tcking.github.com.giraffeplayer2.GiraffePlayer;
-import tcking.github.com.giraffeplayer2.PlayerManager;
-
-import static androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_IDLE;
 
 public class FragmentVideoDetail extends Fragment {
 	View mainView;

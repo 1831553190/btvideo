@@ -1,4 +1,4 @@
-package com.demo.btvideo.view.activity;
+package com.demo.btvideo.ui.activity;
 
 import android.graphics.Color;
 import android.os.Build;
@@ -17,8 +17,8 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
 import com.demo.btvideo.R;
-import com.demo.btvideo.view.fragment.FragmentLogin;
-import com.demo.btvideo.view.fragment.FragmentRegister;
+import com.demo.btvideo.ui.fragment.FragmentLogin;
+import com.demo.btvideo.ui.fragment.FragmentRegister;
 import com.demo.btvideo.viewmodel.DataViewModel;
 
 import butterknife.BindView;

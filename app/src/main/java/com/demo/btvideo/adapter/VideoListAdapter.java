@@ -20,9 +20,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.demo.btvideo.R;
 import com.demo.btvideo.model.VideoInfo;
-import com.demo.btvideo.utils.ServerURL;
-import com.demo.btvideo.view.activity.MainActivity;
-import com.demo.btvideo.view.activity.VideoDetialsActivity;
+import com.demo.btvideo.ui.activity.VideoDetialsActivity;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -61,7 +59,7 @@ public class VideoListAdapter extends PagingDataAdapter<VideoInfo, VideoListAdap
 					Intent intent=new Intent(v.getContext(), VideoDetialsActivity.class);
 					intent.putExtra("videoInfo",getItem(position));
 					ActivityOptions options = ActivityOptions
-							.makeSceneTransitionAnimation(scanForActivity(holder.itemView.getContext()), holder.cover, "aaa");
+							.makeSceneTransitionAnimation(scanForActivity(holder.itemView.getContext()), holder.cover, "cover");
 					v.getContext().startActivity(intent,options.toBundle());
 				}
 			});

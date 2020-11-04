@@ -16,12 +16,13 @@ import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 import retrofit2.http.Query;
 
 public interface NetInterface {
-	//登陆
+	//登录
 	@POST("user/login.do")
-	Call<Msg<AuthData>> login(@Body HashMap<String,String> data);
+	Call<Msg<AuthData>> login(@Body HashMap<String,String> data,@Query("test") String test);
 	//获取用户信息
 	@POST("user/personal.do")
 	Call<Msg<User>> getUserInfo(@Header("Authorization") String auth);
@@ -38,6 +39,8 @@ public interface NetInterface {
 	@POST("user/getCommentList.do")
 	Call<Msg<List<Comment>>> getCommentList(@Query("pageNum") int pageNum,@Query("objectId") int objectId);
 
+
+
 //	上传用户头像
 	@Multipart
 	@POST("user/uploadHeadImage.do")
@@ -46,7 +49,7 @@ public interface NetInterface {
 	//上传视频
 	@Multipart
 	@POST("user/uploadVideo.do")
-	Call<Msg<PageInfo>> uploadVideo(@Part MultipartBody.Part file);
+	Call<Msg<String>> uploadVideo(@Part List<MultipartBody.Part> videofile,@PartMap HashMap<String,String> data);
 
 
 	@POST("user/praiseVideo.do")
