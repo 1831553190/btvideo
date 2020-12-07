@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -164,7 +166,7 @@
             android:indeterminateOnly="true"
             android:visibility="gone" />
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/app_video_bottom_box"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -180,7 +182,10 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:padding="8dp"
-                android:src="@drawable/ic_play_arrow_white_24dp" />
+                android:src="@drawable/ic_play_arrow_white_24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/app_video_currentTime"
@@ -189,6 +194,9 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="5dp"
                 android:layout_marginLeft="5dp"
+                app:layout_constraintLeft_toRightOf="@+id/app_video_play"
+                app:layout_constraintTop_toTopOf="@+id/app_video_play"
+                app:layout_constraintBottom_toBottomOf="@+id/app_video_play"
                 android:layout_toEndOf="@+id/app_video_play"
                 android:layout_toRightOf="@+id/app_video_play"
                 android:text=""
@@ -197,15 +205,17 @@
 
             <SeekBar
                 android:id="@+id/app_video_seekBar"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="3dp"
-                android:layout_marginRight="3dp"
                 android:layout_toStartOf="@+id/app_video_endTime"
                 android:layout_toLeftOf="@+id/app_video_endTime"
                 android:layout_toEndOf="@+id/app_video_currentTime"
-                android:layout_toRightOf="@+id/app_video_currentTime" />
+                android:layout_toRightOf="@+id/app_video_currentTime"
+                app:layout_constraintBottom_toBottomOf="@+id/app_video_play"
+                app:layout_constraintEnd_toStartOf="@+id/app_video_endTime"
+                app:layout_constraintStart_toEndOf="@+id/app_video_currentTime"
+                app:layout_constraintTop_toTopOf="@+id/app_video_play" />
 
             <TextView
                 android:id="@+id/app_video_endTime"
@@ -216,7 +226,21 @@
                 android:layout_toLeftOf="@+id/app_video_clarity"
                 android:text=""
                 android:textColor="@android:color/white"
-                android:textSize="12dp" />
+                android:textSize="12dp"
+                app:layout_constraintBottom_toBottomOf="@+id/app_video_clarity"
+                app:layout_constraintEnd_toStartOf="@+id/app_play_float"
+                app:layout_constraintTop_toTopOf="@+id/app_video_clarity" />
+
+            <ImageView
+                android:id="@+id/app_play_float"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="8dp"
+                android:paddingLeft="8dp"
+                android:src="@drawable/ic_baseline_picture_in_picture_24"
+                app:layout_constraintBottom_toBottomOf="@+id/app_video_seekBar"
+                app:layout_constraintEnd_toStartOf="@+id/app_video_clarity"
+                app:layout_constraintTop_toTopOf="@+id/app_video_seekBar" />
 
             <ImageView
                 android:id="@+id/app_video_clarity"
@@ -228,7 +252,9 @@
                 android:paddingStart="8dp"
                 android:paddingLeft="8dp"
                 android:src="@drawable/ic_setting_white_24dp"
-                android:visibility="gone" />
+                app:layout_constraintBottom_toBottomOf="@+id/app_video_fullscreen"
+                app:layout_constraintEnd_toStartOf="@+id/app_video_fullscreen"
+                app:layout_constraintTop_toTopOf="@+id/app_video_fullscreen" />
 
             <ImageView
                 android:id="@+id/app_video_fullscreen"
@@ -239,9 +265,12 @@
                 android:layout_centerVertical="true"
                 android:paddingStart="8dp"
                 android:paddingLeft="8dp"
-                android:src="@drawable/ic_fullscreen_white_24dp" />
+                android:src="@drawable/ic_fullscreen_white_24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/app_video_subtitle"

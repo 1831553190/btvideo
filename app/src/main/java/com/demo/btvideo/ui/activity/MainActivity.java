@@ -1,7 +1,10 @@
 package com.demo.btvideo.ui.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.preference.PreferenceManager;
@@ -17,14 +20,15 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
+import com.bumptech.glide.Glide;
 import com.demo.btvideo.AppController;
 import com.demo.btvideo.R;
 import com.demo.btvideo.model.User;
 import com.demo.btvideo.model.Msg;
+import com.demo.btvideo.net.ServerURL;
 import com.demo.btvideo.statement.StateGuest;
 import com.demo.btvideo.statement.StateLogin;
 import com.demo.btvideo.utils.NetWorkUtils;
-import com.demo.btvideo.utils.ServerURL;
 import com.demo.btvideo.ui.fragment.FragmentIndex;
 import com.demo.btvideo.ui.fragment.FragmentUser;
 import com.demo.btvideo.viewmodel.DataViewModel;
@@ -39,6 +43,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.concurrent.Executors;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -125,7 +130,21 @@ public class MainActivity extends AppCompatActivity {
 		floatingActionButton.setOnClickListener(v -> {
 			AppController.getInstance().uploadVideo(this);
 		});
+
+		requirePermissions();
 	}
+
+
+
+	private void requirePermissions(){
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+			if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
+				requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},19);
+			}
+		}
+	}
+
 
 	public void checkIdentify() {
 		NetWorkUtils.httpPost(ServerURL.USER_INFO, "", new okhttp3.Callback() {
@@ -141,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
 					Msg userMsg=new Gson().fromJson(resp,Msg.class);
 					if(userMsg.getCode()==401){
 						AppController.getInstance().setLogin(new StateGuest());
-						preferences.edit().putString("token","").apply();
+						preferences.edit().remove("token").remove("userNow").apply();
 						Looper.prepare();
 						Toast.makeText(MainActivity.this, userMsg.getMessage(), Toast.LENGTH_SHORT).show();
 						Looper.loop();
@@ -149,11 +168,11 @@ public class MainActivity extends AppCompatActivity {
 						Type type=new TypeToken<Msg<User>>(){}.getType();
 						Msg<User> userMsg1=new Gson().fromJson(resp,type);
 						ViewModelProviders.of(MainActivity.this).get(DataViewModel.class).userLiveData().postValue(userMsg1.getData());
+
 					}
 				}
 			}
 		});
-
 	}
 
 	@Override
@@ -163,6 +182,24 @@ public class MainActivity extends AppCompatActivity {
 			if (data!=null){
 				System.out.println(data.getData().toString());
 			}
+		}
+	}
+
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+//		Executors.newCachedThreadPool().submit(()->{
+//			Glide.get(this).clearDiskCache();
+//		});
+//		Glide.get(this).clearMemory();
+	}
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		if (requestCode==19&&grantResults[0]!=PackageManager.PERMISSION_GRANTED){
+			Toast.makeText(this, "上传头像和视频可能需要读取您设备上的文件,您稍后可以在应用信息设置内开启", Toast.LENGTH_SHORT).show();
 		}
 	}
 }

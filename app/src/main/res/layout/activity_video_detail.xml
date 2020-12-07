@@ -61,8 +61,13 @@
                 </androidx.appcompat.widget.Toolbar>
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/videodetail_tab"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
         </com.google.android.material.appbar.AppBarLayout>
+
 
 
         <androidx.core.widget.NestedScrollView
@@ -72,32 +77,39 @@
             android:fillViewport="true"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-            <FrameLayout
-                android:id="@+id/video_detail_fragment"
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/videoDetail_viewpager"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"/>
+
 
 
         </androidx.core.widget.NestedScrollView>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
+<!--    <FrameLayout-->
+<!--        android:id="@+id/video_detail_fragment"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent" />-->
     <top.limuyang2.shadowlayoutlib.ShadowConstraintLayout
         android:id="@+id/shadowConstraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:background="@android:color/white"
         app:l_shadowAlpha="1.0"
+        android:visibility="invisible"
         app:l_shadowElevation="6dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/edit_send_comment"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             android:hint="说点什么吧!"
+            android:paddingTop="16dp"
+            android:paddingLeft="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btn_send"
             app:layout_constraintStart_toStartOf="parent"

@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.room.Room;
 
@@ -27,9 +28,9 @@ import com.demo.btvideo.model.AuthData;
 import com.demo.btvideo.model.Msg;
 import com.demo.btvideo.model.User;
 import com.demo.btvideo.net.NetInterface;
+import com.demo.btvideo.net.ServerURL;
 import com.demo.btvideo.statement.StateLogin;
-import com.demo.btvideo.utils.Propertys;
-import com.demo.btvideo.utils.ServerURL;
+import com.demo.btvideo.net.Propertys;
 import com.demo.btvideo.viewmodel.DataViewModel;
 import com.demo.btvideo.viewmodel.LoginViewModel;
 import com.google.android.material.snackbar.Snackbar;
@@ -110,7 +111,7 @@ public class FragmentLogin extends Fragment {
 		username = edituser.getText().toString();
 		password = editpasswd.getText().toString();
 		if (username.equals("") || password.equals("")) {
-			Snackbar.make(view.findViewById(android.R.id.content), "请输入完整内容！", Snackbar.LENGTH_SHORT).show();
+			Snackbar.make(view, "请输入完整内容！", Snackbar.LENGTH_SHORT).show();
 			return;
 		}
 		view.setEnabled(false);
@@ -168,7 +169,9 @@ public class FragmentLogin extends Fragment {
 
 			@Override
 			public void onNext(User user) {
+//				appDatabase.userDao().insertAll(user);  这里不需要插入,需要更新头像
 				LoginViewModel.getInstance().userLiveData().postValue(user);
+				preferences.edit().putString("userNow",user.getAccount()).apply();
 			}
 
 			@Override
@@ -255,6 +258,6 @@ public class FragmentLogin extends Fragment {
 
 	@OnClick(R.id.btnUserRegister)
 	public void toRegister(){
-		ViewModelProviders.of(getActivity()).get(DataViewModel.class).update().setValue(0);
+		new ViewModelProvider(getActivity(),new ViewModelProvider.NewInstanceFactory()).get(DataViewModel.class).update().postValue(0);
 	}
 }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:divider="@drawable/linear_divider"
+    android:showDividers="middle"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <com.demo.btvideo.ui.view.SettingItem
+        android:id="@+id/sett_test"
+        app:setting_title="标题"
+        app:setting_icon="@null"
+        app:setting_summary="测试"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:onClick="btnLogout"
+        android:backgroundTint="@color/red"
+        android:text="退出登陆"
+        android:layout_gravity="bottom"
+        android:layout_margin="16dp"
+        android:padding="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+</LinearLayout>

@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
@@ -73,7 +74,9 @@ public class LoginActivity extends AppCompatActivity {
 			}
 		});
 		viewPager.setCurrentItem(1);
-		ViewModelProviders.of(this).get(DataViewModel.class).update().observe(this, new Observer<Integer>() {
+
+
+		new ViewModelProvider(this,new ViewModelProvider.NewInstanceFactory()).get(DataViewModel.class).update().observe(this, new Observer<Integer>() {
 			@Override
 			public void onChanged(Integer integer) {
 				viewPager.setCurrentItem(integer);

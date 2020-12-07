@@ -3,19 +3,32 @@ package com.demo.btvideo.model;
 import java.io.Serializable;
 import java.util.List;
 
-public class PageInfo implements Serializable {
+public class PageInfo<T> implements Serializable {
 
-	private int pageNum;
+	private int unread;
+
+	int pageNum;
+
 	private int pageSize;
 	private int totalPage;
 	private int total;
-	List<VideoInfo> list;
+	List<T> list;
 
-	public List<VideoInfo> getList() {
+
+
+	
+	public int getUnread() {
+		return unread;
+	}
+	public List<T> getList() {
 		return list;
 	}
 
-	public void setList(List<VideoInfo> list) {
+	public void setUnread(int unread) {
+		this.unread = unread;
+	}
+
+	public void setList(List<T> list) {
 		this.list = list;
 	}
 

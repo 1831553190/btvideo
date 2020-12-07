@@ -140,8 +140,6 @@ public class UploadVideoAcivity extends AppCompatActivity {
 		}
 	}
 
-
-
 	ServiceConnection serviceConnection=new ServiceConnection() {
 		@Override
 		public void onServiceConnected(ComponentName name, IBinder service) {

@@ -18,8 +18,8 @@ import androidx.lifecycle.ViewModelProviders;
 import com.demo.btvideo.R;
 import com.demo.btvideo.model.Msg;
 import com.demo.btvideo.net.NetInterface;
-import com.demo.btvideo.utils.Propertys;
-import com.demo.btvideo.utils.ServerURL;
+import com.demo.btvideo.net.Propertys;
+import com.demo.btvideo.net.ServerURL;
 import com.demo.btvideo.viewmodel.DataViewModel;
 
 import java.util.HashMap;
@@ -50,7 +50,6 @@ public class FragmentRegister extends Fragment {
 
 	Handler handler=new Handler(Looper.getMainLooper());
 	ProgressDialog progressDialog;
-
 
 	public static FragmentRegister getInstance(){
 		return Holder.instance;
@@ -105,7 +104,7 @@ public class FragmentRegister extends Fragment {
 									handler.post(() -> {
 										progressDialog.dismiss();
 										view.setEnabled(true);
-										ViewModelProviders.of(getActivity()).get(DataViewModel.class).update().setValue(1);
+										ViewModelProviders.of(getActivity()).get(DataViewModel.class).update().postValue(1);
 										Toast.makeText(getContext(), msg.getMessage(), Toast.LENGTH_SHORT).show();
 									});
 								} else {
@@ -137,6 +136,6 @@ public class FragmentRegister extends Fragment {
 
 	@OnClick(R.id.btnBack)
 	public void backToLogin(){
-		ViewModelProviders.of(getActivity()).get(DataViewModel.class).update().setValue(1);
+		ViewModelProviders.of(getActivity()).get(DataViewModel.class).update().postValue(1);
 	}
 }

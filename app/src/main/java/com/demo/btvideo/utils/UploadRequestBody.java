@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.util.Log;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -13,7 +12,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
-import kotlin.SinceKotlin;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import okio.Buffer;
@@ -30,8 +28,24 @@ public class UploadRequestBody extends RequestBody {
 	String name;
 	UploadProgress uploadProgress;
 
-	public UploadRequestBody(Uri uri, MediaType conntentType, Context context,UploadProgress uploadProgress) {
+	int id;
+
+	public interface UploadProgress{
+		void getPercent(int id,int percent);
+		void getProgress(int id,long progress);
+	}
+
+	public long getMaxProgress(){
+		if (size!=null){
+			return size;
+		}
+		return -1;
+	}
+
+
+	public UploadRequestBody(int id,Uri uri, MediaType conntentType, Context context,UploadProgress uploadProgress) {
 		this.size = size;
+		this.id=id;
 		this.conntentType = conntentType;
 		this.context = context;
 		this.uploadProgress=uploadProgress;
@@ -41,7 +55,7 @@ public class UploadRequestBody extends RequestBody {
 			String mimeType=cursor.getString(cursor.getColumnIndex(MediaStore.MediaColumns.MIME_TYPE));
 			if (mimeType==null){
 				mimeType=mimeType.split("/")[1];
-				if (name!=mimeType){
+				if (!name.equals(mimeType)){
 //					name = "$name.$mimeType";
 				}
 			}
@@ -97,14 +111,10 @@ public class UploadRequestBody extends RequestBody {
 			byteWritten+=byteCount;
 			if (uploadProgress!=null){
 				long uploadSize=size==null?-1L :size;
-				uploadProgress.getProgress(byteWritten*1.0f/uploadSize);
+				uploadProgress.getPercent(id,(int) ((byteWritten*1.0f/uploadSize)*100));
+				uploadProgress.getProgress(id,byteWritten);
 			}
 		}
 	}
 
-
-
-	public interface UploadProgress{
-		void getProgress(float progress);
-	}
 }

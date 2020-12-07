@@ -1,548 +1,424 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:fillViewport="true"
+        android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/guestView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
 
-        <ImageView
-            android:id="@+id/img_login"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:src="@mipmap/img_login"
-            app:layout_constraintVertical_chainStyle="packed"
-            app:layout_constraintBottom_toTopOf="@+id/labe"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/guestView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/labe"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp"
-            android:text="您还没有登录"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/img_login"
-            app:layout_constraintStart_toStartOf="@+id/img_login"
-            app:layout_constraintTop_toBottomOf="@+id/img_login" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/user_info_center"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guestView">
-
-        <top.limuyang2.shadowlayoutlib.ShadowFrameLayout
-            android:id="@+id/headLayout"
-            android:layout_width="72dp"
-            android:layout_height="72dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:background="@android:color/white"
-            app:l_radius="36dp"
-            app:l_shadowAlpha="0.8"
-            app:l_shadowElevation="4dp"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+
 
             <ImageView
-                android:id="@+id/img_userHeadPic"
-                android:transitionName="upload_cover"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-
-                android:scaleType="centerCrop" />
-        </top.limuyang2.shadowlayoutlib.ShadowFrameLayout>
-
-
-        <TextView
-            android:id="@+id/text_username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="用户名"
-            app:layout_constraintBottom_toTopOf="@id/text_userid"
-            app:layout_constraintStart_toEndOf="@+id/headLayout"
-            app:layout_constraintTop_toTopOf="@+id/headLayout"
-            app:layout_constraintVertical_chainStyle="spread" />
-
-        <TextView
-            android:id="@+id/text_userid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="帐号"
-            app:layout_constraintBottom_toBottomOf="@+id/headLayout"
-            app:layout_constraintStart_toEndOf="@+id/headLayout"
-            app:layout_constraintTop_toBottomOf="@+id/text_username" />
-
-<!--        <TextView-->
-<!--            android:id="@+id/text_userCoin"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginStart="32dp"-->
-<!--            android:text="硬币"-->
-<!--            app:layout_constraintBottom_toBottomOf="@+id/text_userBbi"-->
-<!--            app:layout_constraintStart_toEndOf="@+id/text_userBbi"-->
-<!--            app:layout_constraintTop_toTopOf="@+id/text_userBbi" />-->
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout2"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="24dp"
-            app:layout_constraintHorizontal_weight="1"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/constraintLayout3"
-            app:layout_constraintTop_toBottomOf="@+id/headLayout">
-
-
-            <TextView
-                android:id="@+id/text_userDynamic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/textView11"
+                android:id="@+id/img_login"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:src="@mipmap/img_login"
+                app:layout_constraintBottom_toTopOf="@+id/labe"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
 
             <TextView
-                android:id="@+id/textView11"
+                android:id="@+id/labe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="动态"
+                android:layout_marginBottom="32dp"
+                android:text="您还没有登录"
+                android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.495"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintEnd_toEndOf="@+id/img_login"
+                app:layout_constraintStart_toStartOf="@+id/img_login"
+                app:layout_constraintTop_toBottomOf="@+id/img_login" />
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout3"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_weight="1"
-            app:layout_constraintLeft_toRightOf="@+id/constraintLayout2"
-            app:layout_constraintRight_toLeftOf="@+id/constraintLayout4"
-            app:layout_constraintTop_toTopOf="@+id/constraintLayout2">
-
-
-            <TextView
-                android:id="@+id/textView12"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/textView13"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/textView13"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="关注"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.506"
-                app:layout_constraintStart_toStartOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout4"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_weight="1"
-            app:layout_constraintLeft_toRightOf="@+id/constraintLayout3"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/constraintLayout3">
-
-            <TextView
-                android:id="@+id/text_userFans"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/textView15"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/textView15"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="粉丝"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <TextView
-            android:id="@+id/text_userSpace"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:gravity="center_vertical|center_horizontal"
-            android:padding="16dp"
-            android:text="个人中心  >"
-            app:layout_constraintBottom_toTopOf="@+id/constraintLayout4"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_info_center"
-        app:layout_constraintVertical_bias="0.0"
-        tools:layout_editor_absoluteX="0dp">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/Cons1"
+            android:id="@+id/user_info_center"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/guestView">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout_History"
-                android:layout_width="0dp"
-                android:layout_height="70dp"
-                android:layout_marginTop="16dp"
-                app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@+id/constraintLayout_Collection"
+            <top.limuyang2.shadowlayoutlib.ShadowFrameLayout
+                android:id="@+id/headLayout"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/white"
+                app:l_radius="36dp"
+                app:l_shadowAlpha="0.8"
+                app:l_shadowElevation="4dp"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-
                 <ImageView
-                    android:id="@+id/image_History"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:id="@+id/img_userHeadPic"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:transitionName="upload_cover" />
+            </top.limuyang2.shadowlayoutlib.ShadowFrameLayout>
 
-                    android:src="@drawable/ic_history"
-                    app:layout_constraintBottom_toTopOf="@+id/textView7"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/textView7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="历史记录"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/image_History" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout_Collection"
-                android:layout_width="0dp"
-                android:layout_height="70dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintLeft_toRightOf="@+id/constraintLayout_History"
-                app:layout_constraintRight_toLeftOf="@+id/constraintLayout_Publish"
-                app:layout_constraintTop_toTopOf="@+id/constraintLayout_History">
-
-                <ImageView
-                    android:id="@+id/image_Collection"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-
-                    android:src="@drawable/ic_save"
-                    app:layout_constraintBottom_toTopOf="@+id/text_Collection"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/text_Collection"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="我的收藏"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/image_Collection" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout_Publish"
-                android:layout_width="0dp"
-                android:layout_height="70dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintLeft_toRightOf="@+id/constraintLayout_Collection"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/constraintLayout_Collection">
-
-                <ImageView
-                    android:id="@+id/image_Publish"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-
-                    android:src="@drawable/ic_set"
-                    app:layout_constraintBottom_toTopOf="@+id/text_Publish"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/text_Publish"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="我的发布"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/image_Publish" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout5"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Cons1">
 
             <TextView
-                android:id="@+id/textView16"
-                android:layout_width="71dp"
-                android:layout_height="27dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:text="更多服务"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:id="@+id/text_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="用户名"
+                app:layout_constraintBottom_toTopOf="@id/text_userid"
+                app:layout_constraintStart_toEndOf="@+id/headLayout"
+                app:layout_constraintTop_toTopOf="@+id/headLayout"
+                app:layout_constraintVertical_chainStyle="spread" />
+
+            <TextView
+                android:id="@+id/text_userid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="帐号"
+                app:layout_constraintBottom_toBottomOf="@+id/headLayout"
+                app:layout_constraintStart_toEndOf="@+id/headLayout"
+                app:layout_constraintTop_toBottomOf="@+id/text_username" />
+
+            <!--        <TextView-->
+            <!--            android:id="@+id/text_userCoin"-->
+            <!--            android:layout_width="wrap_content"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:layout_marginStart="32dp"-->
+            <!--            android:text="硬币"-->
+            <!--            app:layout_constraintBottom_toBottomOf="@+id/text_userBbi"-->
+            <!--            app:layout_constraintStart_toEndOf="@+id/text_userBbi"-->
+            <!--            app:layout_constraintTop_toTopOf="@+id/text_userBbi" />-->
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout8"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView16">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayout_Service"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    app:layout_constraintBottom_toTopOf="@+id/constraintLayout_Class"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_weight="1">
-
-                    <ImageView
-                        android:id="@+id/image_Service"
-                        android:layout_width="74dp"
-                        android:layout_height="41dp"
-                        android:layout_marginStart="4dp"
-                        android:src="@drawable/ic_service"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.545" />
-
-                    <TextView
-                        android:id="@+id/textView8_1"
-                        android:layout_width="60dp"
-                        android:layout_height="26dp"
-                        android:layout_marginStart="12dp"
-                        android:text="联系客服"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/image_Service"
-                        app:layout_constraintTop_toTopOf="@+id/image_Service" />
-
-                    <TextView
-                        android:id="@+id/textView18"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        android:text=">"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.515" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayout_Class"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    app:layout_constraintBottom_toTopOf="@+id/constraintLayout_YoungerStar"
-                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout_Service"
-                    app:layout_constraintVertical_weight="1">
-
-                    <ImageView
-                        android:id="@+id/image_Class"
-                        android:layout_width="74dp"
-                        android:layout_height="41dp"
-                        android:layout_marginStart="4dp"
-                        android:src="@drawable/ic_class"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.545" />
-
-                    <TextView
-                        android:id="@+id/textView8_2"
-                        android:layout_width="60dp"
-                        android:layout_height="26dp"
-                        android:layout_marginStart="12dp"
-                        android:text="课堂模式"
-                        app:layout_constraintBottom_toBottomOf="@+id/image_Class"
-                        app:layout_constraintStart_toEndOf="@+id/image_Class"
-                        app:layout_constraintTop_toTopOf="@+id/image_Class" />
-
-                    <TextView
-                        android:id="@+id/textView19"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        android:text=">"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.515" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayout_YoungerStar"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    app:layout_constraintBottom_toTopOf="@id/constraintLayout_Setting"
-                    app:layout_constraintTop_toBottomOf="@id/constraintLayout_Class"
-                    app:layout_constraintVertical_weight="1">
-
-                    <ImageView
-                        android:id="@+id/imageView8_1_3"
-                        android:layout_width="74dp"
-                        android:layout_height="41dp"
-                        android:layout_marginStart="4dp"
-                        android:src="@drawable/ic_youngerstar"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.545" />
-
-                    <TextView
-                        android:id="@+id/textView8_3"
-                        android:layout_width="79dp"
-                        android:layout_height="22dp"
-                        android:layout_marginStart="12dp"
-                        android:text="青少年模式"
-                        app:layout_constraintBottom_toBottomOf="@+id/imageView8_1_3"
-                        app:layout_constraintStart_toEndOf="@+id/imageView8_1_3"
-                        app:layout_constraintTop_toTopOf="@+id/imageView8_1_3" />
-
-                    <TextView
-                        android:id="@+id/textView20"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        android:text=">"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                android:id="@+id/layout_message"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="24dp"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/constraintLayout3"
+                app:layout_constraintTop_toBottomOf="@+id/headLayout">
 
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/text_userDynamic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/textView11"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayout_Setting"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                <TextView
+                    android:id="@+id/textView11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="消息"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/constraintLayout_YoungerStar"
-                    app:layout_constraintVertical_weight="1"
-                    tools:layout_editor_absoluteX="-81dp">
-
-                    <ImageView
-                        android:id="@+id/image_Setting"
-                        android:layout_width="74dp"
-                        android:layout_height="41dp"
-                        android:layout_marginStart="4dp"
-                        android:src="@drawable/ic_setting"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.545" />
-
-                    <TextView
-                        android:id="@+id/textView8_4"
-                        android:layout_width="60dp"
-                        android:layout_height="26dp"
-                        android:layout_marginStart="12dp"
-                        android:text="设置"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/image_Setting"
-                        app:layout_constraintTop_toTopOf="@+id/image_Setting" />
-
-                    <TextView
-                        android:id="@+id/textView21"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        android:text=">"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.495"
+                    app:layout_constraintStart_toStartOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout3"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintLeft_toRightOf="@+id/layout_message"
+                app:layout_constraintRight_toLeftOf="@+id/constraintLayout4"
+                app:layout_constraintTop_toTopOf="@+id/layout_message">
+
+
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/textView13"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="收藏"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.506"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout4"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintLeft_toRightOf="@+id/constraintLayout3"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/constraintLayout3">
+
+                <TextView
+                    android:id="@+id/text_userFans"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/textView15"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="粉丝"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/text_userSpace"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:gravity="center_vertical|center_horizontal"
+                android:padding="16dp"
+                android:text="个人中心  >"
+                app:layout_constraintBottom_toTopOf="@+id/constraintLayout4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <Button
-            android:id="@+id/btn_logout"
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="注销登录"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout5" />
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/user_info_center">
 
+            <top.limuyang2.shadowlayoutlib.ShadowConstraintLayout
+                android:id="@+id/Cons1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="12dp"
+                android:background="@android:color/white"
+                app:l_radius="16dp"
+                app:l_shadowAlpha="0.4"
+                app:l_shadowElevation="4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.demo.btvideo.ui.view.BasePreferenceItem
+                    android:id="@+id/pref_history"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/pref_collection"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:setting_icon="@drawable/ic_historyfix"
+                    app:setting_title="历史记录" />
+
+                <com.demo.btvideo.ui.view.BasePreferenceItem
+                    android:id="@+id/pref_collection"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toRightOf="@+id/pref_history"
+                    app:layout_constraintRight_toLeftOf="@+id/pref_publish"
+                    app:layout_constraintTop_toTopOf="@+id/pref_history"
+                    app:setting_icon="@drawable/ic_starfix"
+                    app:setting_title="收藏" />
+
+
+                <com.demo.btvideo.ui.view.BasePreferenceItem
+                    android:id="@+id/pref_publish"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@+id/pref_collection"
+                    app:layout_constraintLeft_toRightOf="@+id/pref_collection"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/pref_collection"
+                    app:setting_icon="@drawable/ic_publish"
+                    app:setting_title="我的发布" />
+
+                <com.demo.btvideo.ui.view.BasePreferenceItem
+                    android:id="@+id/pref_msg"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/pref_collection"
+                    app:layout_constraintTop_toBottomOf="@+id/pref_history"
+                    app:setting_icon="@drawable/ic_msgtest"
+                    app:setting_title="消息" />
+
+                <com.demo.btvideo.ui.view.BasePreferenceItem
+                    android:id="@+id/pref_favourites"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@+id/pref_msg"
+                    app:layout_constraintLeft_toRightOf="@+id/pref_history"
+                    app:layout_constraintRight_toLeftOf="@+id/pref_publish"
+                    app:layout_constraintTop_toBottomOf="@+id/pref_history"
+                    app:setting_icon="@drawable/ic_favoritefix"
+                    app:setting_title="关注" />
+
+
+                <com.demo.btvideo.ui.view.BasePreferenceItem
+                    android:id="@+id/pref_funs"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@+id/pref_favourites"
+                    app:layout_constraintLeft_toRightOf="@+id/pref_collection"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/pref_collection"
+                    app:setting_icon="@drawable/ic_fans"
+                    app:setting_title="粉丝" />
+
+
+
+            </top.limuyang2.shadowlayoutlib.ShadowConstraintLayout>
+
+
+            <top.limuyang2.shadowlayoutlib.ShadowConstraintLayout
+                android:id="@+id/prelayout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="24dp"
+                android:paddingTop="18dp"
+                android:paddingBottom="18dp"
+                android:background="@android:color/white"
+                app:l_radius="16dp"
+                app:l_shadowAlpha="0.6"
+                app:l_shadowElevation="6dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Cons1">
+
+
+                <com.demo.btvideo.ui.view.BasePreferenceItem
+                    android:id="@+id/pref_pay"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/pref_settings"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:setting_icon="@drawable/ic_pay"
+                    app:setting_title="充值" />
+
+                <com.demo.btvideo.ui.view.BasePreferenceItem
+                    android:id="@+id/pref_settings"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@+id/pref_pay"
+                    app:layout_constraintRight_toLeftOf="@+id/pref_about"
+                    app:layout_constraintTop_toTopOf="@+id/pref_pay"
+                    app:setting_icon="@drawable/ic_setting"
+                    app:setting_title="设置" />
+
+
+                <com.demo.btvideo.ui.view.BasePreferenceItem
+                    android:id="@+id/pref_about"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@+id/pref_settings"
+                    app:layout_constraintLeft_toRightOf="@+id/pref_settings"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/pref_settings"
+                    app:setting_icon="@drawable/ic_about"
+                    app:setting_title="关于" />
+
+                <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+
+<!--                <com.demo.btvideo.ui.view.SettingItem-->
+<!--                    android:id="@+id/pre_message"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:visibility="gone"-->
+<!--                    app:setting_icon="@drawable/ic_message"-->
+<!--                    app:setting_title="消息" />-->
+
+                <!--                    <com.demo.btvideo.ui.view.SettingItem-->
+                <!--                        android:id="@+id/set"-->
+                <!--                        android:layout_width="match_parent"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        app:setting_icon="@drawable/ic_setting"-->
+                <!--                        app:setting_title="设置" />-->
+                <!--                    <com.demo.btvideo.ui.view.SettingItem-->
+                <!--                        android:id="@+id/pay"-->
+                <!--                        android:layout_width="match_parent"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        app:setting_icon="@drawable/ic_pay"-->
+                <!--                        app:setting_title="充值" />-->
+                <!--                    <com.demo.btvideo.ui.view.SettingItem-->
+                <!--                        android:id="@+id/about"-->
+                <!--                        android:layout_width="match_parent"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        app:setting_icon="@drawable/ic_about"-->
+                <!--                        app:setting_title="关于" />-->
+
+                <!--                </LinearLayout>-->
+
+                <Button
+                    android:id="@+id/btn_logout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="64dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="注销登录"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/preLinear" />
+            </top.limuyang2.shadowlayoutlib.ShadowConstraintLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    <!--    <TextView-->
-<!--        android:text="这是用户界面"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"/>-->
+    </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

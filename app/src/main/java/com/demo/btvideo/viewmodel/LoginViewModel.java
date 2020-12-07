@@ -3,6 +3,7 @@ package com.demo.btvideo.viewmodel;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.demo.btvideo.model.VideoInfo;
 
 
 public class LoginViewModel extends ViewModel {

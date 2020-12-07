@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.PixelFormat;
 import android.graphics.SurfaceTexture;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -32,8 +34,10 @@ import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.MediaController;
+import android.widget.TextView;
 
 import com.github.tcking.giraffeplayer2.R;
 
@@ -47,6 +51,9 @@ import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkTimedText;
 import tv.danmaku.ijk.media.player.misc.ITrackInfo;
+
+import static android.content.Context.WINDOW_SERVICE;
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 
 /**
@@ -85,7 +92,9 @@ public class GiraffePlayer implements MediaController.MediaPlayerControl {
     public static final int STATE_LAZYLOADING = 7;
     private final HandlerThread internalPlaybackThread;
     private final IntentFilter intentFilter = new IntentFilter(ACTION);
-    ;
+
+    private float ry;
+    private float rx;
 
     private int currentBufferPercentage = 0;
     private boolean canPause = true;
@@ -113,6 +122,9 @@ public class GiraffePlayer implements MediaController.MediaPlayerControl {
     private boolean mute = false;
     private WeakReference<? extends ViewGroup> displayBoxRef;
     private int ignoreOrientation = -100;
+    private static WindowManager toastWindow;
+    private WindowManager.LayoutParams windowLayoutParams;
+    private static ViewGroup floatBox;
 
     public int getDisplayModel() {
         return displayModel;
@@ -131,6 +143,7 @@ public class GiraffePlayer implements MediaController.MediaPlayerControl {
 
     private GiraffePlayer(final Context context, final VideoInfo videoInfo) {
         this.context = context.getApplicationContext();
+        toastWindow = (WindowManager) context.getSystemService(WINDOW_SERVICE);
         this.videoInfo = videoInfo;
         log("new GiraffePlayer");
         VideoView videoView = PlayerManager.getInstance().getVideoView(videoInfo);
@@ -706,6 +719,9 @@ public class GiraffePlayer implements MediaController.MediaPlayerControl {
         PlayerManager.getInstance().removePlayer(fingerprint);
         proxyListener().onRelease(this);
         handler.obtainMessage(MSG_CTRL_RELEASE, fingerprint).sendToTarget();
+        if (toastWindow!=null&&floatBox!=null&&floatBox.isAttachedToWindow()){
+            toastWindow.removeViewImmediate(floatBox);
+        }
     }
 
     private void releaseDisplayBox() {
@@ -765,11 +781,17 @@ public class GiraffePlayer implements MediaController.MediaPlayerControl {
         lastDisplayModel = displayModel;
 
         if (targetDisplayModel == DISPLAY_FULL_WINDOW) {
+
+
+
+
             Activity activity = getActivity();
             if (activity == null) {
                 return this;
             }
-
+            if (floatBox!=null&&floatBox.isAttachedToWindow()&&toastWindow!=null){
+                toastWindow.removeViewImmediate(floatBox);
+            }
             //orientation & action bar
             UIHelper uiHelper = UIHelper.with(activity);
             if (videoInfo.isPortraitWhenFullScreen()) {
@@ -796,6 +818,9 @@ public class GiraffePlayer implements MediaController.MediaPlayerControl {
 
 
         } else if (targetDisplayModel == DISPLAY_NORMAL) {
+            if (floatBox!=null&&floatBox.isAttachedToWindow()&&toastWindow!=null){
+                toastWindow.removeViewImmediate(floatBox);
+            }
             final Activity activity = getActivity();
             if (activity == null) {
                 return this;
@@ -827,13 +852,28 @@ public class GiraffePlayer implements MediaController.MediaPlayerControl {
                 }
 
             });
+
         } else if (targetDisplayModel == DISPLAY_FLOAT) {
+//
+//            final VideoView videoView = PlayerManager.getInstance().getVideoView(videoInfo);
+//            ViewGroup vg =  (ViewGroup) videoView.getParent();
+//            if(vg!=null){
+//                vg.removeAllViews();
+//            }
+////            createFloatBox();
+//            final ViewGroup floatBox = createFloatBox();
+//            floatBox.setVisibility(View.VISIBLE);
+
+
+
+
+
             Activity activity = getActivity();
             if (activity == null) {
                 return this;
             }
-
-            //change orientation & action bar
+//
+//            //change orientation & action bar
             UIHelper uiHelper = UIHelper.with(activity);
             if (videoInfo.isPortraitWhenFullScreen()) {
                 uiHelper.requestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -1000,7 +1040,7 @@ public class GiraffePlayer implements MediaController.MediaPlayerControl {
         removeFloatContainer();
         Activity topActivity = PlayerManager.getInstance().getTopActivity();
         ViewGroup topActivityBox = (ViewGroup) topActivity.findViewById(android.R.id.content);
-        ViewGroup floatBox = (ViewGroup) LayoutInflater.from(topActivity.getApplication()).inflate(R.layout.giraffe_float_box, null);
+        floatBox = (ViewGroup) LayoutInflater.from(topActivity.getApplication()).inflate(R.layout.giraffe_float_box, null);
         floatBox.setBackgroundColor(videoInfo.getBgColor());
 
         FrameLayout.LayoutParams floatBoxParams = new FrameLayout.LayoutParams(VideoInfo.floatView_width, VideoInfo.floatView_height);
@@ -1013,13 +1053,45 @@ public class GiraffePlayer implements MediaController.MediaPlayerControl {
             floatBoxParams.leftMargin = (int) VideoInfo.floatView_x;
             floatBoxParams.topMargin = (int) VideoInfo.floatView_y;
         }
-        topActivityBox.addView(floatBox, floatBoxParams);
+//        topActivityBox.addView(floatBox, floatBoxParams);
+
+
+        windowLayoutParams = new WindowManager.LayoutParams();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            windowLayoutParams.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+        }else{
+            windowLayoutParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
+        }
+        windowLayoutParams.format = PixelFormat.RGBA_8888;
+//        windowLayoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+//                | WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR
+//                | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN; ;
+        windowLayoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;//不耽误其他事件
+        windowLayoutParams.flags= WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+        windowLayoutParams.gravity = Gravity.CENTER | Gravity.BOTTOM;
+        windowLayoutParams.x = 0;
+        windowLayoutParams.y = 0;
+//      windowLayoutParams.alpha=toastOpacity;
+//        windowLayoutParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
+//        windowLayoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        windowLayoutParams.width = 800;
+        windowLayoutParams.height = 600;
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (!android.provider.Settings.canDrawOverlays(context.getApplicationContext())){
+                Intent intent = new Intent(android.provider.Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+                intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            }else{
+                toastWindow.addView(floatBox, windowLayoutParams);
+            }
+        }
+
+
 
         floatBox.setOnTouchListener(new View.OnTouchListener() {
-            float ry;
+
             float oy;
 
-            float rx;
             float ox;
 
             @Override
@@ -1030,23 +1102,31 @@ public class GiraffePlayer implements MediaController.MediaPlayerControl {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         ry = event.getRawY();
-                        oy = v.getTranslationY();
+//                        oy = v.getTranslationY();
 
                         rx = event.getRawX();
-                        ox = v.getTranslationX();
+//                        ox = v.getTranslationX();
                         break;
                     case MotionEvent.ACTION_MOVE:
-                        float y = oy + event.getRawY() - ry;
-                        if (y > 0) {
-//                            y = 0;
-                        }
-                        v.setTranslationY(y);
-
-                        float x = ox + event.getRawX() - rx;
-                        if (x > 0) {
-//                            x = 0;
-                        }
-                        v.setTranslationX(x);
+//                        float y = oy + event.getRawY() - ry;
+//                        if (y > 0) {
+////                            y = 0;
+//                        }
+////                        v.setTranslationY(y);
+//
+//                        float x = ox + event.getRawX() - rx;
+//                        if (x > 0) {
+////                            x = 0;
+//                        }
+//                        v.setTranslationX(x);
+                        windowLayoutParams.x += event.getRawX() - rx;
+                        windowLayoutParams.y += ry - event.getRawY() ;
+//                        Log.d(TAG, "onTouch: "+event.getRawY());
+//                        Log.d(TAG, "onTouch:Ry "+ry);
+//                        Log.d(TAG, "onTouch:wy "+(event.getRawY() - ry));
+                        toastWindow.updateViewLayout(floatBox, windowLayoutParams);
+                        rx = event.getRawX();
+                        ry = event.getRawY();
                         break;
                 }
                 return true;
@@ -1133,6 +1213,11 @@ public class GiraffePlayer implements MediaController.MediaPlayerControl {
             setDisplayModel(lastDisplayModel);
             return true;
         }
+        if (displayModel==DISPLAY_FLOAT){
+            if (!isPlaying()&&toastWindow!=null&&floatBox!=null&&floatBox.isAttachedToWindow()){
+                toastWindow.removeViewImmediate(floatBox);
+            }
+        }
         return false;
     }
 
@@ -1182,7 +1267,7 @@ public class GiraffePlayer implements MediaController.MediaPlayerControl {
     public static void play(Context context, VideoInfo videoInfo) {
         Intent intent = new Intent(context, PlayerActivity.class);
         if (!(context instanceof Activity)) {
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
         }
         intent.putExtra("__video_info__", videoInfo);
         PlayerManager.getInstance().releaseCurrent();

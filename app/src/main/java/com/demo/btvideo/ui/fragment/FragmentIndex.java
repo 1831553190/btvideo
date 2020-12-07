@@ -1,30 +1,24 @@
 package com.demo.btvideo.ui.fragment;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.paging.LoadState;
-import androidx.paging.LoadStateAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.demo.btvideo.R;
+import com.demo.btvideo.adapter.LoadMoreAdapter;
 import com.demo.btvideo.adapter.VideoListAdapter;
 import com.demo.btvideo.model.VideoInfo;
-import com.demo.btvideo.viewmodel.LoadMoreViewModel;
-
-import org.jetbrains.annotations.NotNull;
+import com.demo.btvideo.viewmodel.DataLoaderViewModel;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -40,10 +34,6 @@ public class FragmentIndex extends Fragment {
 	RecyclerView recyclerView;
 	@BindView(R.id.index_reflash)
 	SwipeRefreshLayout swipeRefreshLayout;
-
-	private boolean mIsLoadInitial = true;
-	private Runnable mRetryAction;
-	Handler handler = new Handler(Looper.getMainLooper());
 
 	private static class Holder {
 		private static FragmentIndex instance = new FragmentIndex();
@@ -73,58 +63,29 @@ public class FragmentIndex extends Fragment {
 				return oldItem.getTitle().equals(newItem.getTitle());
 			}
 		});
-		LoadMoreAdapter loadMoreAdapt=new LoadMoreAdapter();
-		videoListAdapter.withLoadStateFooter(loadMoreAdapt);
-		recyclerView.setAdapter(videoListAdapter);
+		LoadMoreAdapter loadMoreAdapt=new LoadMoreAdapter(() -> videoListAdapter.retry());
+		LoadMoreAdapter headerAdapter=new LoadMoreAdapter(() -> videoListAdapter.retry());
+		recyclerView.setAdapter(videoListAdapter.withLoadStateHeaderAndFooter(headerAdapter,loadMoreAdapt));
 		swipeRefreshLayout.setOnRefreshListener(() -> {
 			videoListAdapter.refresh();
 			swipeRefreshLayout.setRefreshing(false);
 		});
-//		LoadMoreViewModel testViewModel = new LoadMoreViewModel();
 
-		LoadMoreViewModel loadMoreViewModel=new ViewModelProvider(this).get(LoadMoreViewModel.class);
+		videoListAdapter.addLoadStateListener(combinedLoadStates -> {
+			if (combinedLoadStates.getRefresh() instanceof LoadState.Loading||combinedLoadStates.getRefresh() instanceof LoadState.Error) {
+				if (videoListAdapter.getItemCount() == 0) {
+					headerAdapter.setLoadState(combinedLoadStates.getRefresh());
+				}
+			}
+			return null;
+		});
+		DataLoaderViewModel loadMoreViewModel=new ViewModelProvider(this).get(DataLoaderViewModel.class);
 		loadMoreViewModel.getPaging().observe(getViewLifecycleOwner(), videoInfoPagingData ->
 				videoListAdapter.submitData(getLifecycle(),videoInfoPagingData));
 		return mainView;
 	}
 
-	class LoadMoreAdapter extends LoadStateAdapter<MyHolder>{
 
 
-
-		@Override
-			public void onBindViewHolder(@NotNull MyHolder myHolder, @NotNull LoadState loadState) {
-//			if (loadState instanceof LoadState.Error){
-				myHolder.progressBar.setVisibility(View.VISIBLE);
-//			}
-		}
-
-
-
-		@Override
-		public int getStateViewType(@NotNull LoadState loadState) {
-			return -1;
-		}
-
-		@Override
-		public boolean displayLoadStateAsItem(@NotNull LoadState loadState) {
-			return true;
-		}
-
-		@NotNull
-		@Override
-		public MyHolder onCreateViewHolder(@NotNull ViewGroup viewGroup, @NotNull LoadState loadState) {
-			Log.d("TAG", "onCreateViewHolder: loadmore");
-			return new MyHolder(LayoutInflater.from(getContext()).inflate(R.layout.index_footer,viewGroup,false));
-		}
-	}
-
-	class MyHolder extends RecyclerView.ViewHolder{
-		private ProgressBar progressBar;
-		public MyHolder(@NonNull View itemView) {
-			super(itemView);
-			progressBar=itemView.findViewById(R.id.item_wan_footer_pb);
-		}
-	}
 }
 

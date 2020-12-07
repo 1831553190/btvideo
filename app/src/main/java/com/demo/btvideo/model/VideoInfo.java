@@ -37,7 +37,15 @@ public class VideoInfo implements Serializable {
 	private int praiseNum;
 	private String userAccount;
 	private Object categoryId;
-	private String username;
+	User user;
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 	public int getId() {
 		return id;
@@ -143,12 +151,5 @@ public class VideoInfo implements Serializable {
 		this.categoryId = categoryId;
 	}
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
 
 }

@@ -6,6 +6,7 @@ import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -127,7 +128,7 @@ public class DefaultMediaController extends BaseMediaController {
 		if (videoView.isCurrentActivePlayer()) {
 			boolean playing = videoView.getPlayer().isPlaying();
 			if (playing) {
-				$.id(R.id.app_video_play).image(R.drawable.ic_stop_white_24dp);
+				$.id(R.id.app_video_play).image(R.drawable.ic_baseline_pause_24);
 			} else {
 				$.id(R.id.app_video_play).image(R.drawable.ic_play_arrow_white_24dp);
 			}
@@ -221,7 +222,7 @@ public class DefaultMediaController extends BaseMediaController {
 
 				@Override
 				public void onAnimationStart(Animator animation) {
-				    super.onAnimationStart(animation);
+					super.onAnimationStart(animation);
 					$.id(R.id.app_video_bottom_box).visibility(finalShow ? View.VISIBLE : View.GONE);
 
 				}
@@ -293,9 +294,13 @@ public class DefaultMediaController extends BaseMediaController {
 					(scanForActivity(videoView.getContext())).finish();
 				}
 			} else if (v.getId() == R.id.app_video_float_close) {
-				player.stop();
+				Activity activity=scanForActivity(videoView.getContext());
+				if (activity==null||activity.isDestroyed()){
+					player.stop();
+				}
 				player.setDisplayModel(GiraffePlayer.DISPLAY_NORMAL);
 			} else if (v.getId() == R.id.app_video_float_full) {
+//				Activity activity=scanForActivity(videoView.getContext());
 				player.setDisplayModel(GiraffePlayer.DISPLAY_FULL_WINDOW);
 			} else if (v.getId() == R.id.app_video_clarity) {
 				Activity activity = scanForActivity(videoView.getContext());
@@ -307,6 +312,8 @@ public class DefaultMediaController extends BaseMediaController {
 					FragmentManager supportFragmentManager = ((AppCompatActivity) activity).getSupportFragmentManager();
 					trackSelectorFragment.show(supportFragmentManager, "player_track");
 				}
+			} else if (v.getId() == R.id.app_play_float) {
+				player.setDisplayModel(GiraffePlayer.DISPLAY_FLOAT);
 			}
 		}
 	};
@@ -332,6 +339,7 @@ public class DefaultMediaController extends BaseMediaController {
 		$.id(R.id.app_video_finish).clicked(onClickListener).imageView().setRotation(isRtl() ? 180 : 0);
 		$.id(R.id.app_video_replay_icon).clicked(onClickListener).imageView().setRotation(isRtl() ? 180 : 0);
 		$.id(R.id.app_video_clarity).clicked(onClickListener);
+		$.id(R.id.app_play_float).clicked(onClickListener);
 		$.id(R.id.app_video_float_close).clicked(onClickListener);
 		$.id(R.id.app_video_float_full).clicked(onClickListener);
 
@@ -481,26 +489,11 @@ public class DefaultMediaController extends BaseMediaController {
 		private boolean volumeControl;
 		private boolean toSeek;
 
-		/**
-		 * 双击
-		 */
-		@Override
-		public boolean onDoubleTap(MotionEvent e) {
-			GiraffePlayer giraffePlayer=videoView.getPlayer();
-
-			if (giraffePlayer.isPlaying()){
-				giraffePlayer.pause();
-			}else{
-				giraffePlayer.start();
-			}
-			return true;
-		}
 
 		@Override
 		public boolean onDown(MotionEvent e) {
 			firstTouch = true;
 			return true;
-
 		}
 
 		/**
@@ -541,6 +534,22 @@ public class DefaultMediaController extends BaseMediaController {
 			}
 			return true;
 		}
+
+		/**
+		 * 双击
+		 */
+		@Override
+		public boolean onDoubleTap(MotionEvent e) {
+			GiraffePlayer giraffePlayer = videoView.getPlayer();
+
+			if (giraffePlayer.isPlaying()) {
+				giraffePlayer.pause();
+			} else {
+				giraffePlayer.start();
+			}
+			return true;
+		}
+
 
 		@Override
 		public boolean onSingleTapUp(MotionEvent e) {

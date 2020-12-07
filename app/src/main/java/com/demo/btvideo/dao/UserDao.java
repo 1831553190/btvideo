@@ -19,6 +19,9 @@ public interface UserDao {
 	@Query("SELECT * FROM user")
 	User getUser();
 
+	@Query("SELECT * FROM user where account=:account")
+	User getUser(String account);
+
 	@Query("SELECT * FROM user WHERE id IN (:userIds)")
 	List<User> loadAllByIds(int[] userIds);
 

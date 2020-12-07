@@ -108,4 +108,7 @@ dependencies {
     api 'com.github.tcking:ijkplayer-x86:0.8.8' //support x86
     api 'com.github.tcking:ijkplayer-x86_64:0.8.8' //support x86_64\
 
+    //高斯模糊库
+    implementation 'jp.wasabeef:glide-transformations:2.0.1'
+
 }

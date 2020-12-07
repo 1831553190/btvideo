@@ -3,6 +3,7 @@ package com.demo.btvideo.utils;
 import android.util.ArrayMap;
 
 import com.demo.btvideo.AppController;
+import com.demo.btvideo.net.ServerURL;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

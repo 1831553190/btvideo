@@ -104,6 +104,11 @@ public class VideoView extends FrameLayout {
         return this;
     }
 
+    public VideoView setVideoPath(Uri uri) {
+        videoInfo.setUri(uri);
+        return this;
+    }
+
     public GiraffePlayer getPlayer() {
         if (videoInfo.getUri() == null) {
             throw new RuntimeException("player uri is null");

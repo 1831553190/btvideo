@@ -15,6 +15,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -33,35 +34,64 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <EditText
-                android:id="@+id/text_upload_videotitle"
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputLay1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="视频标题"
-                android:text="上传测试"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView3"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
 
-            <EditText
-                android:id="@+id/upload_video_label"
-                android:layout_width="match_parent"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/text_upload_videotitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:background="#f6f6f6"
+                    android:hint="视频标题"
+                    android:text="上传测试"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputLay2"
+                android:layout_width="0dp"
+                android:layout_marginTop="8dp"
                 android:layout_height="wrap_content"
-                android:hint="视频标签"
-                android:text="测试标签"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_upload_videotitle" />
+                app:layout_constraintTop_toBottomOf="@+id/inputLay1">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/upload_video_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#f6f6f6"
+                    android:singleLine="true"
+                    android:hint="视频标签"
+                    android:text="测试标签"/>
 
-            <EditText
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputLay3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inputLay2" >
+
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/upload_video_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#f6f6f6"
                 android:hint="视频描述"
-                android:text="视频描述:这是测试上传功能"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/upload_video_label" />
+                android:text="视频描述:这是测试上传功能" />
+            </com.google.android.material.textfield.TextInputLayout>
 
 
             <TextView
@@ -72,7 +102,7 @@
                 android:layout_marginTop="32dp"
                 android:text="视频封面"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/upload_video_description" />
+                app:layout_constraintTop_toBottomOf="@+id/inputLay3" />
 
             <ImageView
                 android:id="@+id/upload_img_video"
@@ -118,6 +148,9 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/upload_btn_videochoose" />
 
+
+
+
             <Button
                 android:id="@+id/upload_btn_videochoose"
                 android:layout_width="wrap_content"
@@ -127,6 +160,17 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
+
+
+<!--            <tcking.github.com.giraffeplayer2.VideoView-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_marginLeft="4dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:minHeight="100dp"-->
+<!--                app:layout_constraintRight_toLeftOf="@+id/upload_btn_choosefile"-->
+<!--                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="parent"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"/>-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

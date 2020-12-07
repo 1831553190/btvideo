@@ -9,6 +9,7 @@ import com.demo.btvideo.model.VideoInfo;
 
 public class DataViewModel extends ViewModel {
 	MutableLiveData<Integer> val;
+	MutableLiveData<Integer> updataComment;
 	MutableLiveData<VideoInfo> videoInfoMutableLiveData;
 	MutableLiveData<User> userLiveData;
 
@@ -17,6 +18,12 @@ public class DataViewModel extends ViewModel {
 			val=new MutableLiveData<>();
 		}
 		return val;
+	}
+	public MutableLiveData<Integer> updateComment(){
+		if (updataComment==null){
+			updataComment=new MutableLiveData<>();
+		}
+		return updataComment;
 	}
 	public MutableLiveData<User> userLiveData(){
 		if (userLiveData==null){
@@ -32,5 +39,9 @@ public class DataViewModel extends ViewModel {
 		}
 		return videoInfoMutableLiveData;
 	}
+
+
+
+
 
 }

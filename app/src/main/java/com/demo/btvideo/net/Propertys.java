@@ -1,4 +1,4 @@
-package com.demo.btvideo.utils;
+package com.demo.btvideo.net;
 
 public interface Propertys {
 	String USERNAME ="username";

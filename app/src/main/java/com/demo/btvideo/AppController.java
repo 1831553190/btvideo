@@ -6,7 +6,6 @@ import com.demo.btvideo.statement.StateGuest;
 import com.demo.btvideo.statement.StateLogin;
 import com.demo.btvideo.statement.StateUser;
 import com.demo.btvideo.utils.NetWorkUtils;
-import com.demo.btvideo.view.fragment.FragmentIndex;
 
 public class AppController {
 
