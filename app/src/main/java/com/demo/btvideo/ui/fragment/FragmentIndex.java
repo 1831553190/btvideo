@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.paging.LoadState;
 import androidx.recyclerview.widget.DiffUtil;
@@ -19,6 +20,7 @@ import com.demo.btvideo.adapter.LoadMoreAdapter;
 import com.demo.btvideo.adapter.VideoListAdapter;
 import com.demo.btvideo.model.VideoInfo;
 import com.demo.btvideo.viewmodel.DataLoaderViewModel;
+import com.demo.btvideo.viewmodel.LoginViewModel;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -26,6 +28,8 @@ import java.util.concurrent.Executors;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+
+//首页界面
 public class FragmentIndex extends Fragment {
 
 
@@ -70,7 +74,6 @@ public class FragmentIndex extends Fragment {
 			videoListAdapter.refresh();
 			swipeRefreshLayout.setRefreshing(false);
 		});
-
 		videoListAdapter.addLoadStateListener(combinedLoadStates -> {
 			if (combinedLoadStates.getRefresh() instanceof LoadState.Loading||combinedLoadStates.getRefresh() instanceof LoadState.Error) {
 				if (videoListAdapter.getItemCount() == 0) {
@@ -78,6 +81,12 @@ public class FragmentIndex extends Fragment {
 				}
 			}
 			return null;
+		});
+		LoginViewModel.getInstance().refreshVideo().observe(getViewLifecycleOwner(), new Observer<Integer>() {
+			@Override
+			public void onChanged(Integer integer) {
+				videoListAdapter.refresh();
+			}
 		});
 		DataLoaderViewModel loadMoreViewModel=new ViewModelProvider(this).get(DataLoaderViewModel.class);
 		loadMoreViewModel.getPaging().observe(getViewLifecycleOwner(), videoInfoPagingData ->

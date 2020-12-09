@@ -1,5 +1,7 @@
 package com.demo.btvideo.model;
 
+
+//常规消息的实体类
 public class Msg<T> {
 	int code;
 	T data;

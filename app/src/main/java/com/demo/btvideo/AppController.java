@@ -7,6 +7,8 @@ import com.demo.btvideo.statement.StateLogin;
 import com.demo.btvideo.statement.StateUser;
 import com.demo.btvideo.utils.NetWorkUtils;
 
+
+//用户状态控制类
 public class AppController {
 
 	private AppController(){}
@@ -38,7 +40,7 @@ public class AppController {
 	}
 
 	public boolean isLogin(){
-		return stateUser.getClass()== StateLogin.class;
+		return !authString.equals("");
 	}
 
 

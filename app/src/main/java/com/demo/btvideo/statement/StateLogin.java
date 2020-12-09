@@ -5,6 +5,8 @@ import android.content.Intent;
 
 import com.demo.btvideo.ui.activity.UploadVideoAcivity;
 
+
+//登陆状态
 public class StateLogin implements StateUser {
 
 	@Override

@@ -40,6 +40,14 @@
         <activity android:name=".ui.activity.MessageActivity" />
         <activity android:name=".ui.activity.UserInfoCenterActivity" />
         <activity android:name=".ui.activity.SettingActivity" />
+        <activity android:name=".ui.activity.CollectionActivity" />
+        <activity android:name=".ui.activity.UploadHistoryActivity" />
+        <activity android:name=".ui.activity.AttctionActivity" />
+        <activity android:name=".ui.activity.AboutActivity" />
+        <activity android:name=".ui.activity.VipActivity" />
+        <activity android:name=".ui.activity.FunsActivity" />
+        <activity android:name=".ui.activity.PlayHistoryActivity" />
+        <activity android:name=".ui.activity.EditInfoActivity" />
 
         <service android:name=".UploadService" />
     </application>

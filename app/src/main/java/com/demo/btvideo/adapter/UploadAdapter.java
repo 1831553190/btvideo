@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.demo.btvideo.R;
+import com.demo.btvideo.model.Attention;
 import com.demo.btvideo.model.Collection;
 import com.demo.btvideo.model.VideoInfo;
 import com.demo.btvideo.net.ServerURL;
@@ -19,9 +20,17 @@ import org.jetbrains.annotations.NotNull;
 
 public class UploadAdapter extends PagingDataAdapter<VideoInfo, BaseHolder> {
 
+	OnItemClick onItemClick;
 
 	public UploadAdapter(@NotNull DiffUtil.ItemCallback<VideoInfo> diffCallback) {
 		super(diffCallback);
+	}
+	public interface OnItemClick{
+		void onItemClick(View view, VideoInfo videoInfo, int pos);
+	}
+
+	public void setOnItemClickListener(OnItemClick itemClickListener){
+		this.onItemClick=itemClickListener;
 	}
 
 	@NonNull
@@ -44,6 +53,11 @@ public class UploadAdapter extends PagingDataAdapter<VideoInfo, BaseHolder> {
 					.load(ServerURL.MAIN_URL+videoInfo.getCoverImage())
 					.transition(DrawableTransitionOptions.withCrossFade())
 					.into(holder.cover);
+			holder.itemView.setOnClickListener(v -> {
+				if (onItemClick!=null){
+					onItemClick.onItemClick(holder.cover,videoInfo,position);
+				}
+			});
 		}
 	}
 }

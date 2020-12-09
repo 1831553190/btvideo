@@ -25,6 +25,9 @@ import com.demo.btvideo.viewmodel.DataViewModel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+
+
+//登录界面,用来装配两个登陆注册的碎片
 public class LoginActivity extends AppCompatActivity {
 
 

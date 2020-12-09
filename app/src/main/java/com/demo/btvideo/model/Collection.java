@@ -1,5 +1,7 @@
 package com.demo.btvideo.model;
 
+
+//收藏对象的实体类
 public class Collection {
 
 	/**

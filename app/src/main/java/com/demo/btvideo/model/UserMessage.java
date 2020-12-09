@@ -1,5 +1,7 @@
 package com.demo.btvideo.model;
 
+
+//用户消息的实体类
 public class UserMessage {
 
 	/**

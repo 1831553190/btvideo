@@ -19,6 +19,8 @@ import okhttp3.RequestBody;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+
+//从网络获取视频列表数据
 public class LoadVideoInfo implements LoadDataInterface<VideoInfo> {
 	ListeningExecutorService executorService;
 

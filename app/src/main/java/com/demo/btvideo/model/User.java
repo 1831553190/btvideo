@@ -21,6 +21,25 @@ public class User implements Serializable {
 	private String signature;
 	private String headImage;
 	private String mail;
+	int fansNum;
+	String attentionStatus;
+
+
+
+	public int getFansNum() {
+		return fansNum;
+	}
+	public void setFansNum(int fansNum) {
+		this.fansNum = fansNum;
+	}
+
+	public String getAttentionStatus() {
+		return attentionStatus;
+	}
+
+	public void setAttentionStatus(String attentionStatus) {
+		this.attentionStatus = attentionStatus;
+	}
 
 	public String getId() {
 		return id;

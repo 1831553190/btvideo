@@ -20,6 +20,9 @@ import java.util.concurrent.Callable;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+
+
+//从网络获取消息数据
 public class LoadMessageList implements LoadDataInterface<UserMessage> {
 
 

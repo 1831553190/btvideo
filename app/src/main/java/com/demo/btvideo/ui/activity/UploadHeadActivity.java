@@ -63,6 +63,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+
+
+//头像界面
 public class UploadHeadActivity extends AppCompatActivity {
 
 	@BindView(R.id.img_upload_cover)

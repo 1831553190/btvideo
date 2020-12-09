@@ -8,8 +8,8 @@
         android:id="@+id/userAppbarLayot"
         android:background="@android:color/white"
         android:layout_width="match_parent"
-        android:fitsSystemWindows="true"
         android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -19,7 +19,8 @@
             android:id="@+id/collLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+
             <FrameLayout
                 android:background="#aaFFFFFF"
                 android:fitsSystemWindows="true"
@@ -34,7 +35,7 @@
                 <top.limuyang2.shadowlayoutlib.ShadowFrameLayout
                     android:id="@+id/coverBack"
                     android:layout_width="match_parent"
-                    android:layout_height="240dp"
+                    android:layout_height="200dp"
                     android:fitsSystemWindows="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -63,19 +64,65 @@
                             android:transitionName="upload_cover" />
                     </top.limuyang2.shadowlayoutlib.ShadowFrameLayout>
                 </top.limuyang2.shadowlayoutlib.ShadowFrameLayout>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!--            <androidx.appcompat.widget.Toolbar-->
-            <!--                android:id="@+id/mToolbar"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="?actionBarSize"-->
-            <!--                android:layout_marginTop="24dp"-->
-            <!--                app:subtitleTextColor="@color/colorAccent"-->
-            <!--                app:titleTextColor="@color/colorPrimary" >-->
-            <!--            </androidx.appcompat.widget.Toolbar>-->
-
         </com.google.android.material.appbar.CollapsingToolbarLayout>
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/mToolBar"
+            android:background="#aaFFFFFF"
+            android:gravity="right"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
+
+                <TextView
+                    android:id="@+id/baseActivity_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="4dp"
+                    android:gravity="center"
+                    android:minHeight="?actionBarSize"
+                    android:text="个人中心"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/img_back"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/img_back"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:visibility="gone"
+                    android:src="@drawable/ic_back"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@android:color/white" />
+
+
+                <TextView
+                    android:id="@+id/text_menu_editinfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="8dp"
+                    android:text="修改资料"
+                    android:clickable="true"
+                    style="@style/Widget.AppCompat.ActionButton"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+        </androidx.appcompat.widget.Toolbar>
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_userCenter"
@@ -85,20 +132,20 @@
     </com.google.android.material.appbar.AppBarLayout>
 
 
-    <!--    <androidx.core.widget.NestedScrollView-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent"-->
-    <!--        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/linearLayout" >-->
+<!--        <androidx.core.widget.NestedScrollView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/linearLayout" >-->
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/centerListLayout"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
-    <!--    </androidx.core.widget.NestedScrollView>-->
+        android:layout_height="match_parent"/>
+<!--        </androidx.core.widget.NestedScrollView>-->
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

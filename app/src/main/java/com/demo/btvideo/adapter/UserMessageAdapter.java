@@ -5,6 +5,7 @@ import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
+import android.os.UserManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,9 +30,20 @@ import org.jetbrains.annotations.NotNull;
 
 public class UserMessageAdapter extends PagingDataAdapter<UserMessage, UserMessageAdapter.Holder> {
 
+	OnItemClick onItemClick;
+
 
 	public UserMessageAdapter(@NotNull DiffUtil.ItemCallback<UserMessage> diffCallback) {
 		super(diffCallback);
+	}
+
+
+	public interface OnItemClick{
+		void onItemClidk(View view,UserMessage userMessage,int pos);
+	}
+
+	public void setOnItemClickListener(OnItemClick itemClickListener){
+		this.onItemClick=itemClickListener;
 	}
 
 
@@ -58,16 +70,14 @@ public class UserMessageAdapter extends PagingDataAdapter<UserMessage, UserMessa
 					.error(R.mipmap.load404)
 					.into(holder.cover);
 
-//			holder.itemView.setOnClickListener(new View.OnClickListener() {
-//				@Override
-//				public void onClick(View v) {
-//					Intent intent=new Intent(v.getContext(), VideoDetialsActivity.class);
-//					intent.putExtra("videoInfo",getItem(position));
-//					ActivityOptions options = ActivityOptions
-//							.makeSceneTransitionAnimation(scanForActivity(holder.itemView.getContext()), holder.cover, "cover");
-//					v.getContext().startActivity(intent,options.toBundle());
-//				}
-//			});
+			holder.itemView.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					if (onItemClick!=null){
+						onItemClick.onItemClidk(holder.cover,userMessage,position);
+					}
+				}
+			});
 	}
 
 	class Holder extends RecyclerView.ViewHolder {

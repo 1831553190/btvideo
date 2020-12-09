@@ -7,6 +7,8 @@ import android.widget.Toast;
 import com.demo.btvideo.ui.activity.LoginActivity;
 import com.demo.btvideo.ui.activity.UploadVideoAcivity;
 
+
+//游客状态
 public class StateGuest implements StateUser {
 
 	@Override

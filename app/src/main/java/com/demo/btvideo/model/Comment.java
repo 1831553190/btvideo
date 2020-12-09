@@ -1,5 +1,7 @@
 package com.demo.btvideo.model;
 
+
+//对象的实体类
 public class Comment {
 	/**
 	 * announcerAccount : bt538933

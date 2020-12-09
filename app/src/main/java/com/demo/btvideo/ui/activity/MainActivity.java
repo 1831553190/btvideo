@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
@@ -18,11 +19,13 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.room.Room;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.demo.btvideo.AppController;
 import com.demo.btvideo.R;
+import com.demo.btvideo.dao.AppDatabase;
 import com.demo.btvideo.model.User;
 import com.demo.btvideo.model.Msg;
 import com.demo.btvideo.net.ServerURL;
@@ -48,6 +51,8 @@ import java.util.concurrent.Executors;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+
+//主界面,包含FragmentIndex以及FragmentUser
 public class MainActivity extends AppCompatActivity {
 
 	@BindView(R.id.main_toolbar)
@@ -59,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
 
 	SharedPreferences preferences;
 	String token="";
+	Handler handler=new Handler(Looper.getMainLooper());
+	private AppDatabase database;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,18 +74,21 @@ public class MainActivity extends AppCompatActivity {
 		ButterKnife.bind(this);
 		setSupportActionBar(toolbar);
 		preferences= PreferenceManager.getDefaultSharedPreferences(this);
+
 		token=preferences.getString("token","");
 		if (token.isEmpty()){
 			AppController.getInstance().setLogin(new StateGuest());
+			LoginViewModel.getInstance().update().postValue(0);
 		}else {
 			AppController.getInstance().setLogin(new StateLogin());
 			AppController.getInstance().updateAuth(token);
 			checkIdentify();
 		}
+		database = Room.databaseBuilder(this.getApplicationContext(), AppDatabase.class, "user")
+				.fallbackToDestructiveMigration().build();
 		LoginViewModel.getInstance().update().postValue(0);
 //		裁剪图片
-//		toolbar.setNavigationIcon(R.drawable.ic_baseline_person_24);
-		getSupportActionBar().setTitle("首页");
+//		toolbar.setNavigationIcon(R.drawable.ic_baseline_person_24);getSupportActionBar().setTitle("首页");
 		viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
 			@NonNull
 			@Override
@@ -119,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
 						getSupportActionBar().setTitle("首页");
 			}else if (item.getItemId()==R.id.menu_user_index){
 				viewPager.setCurrentItem(1);
-				getSupportActionBar().setTitle("个人中心");
+				getSupportActionBar().setTitle("个人");
 			}
 			return true;
 		});
@@ -158,17 +168,19 @@ public class MainActivity extends AppCompatActivity {
 				String resp=response.body().string();
 				if (response.isSuccessful()&&NetWorkUtils.isJson(resp)){
 					Msg userMsg=new Gson().fromJson(resp,Msg.class);
-					if(userMsg.getCode()==401){
-						AppController.getInstance().setLogin(new StateGuest());
-						preferences.edit().remove("token").remove("userNow").apply();
-						Looper.prepare();
-						Toast.makeText(MainActivity.this, userMsg.getMessage(), Toast.LENGTH_SHORT).show();
-						Looper.loop();
-					}else if(userMsg.getCode()==200){
+					if(userMsg.getCode()==200){
 						Type type=new TypeToken<Msg<User>>(){}.getType();
 						Msg<User> userMsg1=new Gson().fromJson(resp,type);
+						database.userDao().insertAll(userMsg1.getData());
 						ViewModelProviders.of(MainActivity.this).get(DataViewModel.class).userLiveData().postValue(userMsg1.getData());
-
+					}else{
+						AppController.getInstance().setLogin(new StateGuest());
+						preferences.edit().remove("token").remove("userNow").apply();
+						AppController.getInstance().updateAuth("");
+						LoginViewModel.getInstance().update().postValue(0);
+						handler.post(()->{
+							Toast.makeText(MainActivity.this, userMsg.getMessage(), Toast.LENGTH_SHORT).show();
+						});
 					}
 				}
 			}

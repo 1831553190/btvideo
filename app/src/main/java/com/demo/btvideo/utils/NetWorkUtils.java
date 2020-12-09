@@ -22,6 +22,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NetWorkUtils {
@@ -100,6 +101,7 @@ public class NetWorkUtils {
 		retrofit = new Retrofit.Builder()
 				.baseUrl(ServerURL.MAIN_URL)
 				.addConverterFactory(GsonConverterFactory.create(gson))
+				.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
 				.client(httpClientBuilder.build())
 				.build();
 	}
@@ -109,6 +111,7 @@ public class NetWorkUtils {
 			retrofit = new Retrofit.Builder()
 					.baseUrl(ServerURL.MAIN_URL)
 					.addConverterFactory(GsonConverterFactory.create())
+					.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
 					.build();
 		}
 		return retrofit;

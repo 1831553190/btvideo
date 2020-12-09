@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -45,6 +46,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+
+//上传视频的界面
 public class UploadVideoAcivity extends AppCompatActivity {
 
 
@@ -87,10 +90,18 @@ public class UploadVideoAcivity extends AppCompatActivity {
 
 	@OnClick(R.id.upload_btn_choosefile)
 	public void chooseCover() {
-		Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-		intent.setType("*/*");  // 选择文件类型
-		intent.addCategory(Intent.CATEGORY_OPENABLE);
-		startActivityForResult(Intent.createChooser(intent, "选择图片"), 70);
+		Intent intent = new Intent(Intent.ACTION_CHOOSER);
+//创建相机Intent
+		Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		captureIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION |Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+//将相机Intent以数组形式放入Intent.EXTRA_INITIAL_INTENTS
+		intent.putExtra(Intent.EXTRA_INITIAL_INTENTS,new Intent(captureIntent));
+//创建相册Intent
+		Intent albumIntent = new Intent(Intent.ACTION_PICK, null);
+		albumIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+//将相册Intent放入Intent.EXTRA_INTENT
+		intent.putExtra(Intent.EXTRA_INTENT, albumIntent);
+		startActivityForResult(Intent.createChooser(intent, "Select a File to Upload"), 70);
 	}
 
 

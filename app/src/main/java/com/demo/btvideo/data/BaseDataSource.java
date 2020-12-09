@@ -17,6 +17,8 @@ import java.util.concurrent.Executors;
 
 import retrofit2.HttpException;
 
+
+//基本的列表加载类
 public class BaseDataSource<T> extends ListenableFuturePagingSource<Integer, T> {
 	private ExecutorService pool= Executors.newCachedThreadPool();
 

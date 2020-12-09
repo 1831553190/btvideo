@@ -3,6 +3,8 @@ package com.demo.btvideo.model;
 import java.io.Serializable;
 import java.util.List;
 
+
+//分页信息的实体类
 public class PageInfo<T> implements Serializable {
 
 	private int unread;

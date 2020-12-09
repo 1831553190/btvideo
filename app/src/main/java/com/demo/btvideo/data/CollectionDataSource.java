@@ -16,6 +16,8 @@ import java.util.List;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+
+//获取收藏列表信息
 public class CollectionDataSource implements LoadDataInterface<Collection> {
 
 	ListeningExecutorService executorService;

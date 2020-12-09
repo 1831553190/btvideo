@@ -1,5 +1,6 @@
 package com.demo.btvideo.ui.fragment;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -23,6 +24,7 @@ import com.demo.btvideo.adapter.LoadMoreAdapter;
 import com.demo.btvideo.adapter.UploadAdapter;
 import com.demo.btvideo.model.Collection;
 import com.demo.btvideo.model.VideoInfo;
+import com.demo.btvideo.ui.activity.VideoDetialsActivity;
 import com.demo.btvideo.viewmodel.DataLoaderViewModel;
 
 import butterknife.BindView;
@@ -30,6 +32,8 @@ import butterknife.ButterKnife;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 
+
+//作品页面
 public class FragmentWork extends Fragment {
 
 	View mainView;
@@ -96,7 +100,20 @@ public class FragmentWork extends Fragment {
 //
 //					}
 //				}
+
 				return null;
+			}
+		});
+		uploadAdapter.setOnItemClickListener(new UploadAdapter.OnItemClick() {
+			@Override
+			public void onItemClick(View view, VideoInfo videoInfo, int pos) {
+				Intent intent=new Intent(getContext(), VideoDetialsActivity.class);
+				intent.putExtra("videoId",videoInfo.getId());
+				intent.putExtra("videoInfo",videoInfo);
+//				intent.putExtra("msgId",item.getId());
+//                ActivityOptions options = ActivityOptions
+//                        .makeSceneTransitionAnimation(MessageActivity.this, view, "upload_cover");
+				startActivity(intent);
 			}
 		});
 

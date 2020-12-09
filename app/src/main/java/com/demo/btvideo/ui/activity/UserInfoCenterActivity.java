@@ -1,34 +1,38 @@
 package com.demo.btvideo.ui.activity;
 
+import android.animation.ArgbEvaluator;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.TransitionDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.preference.PreferenceManager;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.DrawableUtils;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.Observer;
 import androidx.room.Room;
-import androidx.room.RoomDatabase;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
@@ -37,16 +41,14 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.bumptech.glide.signature.ObjectKey;
-import com.demo.btvideo.AppController;
 import com.demo.btvideo.R;
 import com.demo.btvideo.dao.AppDatabase;
 import com.demo.btvideo.model.Msg;
 import com.demo.btvideo.model.User;
 import com.demo.btvideo.net.NetInterface;
 import com.demo.btvideo.net.ServerURL;
+import com.demo.btvideo.ui.fragment.FragmentAttention;
 import com.demo.btvideo.ui.fragment.FragmentCollection;
-import com.demo.btvideo.ui.fragment.FragmentFavourite;
-import com.demo.btvideo.ui.fragment.FragmentIndex;
 import com.demo.btvideo.ui.fragment.FragmentWork;
 import com.demo.btvideo.utils.BlurTransformation;
 import com.demo.btvideo.utils.NetWorkUtils;
@@ -68,6 +70,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import top.limuyang2.shadowlayoutlib.ShadowFrameLayout;
 
+
+
+//用户中心
 public class UserInfoCenterActivity extends AppCompatActivity {
 
 	private static final String TAG = "UserInfoCenterActivity";
@@ -87,12 +92,24 @@ public class UserInfoCenterActivity extends AppCompatActivity {
 
 	@BindView(R.id.user_cover)
 	ImageView cover;
+	@BindView(R.id.mToolBar)
+	Toolbar toolbar;
+
+	@BindView(R.id.baseActivity_title)
+	TextView baseTitle;
+
+	@BindView(R.id.text_menu_editinfo)
+	TextView textEdit;
+	@BindView(R.id.img_back)
+	ImageView imgBack;
+
+
 
 
 	ExecutorService pool= Executors.newCachedThreadPool();
 
 
-	String[] titles=new String[]{"作品","收藏","关注"};
+	String[] titles=new String[]{"个人作品","收藏","关注"};
 	Handler handler=new Handler(Looper.getMainLooper());
 	private SharedPreferences preference;
 	AppDatabase database;
@@ -120,7 +137,32 @@ public class UserInfoCenterActivity extends AppCompatActivity {
 			}
 		}
 		setContentView(R.layout.activity_userinfo);
+
 		ButterKnife.bind(this);
+		setSupportActionBar(toolbar);
+		getSupportActionBar().setTitle("");
+		ArgbEvaluator argbEvaluator = new ArgbEvaluator();
+		AppBarLayout.LayoutParams layoutParams= (AppBarLayout.LayoutParams) collLayout.getLayoutParams();
+		layoutParams.setScrollInterpolator(new DecelerateInterpolator());
+		appBarLayout.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
+			float offset=Math.abs(verticalOffset)*1.0f/appBarLayout.getTotalScrollRange();
+			if (offset>1.0f){
+				offset=1.0f;
+			}
+			int color= (int) argbEvaluator.evaluate(offset,Color.parseColor("#AAFFFFFF"),getResources().getColor(R.color.colorPrimary));
+			int titleColor= (int) argbEvaluator.evaluate(offset,Color.parseColor("#00FFFFFF"),Color.WHITE);
+			int titleColor1= (int) argbEvaluator.evaluate(offset,Color.BLACK,Color.WHITE);
+			int imgColor= (int) argbEvaluator.evaluate(offset,Color.TRANSPARENT,Color.WHITE);
+			toolbar.setBackgroundColor(color);
+			toolbar.setTitleTextColor(titleColor);
+			baseTitle.setTextColor(titleColor);
+			textEdit.setTextColor(titleColor1);
+			imgBack.setImageTintList(ColorStateList.valueOf(imgColor));
+
+
+		});
+//		toolbar.setTitle("个人中心");
+		baseTitle.setText("个人中心");
 		viewPager.setOffscreenPageLimit(3);
 		viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager(),FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 			@NonNull
@@ -131,7 +173,7 @@ public class UserInfoCenterActivity extends AppCompatActivity {
 				}else if (position==1){
 					return FragmentCollection.getInstance();
 				}else {
-					return FragmentFavourite.getInstance();
+					return FragmentAttention.getInstance();
 				}
 			}
 			@Override
@@ -154,7 +196,6 @@ public class UserInfoCenterActivity extends AppCompatActivity {
 		tabUserCenter.setupWithViewPager(viewPager);
 		database = Room.databaseBuilder(this, AppDatabase.class, "user")
 				.fallbackToDestructiveMigration().build();
-
 		preference= PreferenceManager.getDefaultSharedPreferences(this);
 		pool.execute(()->{
 			NetInterface netInterface=NetWorkUtils.getRetrofit().create(NetInterface.class);
@@ -172,6 +213,7 @@ public class UserInfoCenterActivity extends AppCompatActivity {
 										.transition(DrawableTransitionOptions.withCrossFade())
 										.signature(new ObjectKey(String.valueOf(System.currentTimeMillis())))
 										.apply(RequestOptions.bitmapTransform(new BlurTransformation(UserInfoCenterActivity. this,25,8)))
+										.error(R.mipmap.load404)
 										.into(new SimpleTarget<Drawable>() {
 											@Override
 											public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
@@ -183,6 +225,7 @@ public class UserInfoCenterActivity extends AppCompatActivity {
 								Glide.with(UserInfoCenterActivity.this)
 										.load(ServerURL.MAIN_URL+user.getHeadImage())
 										.signature(new ObjectKey(String.valueOf(System.currentTimeMillis())))
+										.error(R.mipmap.load404)
 										.transition(DrawableTransitionOptions.withCrossFade())
 										.into(cover);
 							}
@@ -218,6 +261,7 @@ public class UserInfoCenterActivity extends AppCompatActivity {
 										.transition(DrawableTransitionOptions.withCrossFade())
 										.signature(new ObjectKey(String.valueOf(System.currentTimeMillis())))
 										.apply(RequestOptions.bitmapTransform(new BlurTransformation(UserInfoCenterActivity. this,25,8)))
+										.error(R.mipmap.load404)
 										.into(new SimpleTarget<Drawable>() {
 											@Override
 											public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
@@ -248,4 +292,15 @@ public class UserInfoCenterActivity extends AppCompatActivity {
 				.makeSceneTransitionAnimation(this, cover, "upload_cover");
 		startActivity(intent, options.toBundle());
 	}
+
+	@OnClick(R.id.img_back)
+	public void btnBack(){
+		finish();
+	}
+
+	@OnClick(R.id.text_menu_editinfo)
+	public void gotoEdit(){
+		startActivity(new Intent(this,EditInfoActivity.class));
+	}
+
 }

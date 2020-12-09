@@ -1,10 +1,19 @@
 package com.demo.btvideo.model;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.List;
 
+
+//视频信息的实体类
+@Entity(tableName = "videoinfo")
 public class VideoInfo implements Serializable {
 	/**
 	 * id : 3
@@ -23,6 +32,8 @@ public class VideoInfo implements Serializable {
 	 * username : 刘柏良
 	 */
 
+	@NonNull
+	@PrimaryKey
 	private int id;
 	private String title;
 	private String labels;
@@ -36,8 +47,30 @@ public class VideoInfo implements Serializable {
 	private int collectNum;
 	private int praiseNum;
 	private String userAccount;
-	private Object categoryId;
+	private String categoryId;
+	@ForeignKey(entity = User.class,
+			parentColumns = "userAccount",
+			childColumns = "account")
+			@Ignore
 	User user;
+	String collectStatus;
+	String praiseStatus;
+
+	public String getCollectStatus() {
+		return collectStatus;
+	}
+
+	public void setCollectStatus(String collectStatus) {
+		this.collectStatus = collectStatus;
+	}
+
+	public String getPraiseStatus() {
+		return praiseStatus;
+	}
+
+	public void setPraiseStatus(String praiseStatus) {
+		this.praiseStatus = praiseStatus;
+	}
 
 	public User getUser() {
 		return user;
@@ -143,11 +176,11 @@ public class VideoInfo implements Serializable {
 		this.userAccount = userAccount;
 	}
 
-	public Object getCategoryId() {
+	public String getCategoryId() {
 		return categoryId;
 	}
 
-	public void setCategoryId(Object categoryId) {
+	public void setCategoryId(String   categoryId) {
 		this.categoryId = categoryId;
 	}
 

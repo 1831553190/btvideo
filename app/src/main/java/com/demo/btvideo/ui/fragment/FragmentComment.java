@@ -1,5 +1,6 @@
 package com.demo.btvideo.ui.fragment;
 
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,6 +29,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.demo.btvideo.R;
 import com.demo.btvideo.adapter.LoadMoreAdapter;
 import com.demo.btvideo.model.Comment;
+import com.demo.btvideo.model.VideoInfo;
 import com.demo.btvideo.net.ServerURL;
 import com.demo.btvideo.utils.GlideCircleBorderTransform;
 import com.demo.btvideo.viewmodel.DataLoaderViewModel;
@@ -40,6 +42,8 @@ import butterknife.ButterKnife;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 
+
+//视频详情-评价界面
 public class FragmentComment extends Fragment {
 
 	@BindView(R.id.video_detail_comment_recycler)
@@ -61,7 +65,7 @@ public class FragmentComment extends Fragment {
 	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		mainView=inflater.inflate(R.layout.fragment_comment,container,false);
 		ButterKnife.bind(this,mainView);
-		int id=getArguments().getInt("videoId");
+
 		recyclerView.addItemDecoration(new DividerItemDecoration(mainView.getContext(),DividerItemDecoration.VERTICAL));
 		CommentListAdapter commentListAdapter=new CommentListAdapter(new DiffUtil.ItemCallback<Comment>() {
 			@Override
@@ -74,13 +78,21 @@ public class FragmentComment extends Fragment {
 				return oldItem.getContent().equals(newItem.getContent());
 			}
 		});
-		LoadMoreAdapter loadMoreAdapter=new LoadMoreAdapter(commentListAdapter::retry);
-		new DataLoaderViewModel().getCommnet(id).observe(getViewLifecycleOwner(), new Observer<PagingData<Comment>>() {
+
+		DataViewModel dataViewModel = new ViewModelProvider(requireActivity()).get(DataViewModel.class);
+		dataViewModel.loadVideoInfo("", "").observe(getViewLifecycleOwner(), new Observer<VideoInfo>() {
 			@Override
-			public void onChanged(PagingData<Comment> commentPagingData) {
-				commentListAdapter.submitData(getLifecycle(),commentPagingData);
+			public void onChanged(VideoInfo videoInfo) {
+				new DataLoaderViewModel().getCommnet(videoInfo.getId()).observe(getViewLifecycleOwner(), new Observer<PagingData<Comment>>() {
+					@Override
+					public void onChanged(PagingData<Comment> commentPagingData) {
+						commentListAdapter.submitData(getLifecycle(),commentPagingData);
+					}
+				});
 			}
 		});
+		LoadMoreAdapter loadMoreAdapter=new LoadMoreAdapter(commentListAdapter::retry);
+
 		recyclerView.setAdapter(commentListAdapter.withLoadStateFooter(loadMoreAdapter));
 
 		commentListAdapter.addLoadStateListener(new Function1<CombinedLoadStates, Unit>() {

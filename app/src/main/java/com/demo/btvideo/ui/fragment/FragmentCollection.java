@@ -1,5 +1,6 @@
 package com.demo.btvideo.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,8 @@ import com.demo.btvideo.adapter.CollectionAdapter;
 import com.demo.btvideo.adapter.LoadMoreAdapter;
 import com.demo.btvideo.model.Collection;
 import com.demo.btvideo.model.Comment;
+import com.demo.btvideo.ui.activity.CollectionActivity;
+import com.demo.btvideo.ui.activity.VideoDetialsActivity;
 import com.demo.btvideo.viewmodel.DataLoaderViewModel;
 
 import butterknife.BindView;
@@ -29,6 +32,9 @@ import butterknife.ButterKnife;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 
+
+
+//用户中心-收藏界面
 public class FragmentCollection extends Fragment {
 
 	View mainView;
@@ -72,7 +78,6 @@ public class FragmentCollection extends Fragment {
 		});
 		swipeRefreshLayout.setOnRefreshListener(()->{
 			collectionAdapter.refresh();
-//			swipeRefreshLayout.setRefreshing(false);
 		});
 		collectionAdapter.addLoadStateListener(new Function1<CombinedLoadStates, Unit>() {
 			@Override
@@ -88,12 +93,21 @@ public class FragmentCollection extends Fragment {
 						header.setLoadState(loadStates.getRefresh());
 					}
 				}
-//				if (loadStates.getRefresh() instanceof LoadState.NotLoading){
-//					if (collectionAdapter.getItemCount()==0){
-//
-//					}
-//				}
 				return null;
+			}
+		});
+
+		collectionAdapter.setOnItemClickListener(new CollectionAdapter.OnItemClick() {
+			@Override
+			public void onItemClick(View view, Collection item, int  pos) {
+				Intent intent=new Intent(getContext(), VideoDetialsActivity.class);
+				intent.putExtra("videoId",item.getVideoId());
+				intent.putExtra("videoInfo",item.getData());
+//				intent.putExtra("msgId",item.getId());
+//                ActivityOptions options = ActivityOptions
+//                        .makeSceneTransitionAnimation(MessageActivity.this, view, "upload_cover");
+				startActivity(intent);
+//				getActivity().finish();
 			}
 		});
 

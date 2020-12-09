@@ -118,12 +118,12 @@
                 android:layout_marginTop="24dp"
                 app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@+id/constraintLayout3"
+                app:layout_constraintRight_toLeftOf="@+id/collectLayout"
                 app:layout_constraintTop_toBottomOf="@+id/headLayout">
 
 
                 <TextView
-                    android:id="@+id/text_userDynamic"
+                    android:id="@+id/text_userMsg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
@@ -146,18 +146,18 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout3"
+                android:id="@+id/collectLayout"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintLeft_toRightOf="@+id/layout_message"
-                app:layout_constraintRight_toLeftOf="@+id/constraintLayout4"
+                app:layout_constraintRight_toLeftOf="@+id/layoutAttction"
                 app:layout_constraintTop_toTopOf="@+id/layout_message">
 
 
                 <TextView
-                    android:id="@+id/textView12"
+                    android:id="@+id/user_textCollect"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
@@ -180,17 +180,17 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout4"
+                android:id="@+id/layoutAttction"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintLeft_toRightOf="@+id/constraintLayout3"
+                app:layout_constraintLeft_toRightOf="@+id/collectLayout"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/constraintLayout3">
+                app:layout_constraintTop_toTopOf="@+id/collectLayout">
 
                 <TextView
-                    android:id="@+id/text_userFans"
+                    android:id="@+id/text_userFollow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
@@ -205,7 +205,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:text="粉丝"
+                    android:text="关注"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
@@ -218,7 +218,7 @@
                 android:gravity="center_vertical|center_horizontal"
                 android:padding="16dp"
                 android:text="个人中心  >"
-                app:layout_constraintBottom_toTopOf="@+id/constraintLayout4"
+                app:layout_constraintBottom_toTopOf="@+id/layoutAttction"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

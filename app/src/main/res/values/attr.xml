@@ -17,4 +17,9 @@
         <attr name="setting_summary" format="string"/>
         <attr name="setting_icon" format="reference"/>
     </declare-styleable>
+    <declare-styleable name="ItemEdit">
+        <attr name="edit_title" format="string"/>
+        <attr name="edit_content" format="string"/>
+        <attr name="edit_editable" format="boolean"/>
+    </declare-styleable>
 </resources>

@@ -68,8 +68,6 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-
-
         <androidx.core.widget.NestedScrollView
             android:id="@+id/sclay"
             android:layout_width="match_parent"
@@ -77,19 +75,16 @@
             android:fillViewport="true"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/videoDetail_viewpager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/videoDetail_viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
 
 
 
         </androidx.core.widget.NestedScrollView>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-<!--    <FrameLayout-->
-<!--        android:id="@+id/video_detail_fragment"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent" />-->
     <top.limuyang2.shadowlayoutlib.ShadowConstraintLayout
         android:id="@+id/shadowConstraintLayout"
         android:layout_width="match_parent"

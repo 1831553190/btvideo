@@ -30,13 +30,14 @@ import butterknife.OnClick;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+
+//注册界面
 public class FragmentRegister extends Fragment {
 
 	View mainView;
 	private static class Holder {
 		private static FragmentRegister instance=new FragmentRegister();
 	}
-
 	@BindView(R.id.reg_username)
 	EditText regUserName;
 	@BindView(R.id.reg_password)

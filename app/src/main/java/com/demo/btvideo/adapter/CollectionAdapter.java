@@ -1,33 +1,34 @@
 package com.demo.btvideo.adapter;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.paging.PagingDataAdapter;
 import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.demo.btvideo.R;
 import com.demo.btvideo.model.Collection;
-import com.demo.btvideo.model.VideoInfo;
 import com.demo.btvideo.net.ServerURL;
 
 import org.jetbrains.annotations.NotNull;
 
 public class CollectionAdapter extends PagingDataAdapter<Collection, BaseHolder> {
 
-
+	OnItemClick onItemClick;
 	public CollectionAdapter(@NotNull DiffUtil.ItemCallback<Collection> diffCallback) {
 		super(diffCallback);
 	}
+	public interface OnItemClick{
+		void onItemClick(View view, Collection collection, int pos);
+	}
 
+	public void setOnItemClickListener(OnItemClick itemClickListener){
+		this.onItemClick=itemClickListener;
+	}
 	@NonNull
 	@Override
 	public BaseHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -48,6 +49,13 @@ public class CollectionAdapter extends PagingDataAdapter<Collection, BaseHolder>
 					.load(ServerURL.MAIN_URL+collection.getData().getCoverImage())
 					.transition(DrawableTransitionOptions.withCrossFade())
 					.into(holder.cover);
+
+
+			holder.itemView.setOnClickListener(v -> {
+				if (onItemClick!=null){
+					onItemClick.onItemClick(holder.cover,collection,position);
+				}
+			});
 		}
 	}
 }

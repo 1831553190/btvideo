@@ -2,6 +2,7 @@ package com.demo.btvideo.net;
 
 import com.demo.btvideo.model.Attention;
 import com.demo.btvideo.model.Collection;
+import com.demo.btvideo.model.Funs;
 import com.demo.btvideo.model.User;
 import com.demo.btvideo.model.AuthData;
 import com.demo.btvideo.model.Comment;
@@ -15,8 +16,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Executor;
 
+import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Header;
@@ -27,6 +30,9 @@ import retrofit2.http.PartMap;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
+
+
+//Retrofit的网络接口
 public interface NetInterface {
 	//登录
 	@POST("user/login.do")
@@ -36,8 +42,18 @@ public interface NetInterface {
 	Call<Msg<User>> getUserInfo(@Header("Authorization") String auth);
 
 	//获取用户信息
+	@POST("{path}")
+	Observable<ResponseBody> downloadFile(String puth);
+
+	//获取用户信息
 	@POST("user/personal.do")
 	Call<Msg<JsonElement>> getUserInfo();
+	//获取用户信息
+	@POST("user/personal.do")
+	Observable<Msg<JsonElement>> getUserInfoOb();
+	//修改用户信息
+	@POST("user/modify.do")
+	Call<Msg<JsonElement>> modifyUserInfo(@Body HashMap<String,String> body);
 
 	//注册
 	@POST("user/register.do")
@@ -72,14 +88,24 @@ public interface NetInterface {
 
 
 	@POST("user/praiseVideo.do")
-	Call<Msg> praiseVideo();
+	Call<Msg<JsonElement>> praiseVideo(@Body HashMap<String,String> body);
+
+	//关注
+	@POST("user/followUser.do")
+	Call<Msg<JsonElement>> followUser(@Body HashMap<String,String> body);
+	//收藏
+	@POST("user/collectVideo.do")
+	Call<Msg<JsonElement>> collectVideo(@Body HashMap<String,String> body);
 
 
 	@POST("user/publish.do")
 	Call<Msg> sendComment(@Body HashMap<String,String> data);
 
 	@POST("user/playVideo.do")
-	Call<Msg> getVideoInfo(@Query("id") String id,@Query("pageNum")int pageNum,@Query("pageSize") int pageSize);
+	Call<Msg<VideoInfo>> getVideoInfo(@Query("id") String id,@Query("pageSize") int pageSize);
+
+	@POST("user/playVideo.do")
+	Call<Msg<VideoInfo>> getVideoInfo(@Query("id") String id,@Body HashMap<String,String> body,@Query("pageSize") int pageSize);
 
 
 	//收藏列表
@@ -90,5 +116,21 @@ public interface NetInterface {
 	@POST("user/getAttentionList.do")
 	Call<Msg<PageInfo<Attention>>> getAttentionList(@Query("pageNum")int pageNum, @Query("pageSize") int pageSize);
 
+
+	//获取消息列表
+	@POST("user/getMessageList.do")
+	Observable<Msg<PageInfo<UserMessage>>> getMessageList(@Query("pageSize") String pageSize);
+
+	//关注列表
+	@POST("user/getAttentionList.do")
+	Observable<Msg<PageInfo<Attention>>> getAttentionList(@Query("pageSize") String pageSize);
+	//收藏列表
+	@POST("user/getCollectionList.do")
+	Observable<Msg<PageInfo<Collection>>> getCollectionList(@Query("pageSize") String pageSize);
+
+
+	//粉丝列表
+	@POST("user/getFansList.do")
+	Call<Msg<PageInfo<Funs>>> getFunsList(@Query("pageNum")int pageNum,@Query("pageSize") String pageSize);
 
 }

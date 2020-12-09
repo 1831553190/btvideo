@@ -33,7 +33,7 @@ public class SettingItem extends FrameLayout {
 		TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ItemSetting);
 		title=typedArray.getString(R.styleable.ItemSetting_setting_title);
 		summary=typedArray.getString(R.styleable.ItemSetting_setting_summary);
-		resId=typedArray.getResourceId(R.styleable.ItemSetting_setting_icon, R.drawable.ic_mine);
+		resId=typedArray.getResourceId(R.styleable.ItemSetting_setting_icon, 0);
 		init(context);
 		typedArray.recycle();
 	}

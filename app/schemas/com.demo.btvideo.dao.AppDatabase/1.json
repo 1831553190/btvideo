@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "010a6e9c8081b1a0e46a9846c7364202",
+    "identityHash": "74766f1421d9b3b96dbf183ea84ded43",
     "entities": [
       {
         "tableName": "user",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT, `username` TEXT, `password` TEXT, `account` TEXT NOT NULL, `type` TEXT, `phone` TEXT, `signature` TEXT, `headImage` TEXT, `mail` TEXT, PRIMARY KEY(`account`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT, `username` TEXT, `password` TEXT, `account` TEXT NOT NULL, `type` TEXT, `phone` TEXT, `signature` TEXT, `headImage` TEXT, `mail` TEXT, `fansNum` INTEGER NOT NULL, `attentionStatus` TEXT, PRIMARY KEY(`account`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -61,6 +61,18 @@
             "columnName": "mail",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "fansNum",
+            "columnName": "fansNum",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "attentionStatus",
+            "columnName": "attentionStatus",
+            "affinity": "TEXT",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -71,12 +83,116 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "videoinfo",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `title` TEXT, `labels` TEXT, `description` TEXT, `coverImage` TEXT, `videoUrl` TEXT, `videoType` TEXT, `updateTime` TEXT, `watchNum` INTEGER NOT NULL, `collectNum` INTEGER NOT NULL, `praiseNum` INTEGER NOT NULL, `userAccount` TEXT, `categoryId` TEXT, `collectStatus` TEXT, `praiseStatus` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "labels",
+            "columnName": "labels",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "coverImage",
+            "columnName": "coverImage",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "videoUrl",
+            "columnName": "videoUrl",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "videoType",
+            "columnName": "videoType",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "updateTime",
+            "columnName": "updateTime",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "watchNum",
+            "columnName": "watchNum",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "collectNum",
+            "columnName": "collectNum",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "praiseNum",
+            "columnName": "praiseNum",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "userAccount",
+            "columnName": "userAccount",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "categoryId",
+            "columnName": "categoryId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "collectStatus",
+            "columnName": "collectStatus",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "praiseStatus",
+            "columnName": "praiseStatus",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '010a6e9c8081b1a0e46a9846c7364202')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '74766f1421d9b3b96dbf183ea84ded43')"
     ]
   }
 }

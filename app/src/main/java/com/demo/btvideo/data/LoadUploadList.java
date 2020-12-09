@@ -16,8 +16,9 @@ import java.util.List;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class LoadUploadList implements LoadDataInterface<VideoInfo> {
 
+//从网络获取上传记录数据
+public class LoadUploadList implements LoadDataInterface<VideoInfo> {
 
     ListeningExecutorService executorService;
     String account;

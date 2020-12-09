@@ -64,6 +64,7 @@ public class VideoListAdapter extends PagingDataAdapter<VideoInfo, VideoListAdap
 				public void onClick(View v) {
 					Intent intent=new Intent(v.getContext(), VideoDetialsActivity.class);
 					intent.putExtra("videoInfo",getItem(position));
+					intent.putExtra("videoId",getItem(position).getId());
 					ActivityOptions options = ActivityOptions
 							.makeSceneTransitionAnimation(scanForActivity(holder.itemView.getContext()), holder.cover, "cover");
 					v.getContext().startActivity(intent,options.toBundle());

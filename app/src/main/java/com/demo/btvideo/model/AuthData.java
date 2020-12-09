@@ -1,5 +1,8 @@
 package com.demo.btvideo.model;
 
+
+
+//令牌(token)数据
 public class AuthData {
 	private String tokenHead;
 	private String token;

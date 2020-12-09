@@ -53,6 +53,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+
+//登录界面
 public class FragmentLogin extends Fragment {
 
 	View mainView;
@@ -170,8 +172,11 @@ public class FragmentLogin extends Fragment {
 			@Override
 			public void onNext(User user) {
 //				appDatabase.userDao().insertAll(user);  这里不需要插入,需要更新头像
+				AppController.getInstance().setLogin(new StateLogin());
 				LoginViewModel.getInstance().userLiveData().postValue(user);
+				LoginViewModel.getInstance().notifyData().postValue(200);
 				preferences.edit().putString("userNow",user.getAccount()).apply();
+
 			}
 
 			@Override
@@ -191,7 +196,6 @@ public class FragmentLogin extends Fragment {
 					preferences.edit().putString("username", username).apply();
 					preferences.edit().putString("passwd", password).apply();
 				}
-				AppController.getInstance().setLogin(new StateLogin());
 				handler.post(()->{
 					progressDialog.dismiss();
 					view.setEnabled(true);
