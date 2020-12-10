@@ -93,11 +93,12 @@
 
             <TextView
                 android:id="@+id/text_userid"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="帐号"
                 app:layout_constraintBottom_toBottomOf="@+id/headLayout"
+                app:layout_constraintEnd_toStartOf="@+id/text_userSpace"
                 app:layout_constraintStart_toEndOf="@+id/headLayout"
                 app:layout_constraintTop_toBottomOf="@+id/text_username" />
 

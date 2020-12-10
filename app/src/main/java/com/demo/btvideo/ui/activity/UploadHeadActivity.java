@@ -32,6 +32,7 @@ import com.demo.btvideo.dao.AppDatabase;
 import com.demo.btvideo.model.Msg;
 import com.demo.btvideo.model.User;
 import com.demo.btvideo.net.NetInterface;
+import com.demo.btvideo.net.ServerURL;
 import com.demo.btvideo.utils.NetWorkUtils;
 import com.demo.btvideo.utils.Tool;
 import com.demo.btvideo.utils.UploadRequestBody;
@@ -115,7 +116,7 @@ public class UploadHeadActivity extends AppCompatActivity {
 			handler.post(() -> {
 				if (user!=null&&user.getHeadImage()!=null){
 					Glide.with(getApplicationContext())
-							.load(user.getHeadImage())
+							.load(ServerURL.MAIN_URL+user.getHeadImage())
 							.signature(new ObjectKey(System.currentTimeMillis()))
 							.into(uploadImage);
 				}
@@ -221,11 +222,11 @@ public class UploadHeadActivity extends AppCompatActivity {
 										}
 										pool.execute(() -> {
 											User user = database.userDao().getUser(preferences.getString("userNow","-1"));
-											File saveImgFile = Tool.saveCover(UploadHeadActivity.this,user, file);
-											user.setHeadImage(saveImgFile.getAbsolutePath());
+//											File saveImgFile = Tool.saveCover(UploadHeadActivity.this,user, file);
+//											user.setHeadImage(saveImgFile.getAbsolutePath());
 											handler.post(()->{
 												Glide.with(getApplicationContext())
-														.load(saveImgFile.getAbsolutePath())
+														.load(ServerURL.MAIN_URL+user.getHeadImage())
 														.signature(new ObjectKey(System.currentTimeMillis()))
 														.into(uploadImage);
 											});

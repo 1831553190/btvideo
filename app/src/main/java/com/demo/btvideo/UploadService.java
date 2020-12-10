@@ -76,6 +76,8 @@ public class UploadService extends Service {
 	UpdateLoadPregress updateLoadPregress;
 	final static String ACTION_CANCEL = "com.myservice.action.ACTION_CANCEL";
 	Observable<File> ofile;
+	HttpURLConnection conn;
+	boolean isCancel=false;
 
 
 	public interface UpdateLoadPregress {
@@ -114,8 +116,7 @@ public class UploadService extends Service {
 			DecimalFormat decimalFormat = new DecimalFormat("##.##");
 			notification = createNotification(70, "上传中");
 			notificationManager.notify(70, notification);
-			Random random
-					= new Random();
+			Random random = new Random();
 			int id = random.nextInt();
 
 			UploadRequestBody imageBody = new UploadRequestBody(id, img, MediaType.parse("multipart/form-data"), getApplicationContext(), new UploadRequestBody.UploadProgress() {
@@ -167,7 +168,7 @@ public class UploadService extends Service {
 					if (response.isSuccessful() && response.body() != null) {
 						Msg<String> msg = response.body();
 						handler.post(() -> {
-							stopForeground(true);
+							stopForeground(false);
 							if (msg.getCode() == 200) {
 								Toast.makeText(getApplicationContext(), "上传成功!", Toast.LENGTH_SHORT).show();
 								finishNotification(id, "上传成功", "视频上传成功");
@@ -177,6 +178,8 @@ public class UploadService extends Service {
 								finishNotification(id, "上传失败", "视频上传失败");
 							}
 						});
+					}else{
+						finishNotification(id, "上传失败", "视频上传失败");
 					}
 				}
 
@@ -272,8 +275,10 @@ public class UploadService extends Service {
 					binder.msgCall.cancel();
 				}
 			}
-			if (ofile!=null){
 
+			if (conn!=null){
+				isCancel=true;
+				conn.disconnect();
 			}
 		}
 		return super.onStartCommand(intent, flags, startId);
@@ -324,7 +329,7 @@ public class UploadService extends Service {
 			Uri uri = null;
 			try {
 				URL url = new URL(downPathUrl);
-				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+				conn = (HttpURLConnection) url.openConnection();
 				conn.setConnectTimeout(30 * 1000);
 				InputStream is = conn.getInputStream();
 //				String fileName = videoInfo.getTitle() + ".mp4";
@@ -376,18 +381,27 @@ public class UploadService extends Service {
 			public void onError(Throwable e) {
 				handler.post(() -> {
 					Toast.makeText(context, "缓存失败", Toast.LENGTH_SHORT).show();
-					finishNotification(70,"缓存失败","视频缓存失败");
 				});
+				finishNotification(70,"缓存失败","视频缓存失败");
+				stopForeground(false);
 				e.printStackTrace();
 			}
 
 			@Override
 			public void onComplete() {
-				handler.post(() -> {
-					Toast.makeText(context, "缓存成功", Toast.LENGTH_SHORT).show();
+				if (isCancel){
+					handler.post(() -> {
+						Toast.makeText(getApplicationContext(), "已取消缓存", Toast.LENGTH_SHORT).show();
+					});
+					finishNotification(70,"取消缓存","用户取消操作");
+				}else{
+					handler.post(() -> {
+						Toast.makeText(getApplicationContext(), "缓存成功", Toast.LENGTH_SHORT).show();
+					});
 					finishNotification(70,"缓存成功","视频下载成功");
-
-				});
+				}
+				isCancel=false;
+				stopForeground(false);
 			}
 		});
 
@@ -402,7 +416,7 @@ public class UploadService extends Service {
 		ofile = Observable.just(downPathUrl).subscribeOn(Schedulers.newThread()).map(s -> {
 			File file = null;
 			URL url = new URL(downPathUrl);
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn = (HttpURLConnection) url.openConnection();
 			conn.setConnectTimeout(30 * 1000);
 			InputStream is = conn.getInputStream();
 //				String fileName = videoInfo.getTitle();
@@ -435,24 +449,38 @@ public class UploadService extends Service {
 
 			@Override
 			public void onNext(File file) {
-
+				if (isCancel){
+					file.delete();
+				}
 			}
 
 			@Override
 			public void onError(Throwable e) {
+
 				handler.post(() -> {
 					Toast.makeText(getApplicationContext(), "缓存失败", Toast.LENGTH_SHORT).show();
-					finishNotification(70,"缓存失败","视频缓存失败");
 				});
+				finishNotification(70,"缓存失败","视频缓存失败");
+				stopForeground(false);
 				e.printStackTrace();
 			}
 
 			@Override
 			public void onComplete() {
-				handler.post(() -> {
-					Toast.makeText(getApplicationContext(), "缓存成功", Toast.LENGTH_SHORT).show();
+
+				if (isCancel){
+					handler.post(() -> {
+						Toast.makeText(getApplicationContext(), "已取消缓存", Toast.LENGTH_SHORT).show();
+					});
+					finishNotification(70,"取消缓存","用户取消操作");
+				}else{
+					handler.post(() -> {
+						Toast.makeText(getApplicationContext(), "缓存成功", Toast.LENGTH_SHORT).show();
+					});
 					finishNotification(70,"缓存成功","视频下载成功");
-				});
+				}
+				isCancel=false;
+				stopForeground(false);
 			}
 		});
 	}

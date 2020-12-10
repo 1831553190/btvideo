@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -17,6 +18,7 @@
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/collLayout"
+            app:layout_scrollInterpolator="@android:interpolator/decelerate_quad"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
@@ -29,10 +31,11 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:fitsSystemWindows="true"
+                app:layout_collapseMode="parallax"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <top.limuyang2.shadowlayoutlib.ShadowFrameLayout
+                <top.limuyang2.shadowlayoutlib.ShadowConstraintLayout
                     android:id="@+id/coverBack"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
@@ -44,15 +47,18 @@
 
 
                     <top.limuyang2.shadowlayoutlib.ShadowFrameLayout
+                        android:id="@+id/shadowFrameLayout2"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:layout_gravity="center"
+                        android:layout_marginTop="32dp"
                         android:background="@android:color/white"
                         app:l_radius="50dp"
                         app:l_shadowAlpha="0.5"
                         app:l_shadowElevation="6dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toTopOf="@+id/centerusername"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
@@ -63,7 +69,34 @@
                             android:scaleType="centerCrop"
                             android:transitionName="upload_cover" />
                     </top.limuyang2.shadowlayoutlib.ShadowFrameLayout>
-                </top.limuyang2.shadowlayoutlib.ShadowFrameLayout>
+
+
+                    <TextView
+                        android:id="@+id/centerusername"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="匿名用户"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toTopOf="@+id/centersign"
+                        app:layout_constraintEnd_toEndOf="@+id/shadowFrameLayout2"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="@+id/shadowFrameLayout2"
+                        app:layout_constraintTop_toBottomOf="@+id/shadowFrameLayout2" />
+
+                    <TextView
+                        android:id="@+id/centersign"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="这个家伙很懒,什么都没有留下"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/centerusername"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="@+id/centerusername"
+                        app:layout_constraintTop_toBottomOf="@+id/centerusername" />
+
+                </top.limuyang2.shadowlayoutlib.ShadowConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

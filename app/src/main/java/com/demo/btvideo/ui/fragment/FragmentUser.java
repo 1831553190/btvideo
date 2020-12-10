@@ -167,17 +167,17 @@ public class FragmentUser extends Fragment {
 						} else {
 							textUserId.setText(result.getSignature());
 						}
-						File file = new File(result.getHeadImage());
-						try {
-							FileInputStream inputStream = new FileInputStream(file);
+//						File file = new File(result.getHeadImage());
+//						try {
+//							FileInputStream inputStream = new FileInputStream(file);
 							Glide.with(getContext())
-									.load(result.getHeadImage())
+									.load(ServerURL.MAIN_URL+result.getHeadImage())
 									.signature(new ObjectKey(String.valueOf(System.currentTimeMillis())))
-									.error(R.mipmap.ic_launcher)
+									.error(R.mipmap.load404)
 									.into(imgHead);
-						} catch (FileNotFoundException e) {
-							e.printStackTrace();
-						}
+//						} catch (FileNotFoundException e) {
+//							e.printStackTrace();
+//						}
 					});
 				}
 			}
@@ -254,7 +254,7 @@ public class FragmentUser extends Fragment {
 							String userImg = user.getHeadImage();
 							if (userImg != null) {
 								Glide.with(getActivity().getApplicationContext())
-										.load(userImg)
+										.load(ServerURL.MAIN_URL+userImg)
 										.signature(new ObjectKey(String.valueOf(System.currentTimeMillis())))
 										.transition(DrawableTransitionOptions.withCrossFade())
 										.error(R.mipmap.load404)
@@ -273,16 +273,16 @@ public class FragmentUser extends Fragment {
 					if (user.getHeadImage() == null) {
 						user.setHeadImage(defaultCover(user));
 					} else {
-						try {
-							File file1 = Glide.with(getContext())
-									.load(ServerURL.MAIN_URL + user.getHeadImage())
-									.downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
-									.get();
-							File cover = Tool.saveCover(getContext(), user, file1);
-							user.setHeadImage(cover.getAbsolutePath());
+//						try {
+//							File file1 = Glide.with(getContext())
+//									.load(ServerURL.MAIN_URL + user.getHeadImage())
+//									.downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+//									.get();
+//							File cover = Tool.saveCover(getContext(), user, file1);
+//							user.setHeadImage(cover.getAbsolutePath());
 							handler.post(() -> {
 								Glide.with(getContext())
-										.load(user.getHeadImage())
+										.load(ServerURL.MAIN_URL+user.getHeadImage())
 										.transition(DrawableTransitionOptions.withCrossFade())
 										.signature(new ObjectKey(String.valueOf(System.currentTimeMillis())))
 										.error(R.mipmap.load404)
@@ -290,11 +290,11 @@ public class FragmentUser extends Fragment {
 								textUsername.setText(user.getUsername());
 								textUserId.setText(user.getSignature());
 							});
-						} catch (ExecutionException e) {
-							e.printStackTrace();
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
+//						} catch (ExecutionException e) {
+//							e.printStackTrace();
+//						} catch (InterruptedException e) {
+//							e.printStackTrace();
+//						}
 					}
 
 					database.userDao().insertAll(user);

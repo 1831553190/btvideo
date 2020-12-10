@@ -54,6 +54,7 @@ import com.demo.btvideo.net.NetInterface;
 import com.demo.btvideo.net.ServerURL;
 import com.demo.btvideo.ui.activity.LoginActivity;
 import com.demo.btvideo.ui.activity.MainActivity;
+import com.demo.btvideo.ui.activity.UploadHistoryActivity;
 import com.demo.btvideo.utils.GlideCircleBorderTransform;
 import com.demo.btvideo.utils.NetWorkUtils;
 import com.demo.btvideo.viewmodel.DataViewModel;
@@ -374,6 +375,15 @@ public class FragmentVideoDetail extends Fragment {
 			Toast.makeText(getContext(), "缓存中", Toast.LENGTH_SHORT).show();
 			binder.downloadVideo(ServerURL.MAIN_URL+videoInfo.getVideoUrl(),videoInfo.getTitle());
 //			downFileFromServiceToPublicDir(ServerURL.MAIN_URL+videoInfo.getVideoUrl(),getContext());
+		}
+	}
+
+	@OnClick({R.id.img_video_cover})
+	public void gotoUploadHistory(){
+		if (videoInfo!=null){
+			Intent intent=new Intent(getContext(), UploadHistoryActivity.class);
+			intent.putExtra("account",videoInfo.getUserAccount());
+			startActivity(intent);
 		}
 	}
 

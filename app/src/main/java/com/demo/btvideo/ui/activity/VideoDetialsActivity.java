@@ -444,14 +444,21 @@ public class VideoDetialsActivity extends AppCompatActivity {
 
 	@Override
 	public void onBackPressed() {
-		if (PlayerManager.getInstance().getCurrentPlayer().getDisplayModel() == GiraffePlayer.DISPLAY_FLOAT) {
+		if (PlayerManager.getInstance().getCurrentPlayer()!=null&&
+				PlayerManager.getInstance().getCurrentPlayer().getDisplayModel() == GiraffePlayer.DISPLAY_FLOAT) {
 			PlayerManager.getInstance().onBackPressed();
 			finish();
 		} else {
 			if (!PlayerManager.getInstance().onBackPressed()) {
-				if (videoView.getPlayer().isPlaying()) {
-					videoView.getPlayer().release();
+				try {
+					if (videoView.getPlayer().isPlaying()) {
+						videoView.getPlayer().release();
+					}
+				}catch (Exception e){
+//					super.onBackPressed();
 				}
+				super.onBackPressed();
+			}else {
 				super.onBackPressed();
 			}
 		}

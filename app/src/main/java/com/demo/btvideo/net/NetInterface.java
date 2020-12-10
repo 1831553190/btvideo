@@ -41,6 +41,9 @@ public interface NetInterface {
 	@POST("user/personal.do")
 	Call<Msg<User>> getUserInfo(@Header("Authorization") String auth);
 
+
+
+
 	//获取用户信息
 	@POST("{path}")
 	Observable<ResponseBody> downloadFile(String puth);
@@ -71,9 +74,19 @@ public interface NetInterface {
 	@POST("user/getMessageList.do")
 	Call<Msg<PageInfo<UserMessage>>> getMessageList(@Query("pageNum") int pageNum, @Query("pageSize") int pageSize);
 
-	//获取上传作品列表
+	//获取用户视频列表
 	@POST("user/getVideoList.do")
 	Call<Msg<PageInfo<VideoInfo>>> getUploadList(@Query("userAccount") String account,@Query("pageNum") int pageNum, @Query("pageSize") int pageSize);
+	//获取标题作品列表
+	@POST("user/getVideoList.do")
+	Call<Msg<PageInfo<VideoInfo>>> getUploadListByTitle(@Query("title") String account,@Query("pageNum") int pageNum, @Query("pageSize") int pageSize);
+	//获取标题作品列表
+	@POST("user/getVideoList.do")
+	Call<Msg<PageInfo<VideoInfo>>> getUploadListByLabel(@Query("labels") String account,@Query("pageNum") int pageNum, @Query("pageSize") int pageSize);
+
+	//获取标题作品列表
+	@POST("user/getVideoList.do")
+	Call<Msg<PageInfo<VideoInfo>>> getUploadListByDescription(@Query("description") String account,@Query("pageNum") int pageNum, @Query("pageSize") int pageSize);
 
 
 //	上传用户头像

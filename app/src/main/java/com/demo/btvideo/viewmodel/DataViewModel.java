@@ -2,6 +2,7 @@ package com.demo.btvideo.viewmodel;
 
 
 import android.util.Log;
+import android.util.Pair;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -25,6 +26,7 @@ public class DataViewModel extends ViewModel {
 	MutableLiveData<Integer> updataComment;
 	MutableLiveData<User> userLiveData;
 	MutableLiveData<VideoInfo> videoInfoData;
+	MutableLiveData<Pair<String,Integer>> mainkey;
 
 
 	public MutableLiveData<Integer> update(){
@@ -33,6 +35,14 @@ public class DataViewModel extends ViewModel {
 		}
 		return val;
 	}
+	public MutableLiveData<Pair<String,Integer>> loadVideoData(){
+		if (mainkey==null){
+			mainkey=new MutableLiveData<>();
+		}
+		return mainkey;
+	}
+
+
 
 
 	public MutableLiveData<VideoInfo> videoData(){

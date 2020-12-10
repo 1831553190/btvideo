@@ -68,8 +68,8 @@ import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import top.limuyang2.shadowlayoutlib.ShadowConstraintLayout;
 import top.limuyang2.shadowlayoutlib.ShadowFrameLayout;
-
 
 
 //用户中心
@@ -85,7 +85,7 @@ public class UserInfoCenterActivity extends AppCompatActivity {
 	@BindView(R.id.userAppbarLayot)
 	AppBarLayout appBarLayout;
 	@BindView(R.id.coverBack)
-	ShadowFrameLayout shadowFrameLayout;
+	ShadowConstraintLayout shadowFrameLayout;
 	@BindView(R.id.collLayout)
 	CollapsingToolbarLayout collLayout;
 
@@ -102,15 +102,17 @@ public class UserInfoCenterActivity extends AppCompatActivity {
 	TextView textEdit;
 	@BindView(R.id.img_back)
 	ImageView imgBack;
+	@BindView(R.id.centerusername)
+	TextView uname;
+	@BindView(R.id.centersign)
+	TextView usign;
 
 
+	ExecutorService pool = Executors.newCachedThreadPool();
 
 
-	ExecutorService pool= Executors.newCachedThreadPool();
-
-
-	String[] titles=new String[]{"个人作品","收藏","关注"};
-	Handler handler=new Handler(Looper.getMainLooper());
+	String[] titles = new String[]{"个人作品", "收藏", "关注"};
+	Handler handler = new Handler(Looper.getMainLooper());
 	private SharedPreferences preference;
 	AppDatabase database;
 
@@ -142,17 +144,17 @@ public class UserInfoCenterActivity extends AppCompatActivity {
 		setSupportActionBar(toolbar);
 		getSupportActionBar().setTitle("");
 		ArgbEvaluator argbEvaluator = new ArgbEvaluator();
-		AppBarLayout.LayoutParams layoutParams= (AppBarLayout.LayoutParams) collLayout.getLayoutParams();
-		layoutParams.setScrollInterpolator(new DecelerateInterpolator());
+//		AppBarLayout.LayoutParams layoutParams = (AppBarLayout.LayoutParams) collLayout.getLayoutParams();
+//		layoutParams.setScrollInterpolator(new DecelerateInterpolator());
 		appBarLayout.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
-			float offset=Math.abs(verticalOffset)*1.0f/appBarLayout.getTotalScrollRange();
-			if (offset>1.0f){
-				offset=1.0f;
+			float offset = Math.abs(verticalOffset) * 1.0f / appBarLayout.getTotalScrollRange();
+			if (offset > 1.0f) {
+				offset = 1.0f;
 			}
-			int color= (int) argbEvaluator.evaluate(offset,Color.parseColor("#AAFFFFFF"),getResources().getColor(R.color.colorPrimary));
-			int titleColor= (int) argbEvaluator.evaluate(offset,Color.parseColor("#00FFFFFF"),Color.WHITE);
-			int titleColor1= (int) argbEvaluator.evaluate(offset,Color.BLACK,Color.WHITE);
-			int imgColor= (int) argbEvaluator.evaluate(offset,Color.TRANSPARENT,Color.WHITE);
+			int color = (int) argbEvaluator.evaluate(offset, Color.parseColor("#AAFFFFFF"), getResources().getColor(R.color.colorPrimary));
+			int titleColor = (int) argbEvaluator.evaluate(offset, Color.parseColor("#00FFFFFF"), Color.WHITE);
+			int titleColor1 = (int) argbEvaluator.evaluate(offset, Color.BLACK, Color.WHITE);
+			int imgColor = (int) argbEvaluator.evaluate(offset, Color.TRANSPARENT, Color.WHITE);
 			toolbar.setBackgroundColor(color);
 			toolbar.setTitleTextColor(titleColor);
 			baseTitle.setTextColor(titleColor);
@@ -164,18 +166,19 @@ public class UserInfoCenterActivity extends AppCompatActivity {
 //		toolbar.setTitle("个人中心");
 		baseTitle.setText("个人中心");
 		viewPager.setOffscreenPageLimit(3);
-		viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager(),FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+		viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 			@NonNull
 			@Override
 			public Fragment getItem(int position) {
-				if (position==0){
+				if (position == 0) {
 					return FragmentWork.getInstance();
-				}else if (position==1){
+				} else if (position == 1) {
 					return FragmentCollection.getInstance();
-				}else {
+				} else {
 					return FragmentAttention.getInstance();
 				}
 			}
+
 			@Override
 			public int getCount() {
 				return 3;
@@ -196,23 +199,27 @@ public class UserInfoCenterActivity extends AppCompatActivity {
 		tabUserCenter.setupWithViewPager(viewPager);
 		database = Room.databaseBuilder(this, AppDatabase.class, "user")
 				.fallbackToDestructiveMigration().build();
-		preference= PreferenceManager.getDefaultSharedPreferences(this);
-		pool.execute(()->{
-			NetInterface netInterface=NetWorkUtils.getRetrofit().create(NetInterface.class);
+		preference = PreferenceManager.getDefaultSharedPreferences(this);
+		pool.execute(() -> {
+			NetInterface netInterface = NetWorkUtils.getRetrofit().create(NetInterface.class);
 			netInterface.getUserInfo().enqueue(new Callback<Msg<JsonElement>>() {
 				@Override
 				public void onResponse(Call<Msg<JsonElement>> call, Response<Msg<JsonElement>> response) {
-					if (response.isSuccessful()&&response.body().getCode()==200){
-						String strUserInfo=response.body().getData().getAsJsonObject().toString();
-						User user=new Gson().fromJson(strUserInfo,User.class);
-						Log.d(TAG, "resp"+user.getHeadImage());
-						handler.post(()->{
-							if (!isDestroyed()){
+					if (response.isSuccessful() && response.body().getCode() == 200) {
+						String strUserInfo = response.body().getData().getAsJsonObject().toString();
+						User user = new Gson().fromJson(strUserInfo, User.class);
+						Log.d(TAG, "resp" + user.getHeadImage());
+						handler.post(() -> {
+							if (!isDestroyed()) {
+								uname.setText(user.getUsername());
+								if (user.getSignature()!=null){
+									usign.setText(user.getSignature());
+								}
 								Glide.with(UserInfoCenterActivity.this)
-										.load(ServerURL.MAIN_URL+user.getHeadImage())
+										.load(ServerURL.MAIN_URL + user.getHeadImage())
 										.transition(DrawableTransitionOptions.withCrossFade())
 										.signature(new ObjectKey(String.valueOf(System.currentTimeMillis())))
-										.apply(RequestOptions.bitmapTransform(new BlurTransformation(UserInfoCenterActivity. this,25,8)))
+										.apply(RequestOptions.bitmapTransform(new BlurTransformation(UserInfoCenterActivity.this, 25, 8)))
 										.error(R.mipmap.load404)
 										.into(new SimpleTarget<Drawable>() {
 											@Override
@@ -223,7 +230,7 @@ public class UserInfoCenterActivity extends AppCompatActivity {
 										});
 
 								Glide.with(UserInfoCenterActivity.this)
-										.load(ServerURL.MAIN_URL+user.getHeadImage())
+										.load(ServerURL.MAIN_URL + user.getHeadImage())
 										.signature(new ObjectKey(String.valueOf(System.currentTimeMillis())))
 										.error(R.mipmap.load404)
 										.transition(DrawableTransitionOptions.withCrossFade())
@@ -235,7 +242,7 @@ public class UserInfoCenterActivity extends AppCompatActivity {
 
 				@Override
 				public void onFailure(Call<Msg<JsonElement>> call, Throwable t) {
-					handler.post(()->{
+					handler.post(() -> {
 						Toast.makeText(UserInfoCenterActivity.this, "连接失败", Toast.LENGTH_SHORT).show();
 					});
 				}
@@ -249,18 +256,22 @@ public class UserInfoCenterActivity extends AppCompatActivity {
 					handler.post(() -> {
 						if (user != null) {
 							String userImg = user.getHeadImage();
+							uname.setText(user.getUsername());
+							if (user.getSignature()!=null){
+								usign.setText(user.getSignature());
+							}
 							if (userImg != null) {
 								Glide.with(UserInfoCenterActivity.this.getApplicationContext())
-										.load(userImg)
+										.load(ServerURL.MAIN_URL+userImg)
 										.signature(new ObjectKey(String.valueOf(System.currentTimeMillis())))
 										.transition(DrawableTransitionOptions.withCrossFade())
 										.error(R.mipmap.load404)
 										.into(cover);
 								Glide.with(UserInfoCenterActivity.this)
-										.load(userImg)
+										.load(ServerURL.MAIN_URL+userImg)
 										.transition(DrawableTransitionOptions.withCrossFade())
 										.signature(new ObjectKey(String.valueOf(System.currentTimeMillis())))
-										.apply(RequestOptions.bitmapTransform(new BlurTransformation(UserInfoCenterActivity. this,25,8)))
+										.apply(RequestOptions.bitmapTransform(new BlurTransformation(UserInfoCenterActivity.this, 25, 8)))
 										.error(R.mipmap.load404)
 										.into(new SimpleTarget<Drawable>() {
 											@Override
@@ -286,7 +297,7 @@ public class UserInfoCenterActivity extends AppCompatActivity {
 	}
 
 	@OnClick(R.id.user_cover)
-	public void gotoCover(){
+	public void gotoCover() {
 		Intent intent = new Intent(this, UploadHeadActivity.class);
 		ActivityOptions options = ActivityOptions
 				.makeSceneTransitionAnimation(this, cover, "upload_cover");
@@ -294,13 +305,13 @@ public class UserInfoCenterActivity extends AppCompatActivity {
 	}
 
 	@OnClick(R.id.img_back)
-	public void btnBack(){
+	public void btnBack() {
 		finish();
 	}
 
 	@OnClick(R.id.text_menu_editinfo)
-	public void gotoEdit(){
-		startActivity(new Intent(this,EditInfoActivity.class));
+	public void gotoEdit() {
+		startActivity(new Intent(this, EditInfoActivity.class));
 	}
 
 }

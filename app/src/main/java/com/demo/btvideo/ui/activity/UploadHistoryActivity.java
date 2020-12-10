@@ -85,17 +85,6 @@ public class UploadHistoryActivity extends AppCompatActivity {
         if (account==null||account.equals("")){
             account=PreferenceManager.getDefaultSharedPreferences(this).getString("userNow","");
         }
-//        CommentListAdapter commentListAdapter=new CommentListAdapter(new DiffUtil.ItemCallback<Comment>() {
-//            @Override
-//            public boolean areItemsTheSame(@NonNull Comment oldItem, @NonNull Comment newItem) {
-//                return oldItem.getId()==newItem.getId();
-//            }
-//
-//            @Override
-//            public boolean areContentsTheSame(@NonNull Comment oldItem, @NonNull Comment newItem) {
-//                return oldItem.getContent().equals(newItem.getContent());
-//            }
-//        });
         UploadAdapter uploadAdapter = new UploadAdapter(new DiffUtil.ItemCallback<VideoInfo>() {
             @Override
             public boolean areItemsTheSame(@NonNull VideoInfo oldItem, @NonNull VideoInfo newItem) {

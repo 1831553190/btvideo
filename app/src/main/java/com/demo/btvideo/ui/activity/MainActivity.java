@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.preference.PreferenceManager;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 
@@ -185,6 +187,24 @@ public class MainActivity extends AppCompatActivity {
 				}
 			}
 		});
+	}
+
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.menu_main,menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+
+	@Override
+	public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+		switch (item.getItemId()){
+			case R.id.asearch:
+				startActivity(new Intent(this,SearchActivity.class));
+		}
+
+		return super.onOptionsItemSelected(item);
 	}
 
 	@Override

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    android:id="@+id/coordinatorLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_constraintBottom_toTopOf="@+id/bottom_navi"
+    app:layout_constraintTop_toTopOf="parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/search_appbar"
+        android:fitsSystemWindows="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <top.limuyang2.shadowlayoutlib.ShadowConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_margin="8dp"
+            app:l_shadowAlpha="0.4"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
+            app:l_shadowElevation="6dp"
+            android:background="@android:color/white"
+            android:layout_marginBottom="4dp"
+            app:l_radius="4dp"
+            android:layout_height="wrap_content">
+
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--                android:layout_height="wrap_content">-->
+                <EditText
+                    android:padding="16dp"
+                    android:id="@+id/search_text"
+                    android:imeOptions="actionSearch"
+                    android:layout_width="match_parent"
+                    android:singleLine="true"
+                    android:hint="请输入关键字..."
+                    android:background="@android:color/white"
+                    android:layout_height="match_parent"/>
+
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
+        </top.limuyang2.shadowlayoutlib.ShadowConstraintLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        app:layout_behavior=".ui.view.FloatingScrollBehavior"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:orientation="vertical"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/search_tab"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </com.google.android.material.tabs.TabLayout>
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewpager_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintBottom_toTopOf="@+id/bottom_navi"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" >
+
+            </androidx.viewpager.widget.ViewPager>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

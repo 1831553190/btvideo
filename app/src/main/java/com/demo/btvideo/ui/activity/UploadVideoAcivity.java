@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -45,6 +47,9 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import tcking.github.com.giraffeplayer2.GiraffePlayer;
+import tcking.github.com.giraffeplayer2.PlayerManager;
+import tcking.github.com.giraffeplayer2.VideoView;
 
 
 //上传视频的界面
@@ -59,6 +64,10 @@ public class UploadVideoAcivity extends AppCompatActivity {
 	TextView description;
 	@BindView(R.id.upload_img_video)
 	ImageView videoImage;
+
+
+	@BindView(R.id.video_preview)
+	VideoView videoView;
 
 //	boolean selectImg = false;
 //	boolean selectVideo = false;
@@ -175,7 +184,44 @@ public class UploadVideoAcivity extends AppCompatActivity {
 						.into(videoImage);
 			}else if (requestCode==80){
 				videoFile=data.getData();
-				textVideoChoose.setText(data.getData().toString());
+				textVideoChoose.setText("预览");
+//				textVideoChoose.setText(data.getData().toString());
+				videoView.setVisibility(View.VISIBLE);
+				videoView.setVideoPath(data.getData());
+			}
+		}
+	}
+
+
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		PlayerManager.getInstance().onConfigurationChanged(newConfig);
+	}
+
+	@Override
+	public void onWindowFocusChanged(boolean hasFocus) {
+		super.onWindowFocusChanged(hasFocus);
+	}
+
+	@Override
+	public void onBackPressed() {
+		if (PlayerManager.getInstance().getCurrentPlayer()!=null&&
+				PlayerManager.getInstance().getCurrentPlayer().getDisplayModel() == GiraffePlayer.DISPLAY_FLOAT) {
+			PlayerManager.getInstance().onBackPressed();
+			finish();
+		} else {
+			if (!PlayerManager.getInstance().onBackPressed()) {
+				try {
+					if (videoView.getPlayer().isPlaying()) {
+						videoView.getPlayer().release();
+					}
+				}catch (Exception e){
+				}
+				super.onBackPressed();
+			}else {
+				super.onBackPressed();
 			}
 		}
 	}

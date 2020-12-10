@@ -17,6 +17,7 @@ import com.demo.btvideo.data.CollectionDataSource;
 import com.demo.btvideo.data.FunsDataSource;
 import com.demo.btvideo.data.HistoryPlayList;
 import com.demo.btvideo.data.LoadMessageList;
+import com.demo.btvideo.data.LoadOtherList;
 import com.demo.btvideo.data.LoadUploadList;
 import com.demo.btvideo.data.LoadVideoInfo;
 import com.demo.btvideo.model.Attention;
@@ -92,6 +93,25 @@ public class DataLoaderViewModel extends ViewModel {
 				new BaseDataSource<>(new LoadUploadList(executorService,userAcccount)));
 		return PagingLiveData.cachedIn(PagingLiveData.getLiveData(pager),viewmodelScope);
 	}
+	public LiveData<PagingData<VideoInfo>> getUploadVideoT(String title){
+		CoroutineScope viewmodelScope= ViewModelKt.getViewModelScope(this);
+		Pager<Integer, VideoInfo> pager = new Pager<>(pagingConfig, () ->
+				new BaseDataSource<>(new LoadOtherList(executorService,title,"title")));
+		return PagingLiveData.cachedIn(PagingLiveData.getLiveData(pager),viewmodelScope);
+	}
+	public LiveData<PagingData<VideoInfo>> getUploadVideoL(String labels){
+		CoroutineScope viewmodelScope= ViewModelKt.getViewModelScope(this);
+		Pager<Integer, VideoInfo> pager = new Pager<>(pagingConfig, () ->
+				new BaseDataSource<>(new LoadOtherList(executorService,labels,"labels")));
+		return PagingLiveData.cachedIn(PagingLiveData.getLiveData(pager),viewmodelScope);
+	}
+	public LiveData<PagingData<VideoInfo>> getUploadVideoD(String descri){
+		CoroutineScope viewmodelScope= ViewModelKt.getViewModelScope(this);
+		Pager<Integer, VideoInfo> pager = new Pager<>(pagingConfig, () ->
+				new BaseDataSource<>(new LoadOtherList(executorService,descri,"descri")));
+		return PagingLiveData.cachedIn(PagingLiveData.getLiveData(pager),viewmodelScope);
+	}
+
 	public LiveData<PagingData<VideoInfo>> getPlayHistory(Context context){
 		CoroutineScope viewmodelScope= ViewModelKt.getViewModelScope(this);
 		Pager<Integer, VideoInfo> pager = new Pager<>(pagingConfig, () ->

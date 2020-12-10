@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="?attr/selectableItemBackground"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/searchc_cover"
+        android:layout_width="120dp"
+        android:layout_height="80dp"
+        android:scaleType="centerCrop"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:transitionName="cover"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+    <TextView
+        android:id="@+id/search_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:singleLine="true"
+        android:text="标题"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/search_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/searchc_cover"
+        app:layout_constraintTop_toTopOf="@+id/searchc_cover" />
+
+    <TextView
+        android:id="@+id/search_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:text="content"
+        app:layout_constraintBottom_toTopOf="@+id/search_usercover"
+        app:layout_constraintEnd_toEndOf="@+id/search_title"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/search_title"
+        app:layout_constraintTop_toBottomOf="@+id/search_title" />
+
+    <ImageView
+        android:id="@+id/search_usercover"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/searchc_cover"
+        app:layout_constraintStart_toStartOf="@+id/search_content"
+        app:layout_constraintTop_toBottomOf="@+id/search_content"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/search_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="user"
+        app:layout_constraintBottom_toBottomOf="@+id/search_usercover"
+        app:layout_constraintStart_toEndOf="@+id/search_usercover"
+        app:layout_constraintTop_toTopOf="@+id/search_usercover" />
+
+
+    <ImageView
+        android:id="@+id/img2_png"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/ic_play"
+        app:layout_constraintBottom_toBottomOf="@+id/search_usercover"
+        app:layout_constraintStart_toEndOf="@+id/search_user"
+        app:layout_constraintTop_toTopOf="@+id/search_usercover" />
+
+    <TextView
+        android:id="@+id/search_playnum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:text="0"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/img2_png"
+        app:layout_constraintLeft_toRightOf="@id/img2_png"
+        app:layout_constraintTop_toTopOf="@id/img2_png" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

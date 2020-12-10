@@ -274,46 +274,50 @@ public class DefaultMediaController extends BaseMediaController {
 	protected final View.OnClickListener onClickListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			GiraffePlayer player = videoView.getPlayer();
-			if (v.getId() == R.id.app_video_fullscreen) {
-				player.toggleFullScreen();
-			} else if (v.getId() == R.id.app_video_play) {
-				if (player.isPlaying()) {
-					player.pause();
-				} else {
+			try {
+				GiraffePlayer player = videoView.getPlayer();
+				if (v.getId() == R.id.app_video_fullscreen) {
+					player.toggleFullScreen();
+				} else if (v.getId() == R.id.app_video_play) {
+					if (player.isPlaying()) {
+						player.pause();
+					} else {
+						player.start();
+					}
+				} else if (v.getId() == R.id.app_video_replay_icon) {
+					player.seekTo(0);
 					player.start();
-				}
-			} else if (v.getId() == R.id.app_video_replay_icon) {
-				player.seekTo(0);
-				player.start();
 //                videoView.seekTo(0);
 //                videoView.start();
 //                doPauseResume();
-			} else if (v.getId() == R.id.app_video_finish) {
-				if (!player.onBackPressed()) {
-					(scanForActivity(videoView.getContext())).finish();
-				}
-			} else if (v.getId() == R.id.app_video_float_close) {
-				Activity activity=scanForActivity(videoView.getContext());
-				if (activity==null||activity.isDestroyed()){
-					player.stop();
-				}
-				player.setDisplayModel(GiraffePlayer.DISPLAY_NORMAL);
-			} else if (v.getId() == R.id.app_video_float_full) {
+				} else if (v.getId() == R.id.app_video_finish) {
+					if (!player.onBackPressed()) {
+						(scanForActivity(videoView.getContext())).finish();
+					}
+				} else if (v.getId() == R.id.app_video_float_close) {
+					Activity activity=scanForActivity(videoView.getContext());
+					if (activity==null||activity.isDestroyed()){
+						player.stop();
+					}
+					player.setDisplayModel(GiraffePlayer.DISPLAY_NORMAL);
+				} else if (v.getId() == R.id.app_video_float_full) {
 //				Activity activity=scanForActivity(videoView.getContext());
-				player.setDisplayModel(GiraffePlayer.DISPLAY_FULL_WINDOW);
-			} else if (v.getId() == R.id.app_video_clarity) {
-				Activity activity = scanForActivity(videoView.getContext());
-				if (activity instanceof AppCompatActivity) {
-					TrackSelectorFragment trackSelectorFragment = new TrackSelectorFragment();
-					Bundle bundle = new Bundle();
-					bundle.putString("fingerprint", videoView.getVideoInfo().getFingerprint());
-					trackSelectorFragment.setArguments(bundle);
-					FragmentManager supportFragmentManager = ((AppCompatActivity) activity).getSupportFragmentManager();
-					trackSelectorFragment.show(supportFragmentManager, "player_track");
+					player.setDisplayModel(GiraffePlayer.DISPLAY_FULL_WINDOW);
+				} else if (v.getId() == R.id.app_video_clarity) {
+					Activity activity = scanForActivity(videoView.getContext());
+					if (activity instanceof AppCompatActivity) {
+						TrackSelectorFragment trackSelectorFragment = new TrackSelectorFragment();
+						Bundle bundle = new Bundle();
+						bundle.putString("fingerprint", videoView.getVideoInfo().getFingerprint());
+						trackSelectorFragment.setArguments(bundle);
+						FragmentManager supportFragmentManager = ((AppCompatActivity) activity).getSupportFragmentManager();
+						trackSelectorFragment.show(supportFragmentManager, "player_track");
+					}
+				} else if (v.getId() == R.id.app_play_float) {
+					player.setDisplayModel(GiraffePlayer.DISPLAY_FLOAT);
 				}
-			} else if (v.getId() == R.id.app_play_float) {
-				player.setDisplayModel(GiraffePlayer.DISPLAY_FLOAT);
+			}catch (Exception e){
+				e.printStackTrace();
 			}
 		}
 	};
@@ -540,12 +544,15 @@ public class DefaultMediaController extends BaseMediaController {
 		 */
 		@Override
 		public boolean onDoubleTap(MotionEvent e) {
-			GiraffePlayer giraffePlayer = videoView.getPlayer();
-
-			if (giraffePlayer.isPlaying()) {
-				giraffePlayer.pause();
-			} else {
-				giraffePlayer.start();
+			try {
+				GiraffePlayer giraffePlayer = videoView.getPlayer();
+				if (giraffePlayer.isPlaying()) {
+					giraffePlayer.pause();
+				} else {
+					giraffePlayer.start();
+				}
+			}catch (Exception ex){
+				ex.printStackTrace();
 			}
 			return true;
 		}

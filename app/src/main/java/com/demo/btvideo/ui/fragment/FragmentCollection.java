@@ -68,7 +68,6 @@ public class FragmentCollection extends Fragment {
 				return oldItem.getData().getTitle().equals(newItem.getData().getTitle());
 			}
 		});
-
 		LoadMoreAdapter header=new LoadMoreAdapter(collectionAdapter::retry);
 		LoadMoreAdapter footer=new LoadMoreAdapter(collectionAdapter::retry);
 		DataLoaderViewModel dataLoaderViewModel = new ViewModelProvider(this).get(DataLoaderViewModel.class);
