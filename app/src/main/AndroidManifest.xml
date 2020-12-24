@@ -50,6 +50,8 @@
         <activity android:name=".ui.activity.PlayHistoryActivity" />
         <activity android:name=".ui.activity.EditInfoActivity" />
         <activity android:name=".ui.activity.SearchActivity" />
+        <activity android:name=".ui.activity.BaseActivity" />
+
         <service android:name=".UploadService" />
     </application>
 

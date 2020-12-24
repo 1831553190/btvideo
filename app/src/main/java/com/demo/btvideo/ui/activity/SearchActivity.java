@@ -31,7 +31,7 @@ import com.google.android.material.tabs.TabLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SearchActivity extends AppCompatActivity {
+public class SearchActivity extends BaseActivity {
 
 
 	@BindView(R.id.viewpager_search)
@@ -45,25 +45,6 @@ public class SearchActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-			int flagTranslucentStatus = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
-			int flagTranslucentNavigation = WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION;
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-				Window window = getWindow();
-				WindowManager.LayoutParams attributes = window.getAttributes();
-				attributes.flags |= flagTranslucentNavigation;
-				window.setAttributes(attributes);
-				getWindow().setStatusBarColor(Color.WHITE);
-			} else {
-				Window window = getWindow();
-				WindowManager.LayoutParams attributes = window.getAttributes();
-				attributes.flags |= flagTranslucentStatus | flagTranslucentNavigation;
-				window.setAttributes(attributes);
-			}
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-				getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-			}
-		}
 		setContentView(R.layout.activity_search);
 		ButterKnife.bind(this);
 		tabLayout.setupWithViewPager(viewPager, false);

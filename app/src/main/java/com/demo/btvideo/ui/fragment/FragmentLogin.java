@@ -65,7 +65,6 @@ public class FragmentLogin extends Fragment {
 	@BindView(R.id.remPasswd)
 	CheckBox checkBox;
 
-
 	private String username;
 	private String password;
 	SharedPreferences preferences;
@@ -73,7 +72,6 @@ public class FragmentLogin extends Fragment {
 
 	ExecutorService executorService = Executors.newCachedThreadPool();
 	AppDatabase appDatabase;
-
 
 	private static class Holder {
 		private static FragmentLogin instance = new FragmentLogin();
@@ -104,7 +102,6 @@ public class FragmentLogin extends Fragment {
 				preferences.edit().putString("passwd", "").apply();
 			}
 		});
-
 		return mainView;
 	}
 
@@ -125,45 +122,42 @@ public class FragmentLogin extends Fragment {
 		data.put(Propertys.USERNAME,username);
 		data.put(Propertys.PASSWORD,password);
 
+
+
+
 		Observable.just(data)
 				.subscribeOn(Schedulers.io())
-				.map(new Function<HashMap<String, String>, Msg<AuthData>>() {
-					@Override
-					public Msg<AuthData> apply(HashMap<String, String> stringStringHashMap) throws Exception {
-						Retrofit retrofit=new Retrofit.Builder()
-								.addConverterFactory(GsonConverterFactory.create())
-								.baseUrl(ServerURL.MAIN_URL)
-								.build();
-						NetInterface netInterface=retrofit.create(NetInterface.class);
-						Response<Msg<AuthData>> response=netInterface.login(stringStringHashMap,"ceshi").execute();
-						if (response.isSuccessful()&&response.body()!=null&&response.body().getCode()==200){
-							return response.body();
-						}else if (response.body()!=null){
-							throw Exceptions.propagate(new Throwable(response.body().getMessage()));
-						}else{
-							throw Exceptions.propagate(new Throwable("未知错误"));
-						}
+				.map(stringStringHashMap -> {
+					Retrofit retrofit=new Retrofit.Builder()
+							.addConverterFactory(GsonConverterFactory.create())
+							.baseUrl(ServerURL.MAIN_URL)
+							.build();
+					NetInterface netInterface=retrofit.create(NetInterface.class);
+					Response<Msg<AuthData>> response=netInterface.login(stringStringHashMap,"ceshi").execute();
+					if (response.isSuccessful()&&response.body()!=null&&response.body().getCode()==200){
+						return response.body();
+					}else if (response.body()!=null){
+						throw Exceptions.propagate(new Throwable(response.body().getMessage()));
+					}else{
+						throw Exceptions.propagate(new Throwable("未知错误"));
 					}
-				}).map(new Function<Msg<AuthData>, User>() {
-			@Override
-			public User apply(Msg<AuthData> authDataMsg) throws Exception {
-				String auth=authDataMsg.getData().getToken();
-				preferences.edit().putString("token",auth).putString("tokenHead",authDataMsg.getData().getTokenHead()).apply();
-				AppController.getInstance().updateAuth(auth);
-				Retrofit retrofit=new Retrofit.Builder()
-						.addConverterFactory(GsonConverterFactory.create())
-						.baseUrl(ServerURL.MAIN_URL)
-						.build();
-				NetInterface netInterface=retrofit.create(NetInterface.class);
-				Response<Msg<User>> response=netInterface.getUserInfo("Bearer "+auth).execute();
-				if (response.isSuccessful()&&response.body()!=null){
-					return response.body().getData();
-				}else {
-					Exceptions.propagate(new Throwable("未知错误"));
-				}
-				return null;
-			}
-		}).subscribe(new Observer<User>() {
+				}).map(authDataMsg -> {
+					String auth=authDataMsg.getData().getToken();
+					preferences.edit().putString("token",auth).putString("tokenHead",authDataMsg.getData().getTokenHead()).apply();
+					AppController.getInstance().updateAuth(auth);
+					Retrofit retrofit=new Retrofit.Builder()
+							.addConverterFactory(GsonConverterFactory.create())
+							.baseUrl(ServerURL.MAIN_URL)
+							.build();
+					NetInterface netInterface=retrofit.create(NetInterface.class);
+					Response<Msg<User>> response=netInterface.getUserInfo("Bearer "+auth).execute();
+					if (response.isSuccessful()&&response.body()!=null){
+						return response.body().getData();
+					}else {
+						Exceptions.propagate(new Throwable("未知错误"));
+					}
+					return null;
+				}).subscribe(new Observer<User>() {
 			@Override
 			public void onSubscribe(Disposable d) {
 

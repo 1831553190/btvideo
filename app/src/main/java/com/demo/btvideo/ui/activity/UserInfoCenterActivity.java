@@ -73,7 +73,7 @@ import top.limuyang2.shadowlayoutlib.ShadowFrameLayout;
 
 
 //用户中心
-public class UserInfoCenterActivity extends AppCompatActivity {
+public class UserInfoCenterActivity extends BaseActivity {
 
 	private static final String TAG = "UserInfoCenterActivity";
 	//	@BindView(R.id.mToolbar)
@@ -119,25 +119,6 @@ public class UserInfoCenterActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-			int flagTranslucentStatus = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
-			int flagTranslucentNavigation = WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION;
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-				Window window = getWindow();
-				WindowManager.LayoutParams attributes = window.getAttributes();
-				attributes.flags |= flagTranslucentNavigation;
-				window.setAttributes(attributes);
-				getWindow().setStatusBarColor(Color.TRANSPARENT);
-			} else {
-				Window window = getWindow();
-				WindowManager.LayoutParams attributes = window.getAttributes();
-				attributes.flags |= flagTranslucentStatus | flagTranslucentNavigation;
-				window.setAttributes(attributes);
-			}
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-				getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_IMMERSIVE);
-			}
-		}
 		setContentView(R.layout.activity_userinfo);
 
 		ButterKnife.bind(this);

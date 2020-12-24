@@ -68,7 +68,7 @@ import tv.danmaku.ijk.media.player.IjkTimedText;
 
 
 //视频详情界面
-public class VideoDetialsActivity extends AppCompatActivity {
+public class VideoDetialsActivity extends BaseActivity {
 
 	private PowerManager.WakeLock wakeLock;
 	View rootView;
@@ -107,26 +107,6 @@ public class VideoDetialsActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-			int flagTranslucentStatus = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
-			int flagTranslucentNavigation = WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION;
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-				Window window = getWindow();
-				WindowManager.LayoutParams attributes = window.getAttributes();
-				attributes.flags |= flagTranslucentStatus;
-				window.setAttributes(attributes);
-				getWindow().setStatusBarColor(Color.TRANSPARENT);
-			} else {
-				Window window = getWindow();
-				WindowManager.LayoutParams attributes = window.getAttributes();
-				attributes.flags |= flagTranslucentStatus;
-				window.setAttributes(attributes);
-			}
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-				getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_IMMERSIVE);
-			}
-		}
-
 		setContentView(R.layout.activity_video_detail);
 		ButterKnife.bind(this);
 		PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);

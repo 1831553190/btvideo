@@ -90,7 +90,7 @@ public class FragmentIndex extends Fragment {
 		});
 		DataLoaderViewModel loadMoreViewModel=new ViewModelProvider(this).get(DataLoaderViewModel.class);
 		loadMoreViewModel.getPaging().observe(getViewLifecycleOwner(), videoInfoPagingData ->
-				videoListAdapter.submitData(getLifecycle(),videoInfoPagingData));
+				videoListAdapter.submitData(getLifecycle(),videoInfoPagingData));   //提交数据到Adapter
 		return mainView;
 	}
 

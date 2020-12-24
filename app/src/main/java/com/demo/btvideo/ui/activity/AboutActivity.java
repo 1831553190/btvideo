@@ -23,29 +23,10 @@ import com.demo.btvideo.R;
 
 
 //关于界面
-public class AboutActivity extends AppCompatActivity {
+public class AboutActivity extends BaseActivity {
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-			int flagTranslucentStatus = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
-			int flagTranslucentNavigation = WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION;
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-				Window window = getWindow();
-				WindowManager.LayoutParams attributes = window.getAttributes();
-				attributes.flags |= flagTranslucentNavigation;
-				window.setAttributes(attributes);
-				getWindow().setStatusBarColor(Color.TRANSPARENT);
-			} else {
-				Window window = getWindow();
-				WindowManager.LayoutParams attributes = window.getAttributes();
-				attributes.flags |= flagTranslucentStatus | flagTranslucentNavigation;
-				window.setAttributes(attributes);
-			}
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-				getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-			}
-		}
 		setContentView(R.layout.activity_about);
 		TextView textVersion=findViewById(R.id.textVersion);
 		textVersion.setText(BuildConfig.VERSION_NAME);

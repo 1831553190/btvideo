@@ -27,20 +27,16 @@ public class LoadVideoInfo implements LoadDataInterface<VideoInfo> {
 	public LoadVideoInfo(ListeningExecutorService executorService) {
 		this.executorService=executorService;
 	}
-
 	@Override
 	public ListenableFuture<List<VideoInfo>> load(int pageNum) {
-		return executorService.submit(new Callable<List<VideoInfo>>() {
-			@Override
-			public List<VideoInfo> call() throws Exception {
-				Retrofit retrofit = NetWorkUtils.getRetrofit();
-				NetInterface netInterface = retrofit.create(NetInterface.class);
-				Response<Msg<PageInfo<VideoInfo>>> infos = netInterface.getPageInfo(pageNum, 20).execute();
-				if (infos.body() != null) {
-					return infos.body().getData().getList();
-				} else {
-					return null;
-				}
+		return executorService.submit(() -> {
+			Retrofit retrofit = NetWorkUtils.getRetrofit();
+			NetInterface netInterface = retrofit.create(NetInterface.class);
+			Response<Msg<PageInfo<VideoInfo>>> infos = netInterface.getPageInfo(pageNum, 20).execute();
+			if (infos.body() != null) {
+				return infos.body().getData().getList();
+			} else {
+				return null;
 			}
 		});
 	}

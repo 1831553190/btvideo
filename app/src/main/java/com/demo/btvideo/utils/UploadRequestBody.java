@@ -27,9 +27,7 @@ public class UploadRequestBody extends RequestBody {
 	Context context;
 	String name;
 	UploadProgress uploadProgress;
-
 	int id;
-
 	public interface UploadProgress{
 		void getPercent(int id,int percent);
 		void getProgress(int id,long progress);
@@ -41,8 +39,6 @@ public class UploadRequestBody extends RequestBody {
 		}
 		return -1;
 	}
-
-
 	public UploadRequestBody(int id,Uri uri, MediaType conntentType, Context context,UploadProgress uploadProgress) {
 		this.size = size;
 		this.id=id;
@@ -93,12 +89,12 @@ public class UploadRequestBody extends RequestBody {
 	}
 
 	class Forware extends ForwardingSink{
-		long contentLength=0l;
-		long byteWritten=0l;
+		long contentLength= 0L;
+		long byteWritten= 0L;
 		public Forware(@NotNull Sink delegate) {
 			super(delegate);
-			if (contentLength<=0l){
-				contentLength=size==null?-1l:size;
+			if (contentLength<= 0L){
+				contentLength=size==null?-1L :size;
 			}
 		}
 

@@ -7,16 +7,12 @@ import java.util.List;
 //分页信息的实体类
 public class PageInfo<T> implements Serializable {
 
-	private int unread;
-
-	int pageNum;
-
-	private int pageSize;
-	private int totalPage;
-	private int total;
-	List<T> list;
-
-
+	private int unread;//未读数
+	int pageNum;//页数
+	private int pageSize;//数据量
+	private int totalPage;//总页数
+	private int total;  //总消息数
+	List<T> list;       //数据列表
 
 	
 	public int getUnread() {

@@ -30,7 +30,7 @@ import butterknife.ButterKnife;
 
 
 //收藏界面
-public class CollectionActivity extends AppCompatActivity {
+public class CollectionActivity extends BaseActivity {
 
     @BindView(R.id.list_message)
     RecyclerView recyclerView;
@@ -47,25 +47,6 @@ public class CollectionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            int flagTranslucentStatus = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
-            int flagTranslucentNavigation = WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                Window window = getWindow();
-                WindowManager.LayoutParams attributes = window.getAttributes();
-                attributes.flags |= flagTranslucentNavigation;
-                window.setAttributes(attributes);
-                getWindow().setStatusBarColor(Color.TRANSPARENT);
-            } else {
-                Window window = getWindow();
-                WindowManager.LayoutParams attributes = window.getAttributes();
-                attributes.flags |= flagTranslucentStatus | flagTranslucentNavigation;
-                window.setAttributes(attributes);
-            }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-            }
-        }
         setContentView(R.layout.mseeage_list);
         ButterKnife.bind(this);
         ImageView backImg=findViewById(R.id.img_back);

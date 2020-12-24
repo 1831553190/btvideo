@@ -137,7 +137,10 @@ public class MainActivity extends AppCompatActivity {
 		});
 		FloatingActionButton floatingActionButton=new FloatingActionButton(this);
 		floatingActionButton.setImageResource(R.drawable.ic_upload);
+
+
 		BottomNavigationMenuView navi_menu_view=(BottomNavigationMenuView)bottomNavigationView.getChildAt(0);
+
 		navi_menu_view.addView(floatingActionButton,1);
 		floatingActionButton.setOnClickListener(v -> {
 			AppController.getInstance().uploadVideo(this);
