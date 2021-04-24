@@ -126,7 +126,7 @@ public class UploadHeadActivity extends BaseActivity {
 			startActivityForResult(Intent.createChooser(intent, "Select a File to Upload"), 200);
 
 		});
-		bottomSheetDialog = new BottomSheetDialog(UploadHeadActivity.this);
+		bottomSheetDialog = new BottomSheetDialog(UploadHeadActivity.this,R.style.BottomSheetDialog);
 		bottomSheetDialog.setContentView(view);
 		mDialogBehavior = BottomSheetBehavior.from((View) view.getParent());
 //		mDialogBehavior.setPeekHeight(100);
